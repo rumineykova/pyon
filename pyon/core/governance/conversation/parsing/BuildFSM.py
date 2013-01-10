@@ -1,4 +1,4 @@
-# $ANTLR 3.1.3 Mar 18, 2009 10:09:25 src/SavedFSM/BuildFSM.g 2012-03-12 22:19:58
+# $ANTLR 3.1.3 Mar 18, 2009 10:09:25 final_09_01-13/BuildFSM.g 2013-01-09 21:17:06
 
 import sys
 from antlr3 import *
@@ -97,33 +97,44 @@ class FSMBuilderState(object):
 HIDDEN = BaseRecognizer.HIDDEN
 
 # token types
+T__68=68
+T__69=69
+T__66=66
+T__67=67
+T__64=64
+T__65=65
+T__62=62
+T__63=63
 RESV=12
-ANNOTATION=25
-ASSERTION=28
+ANNOTATION=28
 PARALLEL=19
+ASSERTION=31
+DO=27
 T__61=61
-ID=26
+ID=29
 T__60=60
 EOF=-1
 PROTOCOL=20
 TYPE=14
 T__55=55
-INTERACTION=4
+ML_COMMENT=35
 T__56=56
-ML_COMMENT=32
+INTERACTION=4
 T__57=57
-T__58=58
 ROLES=24
+T__58=58
 T__51=51
 T__52=52
 T__53=53
 T__54=54
 T__59=59
 FULLSTOP=11
-PLUS=7
 SEND=13
-DIGIT=30
+PLUS=7
+DIGIT=33
+INTR=26
 T__50=50
+WITH=25
 T__42=42
 T__43=43
 T__40=40
@@ -132,24 +143,24 @@ T__46=46
 T__47=47
 T__44=44
 T__45=45
-LINE_COMMENT=33
+LINE_COMMENT=36
 T__48=48
 T__49=49
 RECLABEL=18
-NUMBER=29
-WHITESPACE=31
+NUMBER=32
+WHITESPACE=34
 INT=5
-VALUE=15
-MULT=9
 MINUS=8
+MULT=9
+VALUE=15
 ASSERT=21
 UNORDERED=17
 EMPTY=23
-StringLiteral=27
-T__34=34
+StringLiteral=30
+T__71=71
+T__72=72
 GLOBAL_ESCAPE=22
-T__35=35
-T__36=36
+T__70=70
 T__37=37
 T__38=38
 T__39=39
@@ -163,19 +174,20 @@ tokenNames = [
     "INTERACTION", "INT", "STRING", "PLUS", "MINUS", "MULT", "DIV", "FULLSTOP", 
     "RESV", "SEND", "TYPE", "VALUE", "BRANCH", "UNORDERED", "RECLABEL", 
     "PARALLEL", "PROTOCOL", "ASSERT", "GLOBAL_ESCAPE", "EMPTY", "ROLES", 
-    "ANNOTATION", "ID", "StringLiteral", "ASSERTION", "NUMBER", "DIGIT", 
-    "WHITESPACE", "ML_COMMENT", "LINE_COMMENT", "'import'", "'protocol'", 
-    "','", "';'", "'from'", "'as'", "'at'", "'{'", "'}'", "'('", "')'", 
-    "'role'", "'introduces'", "':'", "'to'", "'choice'", "'or'", "'repeat'", 
-    "'rec'", "'end'", "'run'", "'inline'", "'parallel'", "'and'", "'do'", 
-    "'interrupt'", "'by'", "'unordered'"
+    "WITH", "INTR", "DO", "ANNOTATION", "ID", "StringLiteral", "ASSERTION", 
+    "NUMBER", "DIGIT", "WHITESPACE", "ML_COMMENT", "LINE_COMMENT", "'package'", 
+    "';'", "'import'", "'protocol'", "','", "'from'", "'as'", "'local'", 
+    "'at'", "'{'", "'}'", "'('", "')'", "'role'", "'introduces'", "':'", 
+    "'to'", "'choice'", "'or'", "'repeat'", "'rec'", "'continue'", "'end'", 
+    "'run'", "'inline'", "'par'", "'and'", "'interruptible'", "'throw'", 
+    "'by'", "'catch'", "'unordered'", "'do'", "'['", "']'", "'interrupt'"
 ]
 
 
 
 
 class BuildFSM(TreeParser):
-    grammarFileName = "src/SavedFSM/BuildFSM.g"
+    grammarFileName = "final_09_01-13/BuildFSM.g"
     antlr_version = version_str_to_tuple("3.1.3 Mar 18, 2009 10:09:25")
     antlr_version_str = "3.1.3 Mar 18, 2009 10:09:25"
     tokenNames = tokenNames
@@ -207,13 +219,13 @@ class BuildFSM(TreeParser):
 
 
     # $ANTLR start "description"
-    # src/SavedFSM/BuildFSM.g:107:1: description : ^( PROTOCOL roleName parameterDefs ( activityDef )+ ) ;
+    # final_09_01-13/BuildFSM.g:107:1: description : ^( PROTOCOL roleName parameterDefs ( activityDef )+ ) ;
     def description(self, ):
 
         try:
             try:
-                # src/SavedFSM/BuildFSM.g:107:12: ( ^( PROTOCOL roleName parameterDefs ( activityDef )+ ) )
-                # src/SavedFSM/BuildFSM.g:107:14: ^( PROTOCOL roleName parameterDefs ( activityDef )+ )
+                # final_09_01-13/BuildFSM.g:107:12: ( ^( PROTOCOL roleName parameterDefs ( activityDef )+ ) )
+                # final_09_01-13/BuildFSM.g:107:14: ^( PROTOCOL roleName parameterDefs ( activityDef )+ )
                 pass 
                 self.match(self.input, PROTOCOL, self.FOLLOW_PROTOCOL_in_description52)
 
@@ -226,18 +238,18 @@ class BuildFSM(TreeParser):
                 self.parameterDefs()
 
                 self._state.following.pop()
-                # src/SavedFSM/BuildFSM.g:107:48: ( activityDef )+
+                # final_09_01-13/BuildFSM.g:107:48: ( activityDef )+
                 cnt1 = 0
                 while True: #loop1
                     alt1 = 2
                     LA1_0 = self.input.LA(1)
 
-                    if ((RESV <= LA1_0 <= SEND) or (RECLABEL <= LA1_0 <= PARALLEL) or LA1_0 == GLOBAL_ESCAPE or LA1_0 == 49 or (51 <= LA1_0 <= 52)) :
+                    if ((RESV <= LA1_0 <= SEND) or (RECLABEL <= LA1_0 <= PARALLEL) or LA1_0 == GLOBAL_ESCAPE or LA1_0 == 54 or (56 <= LA1_0 <= 57)) :
                         alt1 = 1
 
 
                     if alt1 == 1:
-                        # src/SavedFSM/BuildFSM.g:107:48: activityDef
+                        # final_09_01-13/BuildFSM.g:107:48: activityDef
                         pass 
                         self._state.following.append(self.FOLLOW_activityDef_in_description58)
                         self.activityDef()
@@ -256,7 +268,7 @@ class BuildFSM(TreeParser):
 
                 self.match(self.input, UP, None)
                 #action start
-                #print "ProtocolDefinition"
+                print "ProtocolDefinition"
                 #action end
 
 
@@ -274,18 +286,18 @@ class BuildFSM(TreeParser):
 
 
     # $ANTLR start "parameterDefs"
-    # src/SavedFSM/BuildFSM.g:108:1: parameterDefs : ^( ROLES ( roleName )+ ) ;
+    # final_09_01-13/BuildFSM.g:108:1: parameterDefs : ^( ROLES ( roleName )+ ) ;
     def parameterDefs(self, ):
 
         try:
             try:
-                # src/SavedFSM/BuildFSM.g:108:14: ( ^( ROLES ( roleName )+ ) )
-                # src/SavedFSM/BuildFSM.g:108:16: ^( ROLES ( roleName )+ )
+                # final_09_01-13/BuildFSM.g:108:14: ( ^( ROLES ( roleName )+ ) )
+                # final_09_01-13/BuildFSM.g:108:16: ^( ROLES ( roleName )+ )
                 pass 
                 self.match(self.input, ROLES, self.FOLLOW_ROLES_in_parameterDefs71)
 
                 self.match(self.input, DOWN, None)
-                # src/SavedFSM/BuildFSM.g:108:24: ( roleName )+
+                # final_09_01-13/BuildFSM.g:108:24: ( roleName )+
                 cnt2 = 0
                 while True: #loop2
                     alt2 = 2
@@ -296,7 +308,7 @@ class BuildFSM(TreeParser):
 
 
                     if alt2 == 1:
-                        # src/SavedFSM/BuildFSM.g:108:24: roleName
+                        # final_09_01-13/BuildFSM.g:108:24: roleName
                         pass 
                         self._state.following.append(self.FOLLOW_roleName_in_parameterDefs73)
                         self.roleName()
@@ -330,7 +342,7 @@ class BuildFSM(TreeParser):
 
 
     # $ANTLR start "activityDef"
-    # src/SavedFSM/BuildFSM.g:109:1: activityDef : ( ^( RESV (rlabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) ) | ^( SEND (slabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) ) | ^( 'choice' ( ^( BRANCH ( activityDef )+ ) )+ ) | ^( PARALLEL ( ^( BRANCH ( activityDef )+ ) )+ ) | ^( 'repeat' ( ^( BRANCH ( activityDef )+ ) ) ) | ^( 'rec' label= ID ( ^( BRANCH ( activityDef )+ ) ) ) | ^( 'RECLABEL' labelID= ID ) | ^( GLOBAL_ESCAPE ( ^( 'do' ( ( activityDef )+ ) ) ) ( ^( 'interrupt' roleName ( ( activityDef )+ ) ) ) ) );
+    # final_09_01-13/BuildFSM.g:109:1: activityDef : ( ^( RESV (rlabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) ) | ^( SEND (slabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) ) | ^( 'choice' ( ^( BRANCH ( activityDef )+ ) )+ ) | ^( PARALLEL ( ^( BRANCH ( activityDef )+ ) )+ ) | ^( 'repeat' ( ^( BRANCH ( activityDef )+ ) ) ) | ^( 'rec' label= ID ( ^( BRANCH ( activityDef )+ ) ) ) | ^( 'RECLABEL' labelID= ID ) | ^( GLOBAL_ESCAPE ( ^( 'do' ( ( activityDef )+ ) ) ) ( ^( 'interrupt' roleName ( ( activityDef )+ ) ) ) ) );
     def activityDef(self, ):
 
         rlabel = None
@@ -344,20 +356,20 @@ class BuildFSM(TreeParser):
 
         try:
             try:
-                # src/SavedFSM/BuildFSM.g:109:12: ( ^( RESV (rlabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) ) | ^( SEND (slabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) ) | ^( 'choice' ( ^( BRANCH ( activityDef )+ ) )+ ) | ^( PARALLEL ( ^( BRANCH ( activityDef )+ ) )+ ) | ^( 'repeat' ( ^( BRANCH ( activityDef )+ ) ) ) | ^( 'rec' label= ID ( ^( BRANCH ( activityDef )+ ) ) ) | ^( 'RECLABEL' labelID= ID ) | ^( GLOBAL_ESCAPE ( ^( 'do' ( ( activityDef )+ ) ) ) ( ^( 'interrupt' roleName ( ( activityDef )+ ) ) ) ) )
+                # final_09_01-13/BuildFSM.g:109:12: ( ^( RESV (rlabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) ) | ^( SEND (slabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) ) | ^( 'choice' ( ^( BRANCH ( activityDef )+ ) )+ ) | ^( PARALLEL ( ^( BRANCH ( activityDef )+ ) )+ ) | ^( 'repeat' ( ^( BRANCH ( activityDef )+ ) ) ) | ^( 'rec' label= ID ( ^( BRANCH ( activityDef )+ ) ) ) | ^( 'RECLABEL' labelID= ID ) | ^( GLOBAL_ESCAPE ( ^( 'do' ( ( activityDef )+ ) ) ) ( ^( 'interrupt' roleName ( ( activityDef )+ ) ) ) ) )
                 alt19 = 8
                 LA19 = self.input.LA(1)
                 if LA19 == RESV:
                     alt19 = 1
                 elif LA19 == SEND:
                     alt19 = 2
-                elif LA19 == 49:
+                elif LA19 == 54:
                     alt19 = 3
                 elif LA19 == PARALLEL:
                     alt19 = 4
-                elif LA19 == 51:
+                elif LA19 == 56:
                     alt19 = 5
-                elif LA19 == 52:
+                elif LA19 == 57:
                     alt19 = 6
                 elif LA19 == RECLABEL:
                     alt19 = 7
@@ -369,7 +381,7 @@ class BuildFSM(TreeParser):
                     raise nvae
 
                 if alt19 == 1:
-                    # src/SavedFSM/BuildFSM.g:110:2: ^( RESV (rlabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) )
+                    # final_09_01-13/BuildFSM.g:110:2: ^( RESV (rlabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) )
                     pass 
                     self.match(self.input, RESV, self.FOLLOW_RESV_in_activityDef85)
 
@@ -380,14 +392,14 @@ class BuildFSM(TreeParser):
                     #action end
 
                     self.match(self.input, DOWN, None)
-                    # src/SavedFSM/BuildFSM.g:113:5: (rlabel= ID )?
+                    # final_09_01-13/BuildFSM.g:113:5: (rlabel= ID )?
                     alt3 = 2
                     LA3_0 = self.input.LA(1)
 
                     if (LA3_0 == ID) :
                         alt3 = 1
                     if alt3 == 1:
-                        # src/SavedFSM/BuildFSM.g:113:6: rlabel= ID
+                        # final_09_01-13/BuildFSM.g:113:6: rlabel= ID
                         pass 
                         rlabel=self.match(self.input, ID, self.FOLLOW_ID_in_activityDef98)
                         #action start
@@ -398,14 +410,14 @@ class BuildFSM(TreeParser):
 
 
 
-                    # src/SavedFSM/BuildFSM.g:116:5: ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) )
-                    # src/SavedFSM/BuildFSM.g:116:6: ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* )
+                    # final_09_01-13/BuildFSM.g:116:5: ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) )
+                    # final_09_01-13/BuildFSM.g:116:6: ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* )
                     pass 
                     self.match(self.input, VALUE, self.FOLLOW_VALUE_in_activityDef110)
 
                     if self.input.LA(1) == DOWN:
                         self.match(self.input, DOWN, None)
-                        # src/SavedFSM/BuildFSM.g:116:14: ( (val= ID (vtype= ( INT | STRING ) )? ) )*
+                        # final_09_01-13/BuildFSM.g:116:14: ( (val= ID (vtype= ( INT | STRING ) )? ) )*
                         while True: #loop5
                             alt5 = 2
                             LA5_0 = self.input.LA(1)
@@ -415,20 +427,20 @@ class BuildFSM(TreeParser):
 
 
                             if alt5 == 1:
-                                # src/SavedFSM/BuildFSM.g:116:15: (val= ID (vtype= ( INT | STRING ) )? )
+                                # final_09_01-13/BuildFSM.g:116:15: (val= ID (vtype= ( INT | STRING ) )? )
                                 pass 
-                                # src/SavedFSM/BuildFSM.g:116:15: (val= ID (vtype= ( INT | STRING ) )? )
-                                # src/SavedFSM/BuildFSM.g:116:16: val= ID (vtype= ( INT | STRING ) )?
+                                # final_09_01-13/BuildFSM.g:116:15: (val= ID (vtype= ( INT | STRING ) )? )
+                                # final_09_01-13/BuildFSM.g:116:16: val= ID (vtype= ( INT | STRING ) )?
                                 pass 
                                 val=self.match(self.input, ID, self.FOLLOW_ID_in_activityDef116)
-                                # src/SavedFSM/BuildFSM.g:116:28: (vtype= ( INT | STRING ) )?
+                                # final_09_01-13/BuildFSM.g:116:28: (vtype= ( INT | STRING ) )?
                                 alt4 = 2
                                 LA4_0 = self.input.LA(1)
 
                                 if ((INT <= LA4_0 <= STRING)) :
                                     alt4 = 1
                                 if alt4 == 1:
-                                    # src/SavedFSM/BuildFSM.g:116:28: vtype= ( INT | STRING )
+                                    # final_09_01-13/BuildFSM.g:116:28: vtype= ( INT | STRING )
                                     pass 
                                     vtype = self.input.LT(1)
                                     if (INT <= self.input.LA(1) <= STRING):
@@ -463,21 +475,21 @@ class BuildFSM(TreeParser):
                     #action start
                     if not(role.text in self.roles): self.roles.append(role.text)
                     #action end
-                    # src/SavedFSM/BuildFSM.g:118:5: ( ^( ASSERT (assertion= ASSERTION )? ) )
-                    # src/SavedFSM/BuildFSM.g:118:6: ^( ASSERT (assertion= ASSERTION )? )
+                    # final_09_01-13/BuildFSM.g:118:5: ( ^( ASSERT (assertion= ASSERTION )? ) )
+                    # final_09_01-13/BuildFSM.g:118:6: ^( ASSERT (assertion= ASSERTION )? )
                     pass 
                     self.match(self.input, ASSERT, self.FOLLOW_ASSERT_in_activityDef151)
 
                     if self.input.LA(1) == DOWN:
                         self.match(self.input, DOWN, None)
-                        # src/SavedFSM/BuildFSM.g:118:15: (assertion= ASSERTION )?
+                        # final_09_01-13/BuildFSM.g:118:15: (assertion= ASSERTION )?
                         alt6 = 2
                         LA6_0 = self.input.LA(1)
 
                         if (LA6_0 == ASSERTION) :
                             alt6 = 1
                         if alt6 == 1:
-                            # src/SavedFSM/BuildFSM.g:118:16: assertion= ASSERTION
+                            # final_09_01-13/BuildFSM.g:118:16: assertion= ASSERTION
                             pass 
                             assertion=self.match(self.input, ASSERTION, self.FOLLOW_ASSERTION_in_activityDef156)
 
@@ -500,7 +512,7 @@ class BuildFSM(TreeParser):
 
 
                 elif alt19 == 2:
-                    # src/SavedFSM/BuildFSM.g:123:3: ^( SEND (slabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) )
+                    # final_09_01-13/BuildFSM.g:123:3: ^( SEND (slabel= ID )? ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) ) role= ID ( ^( ASSERT (assertion= ASSERTION )? ) ) )
                     pass 
                     self.match(self.input, SEND, self.FOLLOW_SEND_in_activityDef169)
 
@@ -511,14 +523,14 @@ class BuildFSM(TreeParser):
                     #action end
 
                     self.match(self.input, DOWN, None)
-                    # src/SavedFSM/BuildFSM.g:126:5: (slabel= ID )?
+                    # final_09_01-13/BuildFSM.g:126:5: (slabel= ID )?
                     alt7 = 2
                     LA7_0 = self.input.LA(1)
 
                     if (LA7_0 == ID) :
                         alt7 = 1
                     if alt7 == 1:
-                        # src/SavedFSM/BuildFSM.g:126:6: slabel= ID
+                        # final_09_01-13/BuildFSM.g:126:6: slabel= ID
                         pass 
                         slabel=self.match(self.input, ID, self.FOLLOW_ID_in_activityDef182)
                         #action start
@@ -529,14 +541,14 @@ class BuildFSM(TreeParser):
 
 
 
-                    # src/SavedFSM/BuildFSM.g:129:12: ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) )
-                    # src/SavedFSM/BuildFSM.g:129:13: ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* )
+                    # final_09_01-13/BuildFSM.g:129:12: ( ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* ) )
+                    # final_09_01-13/BuildFSM.g:129:13: ^( VALUE ( (val= ID (vtype= ( INT | STRING ) )? ) )* )
                     pass 
                     self.match(self.input, VALUE, self.FOLLOW_VALUE_in_activityDef201)
 
                     if self.input.LA(1) == DOWN:
                         self.match(self.input, DOWN, None)
-                        # src/SavedFSM/BuildFSM.g:129:21: ( (val= ID (vtype= ( INT | STRING ) )? ) )*
+                        # final_09_01-13/BuildFSM.g:129:21: ( (val= ID (vtype= ( INT | STRING ) )? ) )*
                         while True: #loop9
                             alt9 = 2
                             LA9_0 = self.input.LA(1)
@@ -546,20 +558,20 @@ class BuildFSM(TreeParser):
 
 
                             if alt9 == 1:
-                                # src/SavedFSM/BuildFSM.g:129:22: (val= ID (vtype= ( INT | STRING ) )? )
+                                # final_09_01-13/BuildFSM.g:129:22: (val= ID (vtype= ( INT | STRING ) )? )
                                 pass 
-                                # src/SavedFSM/BuildFSM.g:129:22: (val= ID (vtype= ( INT | STRING ) )? )
-                                # src/SavedFSM/BuildFSM.g:129:23: val= ID (vtype= ( INT | STRING ) )?
+                                # final_09_01-13/BuildFSM.g:129:22: (val= ID (vtype= ( INT | STRING ) )? )
+                                # final_09_01-13/BuildFSM.g:129:23: val= ID (vtype= ( INT | STRING ) )?
                                 pass 
                                 val=self.match(self.input, ID, self.FOLLOW_ID_in_activityDef207)
-                                # src/SavedFSM/BuildFSM.g:129:35: (vtype= ( INT | STRING ) )?
+                                # final_09_01-13/BuildFSM.g:129:35: (vtype= ( INT | STRING ) )?
                                 alt8 = 2
                                 LA8_0 = self.input.LA(1)
 
                                 if ((INT <= LA8_0 <= STRING)) :
                                     alt8 = 1
                                 if alt8 == 1:
-                                    # src/SavedFSM/BuildFSM.g:129:35: vtype= ( INT | STRING )
+                                    # final_09_01-13/BuildFSM.g:129:35: vtype= ( INT | STRING )
                                     pass 
                                     vtype = self.input.LT(1)
                                     if (INT <= self.input.LA(1) <= STRING):
@@ -594,21 +606,21 @@ class BuildFSM(TreeParser):
                     #action start
                     if not(role.text in self.roles): self.roles.append(role.text)
                     #action end
-                    # src/SavedFSM/BuildFSM.g:131:5: ( ^( ASSERT (assertion= ASSERTION )? ) )
-                    # src/SavedFSM/BuildFSM.g:131:6: ^( ASSERT (assertion= ASSERTION )? )
+                    # final_09_01-13/BuildFSM.g:131:5: ( ^( ASSERT (assertion= ASSERTION )? ) )
+                    # final_09_01-13/BuildFSM.g:131:6: ^( ASSERT (assertion= ASSERTION )? )
                     pass 
                     self.match(self.input, ASSERT, self.FOLLOW_ASSERT_in_activityDef246)
 
                     if self.input.LA(1) == DOWN:
                         self.match(self.input, DOWN, None)
-                        # src/SavedFSM/BuildFSM.g:131:15: (assertion= ASSERTION )?
+                        # final_09_01-13/BuildFSM.g:131:15: (assertion= ASSERTION )?
                         alt10 = 2
                         LA10_0 = self.input.LA(1)
 
                         if (LA10_0 == ASSERTION) :
                             alt10 = 1
                         if alt10 == 1:
-                            # src/SavedFSM/BuildFSM.g:131:16: assertion= ASSERTION
+                            # final_09_01-13/BuildFSM.g:131:16: assertion= ASSERTION
                             pass 
                             assertion=self.match(self.input, ASSERTION, self.FOLLOW_ASSERTION_in_activityDef251)
 
@@ -633,9 +645,9 @@ class BuildFSM(TreeParser):
 
 
                 elif alt19 == 3:
-                    # src/SavedFSM/BuildFSM.g:136:3: ^( 'choice' ( ^( BRANCH ( activityDef )+ ) )+ )
+                    # final_09_01-13/BuildFSM.g:136:3: ^( 'choice' ( ^( BRANCH ( activityDef )+ ) )+ )
                     pass 
-                    self.match(self.input, 49, self.FOLLOW_49_in_activityDef270)
+                    self.match(self.input, 54, self.FOLLOW_54_in_activityDef270)
 
                     #action start
                     self.memory.append('enter choice state')
@@ -645,7 +657,7 @@ class BuildFSM(TreeParser):
                     #action end
 
                     self.match(self.input, DOWN, None)
-                    # src/SavedFSM/BuildFSM.g:141:2: ( ^( BRANCH ( activityDef )+ ) )+
+                    # final_09_01-13/BuildFSM.g:141:2: ( ^( BRANCH ( activityDef )+ ) )+
                     cnt12 = 0
                     while True: #loop12
                         alt12 = 2
@@ -656,7 +668,7 @@ class BuildFSM(TreeParser):
 
 
                         if alt12 == 1:
-                            # src/SavedFSM/BuildFSM.g:141:3: ^( BRANCH ( activityDef )+ )
+                            # final_09_01-13/BuildFSM.g:141:3: ^( BRANCH ( activityDef )+ )
                             pass 
                             self.match(self.input, BRANCH, self.FOLLOW_BRANCH_in_activityDef280)
 
@@ -669,18 +681,18 @@ class BuildFSM(TreeParser):
                             #action end
 
                             self.match(self.input, DOWN, None)
-                            # src/SavedFSM/BuildFSM.g:146:4: ( activityDef )+
+                            # final_09_01-13/BuildFSM.g:146:4: ( activityDef )+
                             cnt11 = 0
                             while True: #loop11
                                 alt11 = 2
                                 LA11_0 = self.input.LA(1)
 
-                                if ((RESV <= LA11_0 <= SEND) or (RECLABEL <= LA11_0 <= PARALLEL) or LA11_0 == GLOBAL_ESCAPE or LA11_0 == 49 or (51 <= LA11_0 <= 52)) :
+                                if ((RESV <= LA11_0 <= SEND) or (RECLABEL <= LA11_0 <= PARALLEL) or LA11_0 == GLOBAL_ESCAPE or LA11_0 == 54 or (56 <= LA11_0 <= 57)) :
                                     alt11 = 1
 
 
                                 if alt11 == 1:
-                                    # src/SavedFSM/BuildFSM.g:146:4: activityDef
+                                    # final_09_01-13/BuildFSM.g:146:4: activityDef
                                     pass 
                                     self._state.following.append(self.FOLLOW_activityDef_in_activityDef286)
                                     self.activityDef()
@@ -727,7 +739,7 @@ class BuildFSM(TreeParser):
 
 
                 elif alt19 == 4:
-                    # src/SavedFSM/BuildFSM.g:158:4: ^( PARALLEL ( ^( BRANCH ( activityDef )+ ) )+ )
+                    # final_09_01-13/BuildFSM.g:158:4: ^( PARALLEL ( ^( BRANCH ( activityDef )+ ) )+ )
                     pass 
                     self.match(self.input, PARALLEL, self.FOLLOW_PARALLEL_in_activityDef305)
 
@@ -739,7 +751,7 @@ class BuildFSM(TreeParser):
                     #action end
 
                     self.match(self.input, DOWN, None)
-                    # src/SavedFSM/BuildFSM.g:163:2: ( ^( BRANCH ( activityDef )+ ) )+
+                    # final_09_01-13/BuildFSM.g:163:2: ( ^( BRANCH ( activityDef )+ ) )+
                     cnt14 = 0
                     while True: #loop14
                         alt14 = 2
@@ -750,7 +762,7 @@ class BuildFSM(TreeParser):
 
 
                         if alt14 == 1:
-                            # src/SavedFSM/BuildFSM.g:163:3: ^( BRANCH ( activityDef )+ )
+                            # final_09_01-13/BuildFSM.g:163:3: ^( BRANCH ( activityDef )+ )
                             pass 
                             self.match(self.input, BRANCH, self.FOLLOW_BRANCH_in_activityDef322)
 
@@ -764,18 +776,18 @@ class BuildFSM(TreeParser):
                             #action end
 
                             self.match(self.input, DOWN, None)
-                            # src/SavedFSM/BuildFSM.g:170:2: ( activityDef )+
+                            # final_09_01-13/BuildFSM.g:170:2: ( activityDef )+
                             cnt13 = 0
                             while True: #loop13
                                 alt13 = 2
                                 LA13_0 = self.input.LA(1)
 
-                                if ((RESV <= LA13_0 <= SEND) or (RECLABEL <= LA13_0 <= PARALLEL) or LA13_0 == GLOBAL_ESCAPE or LA13_0 == 49 or (51 <= LA13_0 <= 52)) :
+                                if ((RESV <= LA13_0 <= SEND) or (RECLABEL <= LA13_0 <= PARALLEL) or LA13_0 == GLOBAL_ESCAPE or LA13_0 == 54 or (56 <= LA13_0 <= 57)) :
                                     alt13 = 1
 
 
                                 if alt13 == 1:
-                                    # src/SavedFSM/BuildFSM.g:170:3: activityDef
+                                    # final_09_01-13/BuildFSM.g:170:3: activityDef
                                     pass 
                                     self._state.following.append(self.FOLLOW_activityDef_in_activityDef331)
                                     self.activityDef()
@@ -820,33 +832,33 @@ class BuildFSM(TreeParser):
 
 
                 elif alt19 == 5:
-                    # src/SavedFSM/BuildFSM.g:180:3: ^( 'repeat' ( ^( BRANCH ( activityDef )+ ) ) )
+                    # final_09_01-13/BuildFSM.g:180:3: ^( 'repeat' ( ^( BRANCH ( activityDef )+ ) ) )
                     pass 
-                    self.match(self.input, 51, self.FOLLOW_51_in_activityDef352)
+                    self.match(self.input, 56, self.FOLLOW_56_in_activityDef352)
 
                     #action start
                     self.memory.append('enter repeat state')
                     #action end
 
                     self.match(self.input, DOWN, None)
-                    # src/SavedFSM/BuildFSM.g:182:2: ( ^( BRANCH ( activityDef )+ ) )
-                    # src/SavedFSM/BuildFSM.g:182:3: ^( BRANCH ( activityDef )+ )
+                    # final_09_01-13/BuildFSM.g:182:2: ( ^( BRANCH ( activityDef )+ ) )
+                    # final_09_01-13/BuildFSM.g:182:3: ^( BRANCH ( activityDef )+ )
                     pass 
                     self.match(self.input, BRANCH, self.FOLLOW_BRANCH_in_activityDef361)
 
                     self.match(self.input, DOWN, None)
-                    # src/SavedFSM/BuildFSM.g:182:12: ( activityDef )+
+                    # final_09_01-13/BuildFSM.g:182:12: ( activityDef )+
                     cnt15 = 0
                     while True: #loop15
                         alt15 = 2
                         LA15_0 = self.input.LA(1)
 
-                        if ((RESV <= LA15_0 <= SEND) or (RECLABEL <= LA15_0 <= PARALLEL) or LA15_0 == GLOBAL_ESCAPE or LA15_0 == 49 or (51 <= LA15_0 <= 52)) :
+                        if ((RESV <= LA15_0 <= SEND) or (RECLABEL <= LA15_0 <= PARALLEL) or LA15_0 == GLOBAL_ESCAPE or LA15_0 == 54 or (56 <= LA15_0 <= 57)) :
                             alt15 = 1
 
 
                         if alt15 == 1:
-                            # src/SavedFSM/BuildFSM.g:182:13: activityDef
+                            # final_09_01-13/BuildFSM.g:182:13: activityDef
                             pass 
                             self._state.following.append(self.FOLLOW_activityDef_in_activityDef364)
                             self.activityDef()
@@ -878,9 +890,9 @@ class BuildFSM(TreeParser):
 
 
                 elif alt19 == 6:
-                    # src/SavedFSM/BuildFSM.g:185:10: ^( 'rec' label= ID ( ^( BRANCH ( activityDef )+ ) ) )
+                    # final_09_01-13/BuildFSM.g:185:10: ^( 'rec' label= ID ( ^( BRANCH ( activityDef )+ ) ) )
                     pass 
-                    self.match(self.input, 52, self.FOLLOW_52_in_activityDef388)
+                    self.match(self.input, 57, self.FOLLOW_57_in_activityDef388)
 
                     self.match(self.input, DOWN, None)
                     label=self.match(self.input, ID, self.FOLLOW_ID_in_activityDef394)
@@ -889,24 +901,24 @@ class BuildFSM(TreeParser):
                     self.current_fsm.recursions_states.setdefault(label.text, (self.current_fsm.format_state_name(self.current_fsm.get_current_state()), True))
                             
                     #action end
-                    # src/SavedFSM/BuildFSM.g:189:2: ( ^( BRANCH ( activityDef )+ ) )
-                    # src/SavedFSM/BuildFSM.g:189:3: ^( BRANCH ( activityDef )+ )
+                    # final_09_01-13/BuildFSM.g:189:2: ( ^( BRANCH ( activityDef )+ ) )
+                    # final_09_01-13/BuildFSM.g:189:3: ^( BRANCH ( activityDef )+ )
                     pass 
                     self.match(self.input, BRANCH, self.FOLLOW_BRANCH_in_activityDef410)
 
                     self.match(self.input, DOWN, None)
-                    # src/SavedFSM/BuildFSM.g:189:12: ( activityDef )+
+                    # final_09_01-13/BuildFSM.g:189:12: ( activityDef )+
                     cnt16 = 0
                     while True: #loop16
                         alt16 = 2
                         LA16_0 = self.input.LA(1)
 
-                        if ((RESV <= LA16_0 <= SEND) or (RECLABEL <= LA16_0 <= PARALLEL) or LA16_0 == GLOBAL_ESCAPE or LA16_0 == 49 or (51 <= LA16_0 <= 52)) :
+                        if ((RESV <= LA16_0 <= SEND) or (RECLABEL <= LA16_0 <= PARALLEL) or LA16_0 == GLOBAL_ESCAPE or LA16_0 == 54 or (56 <= LA16_0 <= 57)) :
                             alt16 = 1
 
 
                         if alt16 == 1:
-                            # src/SavedFSM/BuildFSM.g:189:13: activityDef
+                            # final_09_01-13/BuildFSM.g:189:13: activityDef
                             pass 
                             self._state.following.append(self.FOLLOW_activityDef_in_activityDef413)
                             self.activityDef()
@@ -942,7 +954,7 @@ class BuildFSM(TreeParser):
 
 
                 elif alt19 == 7:
-                    # src/SavedFSM/BuildFSM.g:196:3: ^( 'RECLABEL' labelID= ID )
+                    # final_09_01-13/BuildFSM.g:196:3: ^( 'RECLABEL' labelID= ID )
                     pass 
                     self.match(self.input, RECLABEL, self.FOLLOW_RECLABEL_in_activityDef431)
 
@@ -973,32 +985,32 @@ class BuildFSM(TreeParser):
 
 
                 elif alt19 == 8:
-                    # src/SavedFSM/BuildFSM.g:213:3: ^( GLOBAL_ESCAPE ( ^( 'do' ( ( activityDef )+ ) ) ) ( ^( 'interrupt' roleName ( ( activityDef )+ ) ) ) )
+                    # final_09_01-13/BuildFSM.g:213:3: ^( GLOBAL_ESCAPE ( ^( 'do' ( ( activityDef )+ ) ) ) ( ^( 'interrupt' roleName ( ( activityDef )+ ) ) ) )
                     pass 
                     self.match(self.input, GLOBAL_ESCAPE, self.FOLLOW_GLOBAL_ESCAPE_in_activityDef452)
 
                     self.match(self.input, DOWN, None)
-                    # src/SavedFSM/BuildFSM.g:214:5: ( ^( 'do' ( ( activityDef )+ ) ) )
-                    # src/SavedFSM/BuildFSM.g:214:6: ^( 'do' ( ( activityDef )+ ) )
+                    # final_09_01-13/BuildFSM.g:214:5: ( ^( 'do' ( ( activityDef )+ ) ) )
+                    # final_09_01-13/BuildFSM.g:214:6: ^( 'do' ( ( activityDef )+ ) )
                     pass 
-                    self.match(self.input, 58, self.FOLLOW_58_in_activityDef461)
+                    self.match(self.input, 69, self.FOLLOW_69_in_activityDef461)
 
                     self.match(self.input, DOWN, None)
-                    # src/SavedFSM/BuildFSM.g:214:13: ( ( activityDef )+ )
-                    # src/SavedFSM/BuildFSM.g:214:14: ( activityDef )+
+                    # final_09_01-13/BuildFSM.g:214:13: ( ( activityDef )+ )
+                    # final_09_01-13/BuildFSM.g:214:14: ( activityDef )+
                     pass 
-                    # src/SavedFSM/BuildFSM.g:214:14: ( activityDef )+
+                    # final_09_01-13/BuildFSM.g:214:14: ( activityDef )+
                     cnt17 = 0
                     while True: #loop17
                         alt17 = 2
                         LA17_0 = self.input.LA(1)
 
-                        if ((RESV <= LA17_0 <= SEND) or (RECLABEL <= LA17_0 <= PARALLEL) or LA17_0 == GLOBAL_ESCAPE or LA17_0 == 49 or (51 <= LA17_0 <= 52)) :
+                        if ((RESV <= LA17_0 <= SEND) or (RECLABEL <= LA17_0 <= PARALLEL) or LA17_0 == GLOBAL_ESCAPE or LA17_0 == 54 or (56 <= LA17_0 <= 57)) :
                             alt17 = 1
 
 
                         if alt17 == 1:
-                            # src/SavedFSM/BuildFSM.g:214:14: activityDef
+                            # final_09_01-13/BuildFSM.g:214:14: activityDef
                             pass 
                             self._state.following.append(self.FOLLOW_activityDef_in_activityDef464)
                             self.activityDef()
@@ -1025,10 +1037,10 @@ class BuildFSM(TreeParser):
 
 
 
-                    # src/SavedFSM/BuildFSM.g:215:5: ( ^( 'interrupt' roleName ( ( activityDef )+ ) ) )
-                    # src/SavedFSM/BuildFSM.g:215:6: ^( 'interrupt' roleName ( ( activityDef )+ ) )
+                    # final_09_01-13/BuildFSM.g:215:5: ( ^( 'interrupt' roleName ( ( activityDef )+ ) ) )
+                    # final_09_01-13/BuildFSM.g:215:6: ^( 'interrupt' roleName ( ( activityDef )+ ) )
                     pass 
-                    self.match(self.input, 59, self.FOLLOW_59_in_activityDef477)
+                    self.match(self.input, 72, self.FOLLOW_72_in_activityDef477)
 
                     self.match(self.input, DOWN, None)
                     self._state.following.append(self.FOLLOW_roleName_in_activityDef479)
@@ -1040,21 +1052,21 @@ class BuildFSM(TreeParser):
                     self.current_fsm.interrupt_start_state = self.current_fsm.move_current_state()
                     self.current_fsm.set_interrupt_transition = True
                     #action end
-                    # src/SavedFSM/BuildFSM.g:218:56: ( ( activityDef )+ )
-                    # src/SavedFSM/BuildFSM.g:218:57: ( activityDef )+
+                    # final_09_01-13/BuildFSM.g:218:56: ( ( activityDef )+ )
+                    # final_09_01-13/BuildFSM.g:218:57: ( activityDef )+
                     pass 
-                    # src/SavedFSM/BuildFSM.g:218:57: ( activityDef )+
+                    # final_09_01-13/BuildFSM.g:218:57: ( activityDef )+
                     cnt18 = 0
                     while True: #loop18
                         alt18 = 2
                         LA18_0 = self.input.LA(1)
 
-                        if ((RESV <= LA18_0 <= SEND) or (RECLABEL <= LA18_0 <= PARALLEL) or LA18_0 == GLOBAL_ESCAPE or LA18_0 == 49 or (51 <= LA18_0 <= 52)) :
+                        if ((RESV <= LA18_0 <= SEND) or (RECLABEL <= LA18_0 <= PARALLEL) or LA18_0 == GLOBAL_ESCAPE or LA18_0 == 54 or (56 <= LA18_0 <= 57)) :
                             alt18 = 1
 
 
                         if alt18 == 1:
-                            # src/SavedFSM/BuildFSM.g:218:57: activityDef
+                            # final_09_01-13/BuildFSM.g:218:57: activityDef
                             pass 
                             self._state.following.append(self.FOLLOW_activityDef_in_activityDef488)
                             self.activityDef()
@@ -1095,15 +1107,15 @@ class BuildFSM(TreeParser):
 
 
     # $ANTLR start "roleName"
-    # src/SavedFSM/BuildFSM.g:220:1: roleName : role= ID ;
+    # final_09_01-13/BuildFSM.g:220:1: roleName : role= ID ;
     def roleName(self, ):
 
         role = None
 
         try:
             try:
-                # src/SavedFSM/BuildFSM.g:220:9: (role= ID )
-                # src/SavedFSM/BuildFSM.g:220:11: role= ID
+                # final_09_01-13/BuildFSM.g:220:9: (role= ID )
+                # final_09_01-13/BuildFSM.g:220:11: role= ID
                 pass 
                 role=self.match(self.input, ID, self.FOLLOW_ID_in_roleName505)
                 #action start
@@ -1127,13 +1139,13 @@ class BuildFSM(TreeParser):
 
 
     # $ANTLR start "labelName"
-    # src/SavedFSM/BuildFSM.g:223:1: labelName : ID ;
+    # final_09_01-13/BuildFSM.g:223:1: labelName : ID ;
     def labelName(self, ):
 
         try:
             try:
-                # src/SavedFSM/BuildFSM.g:223:10: ( ID )
-                # src/SavedFSM/BuildFSM.g:223:12: ID
+                # final_09_01-13/BuildFSM.g:223:10: ( ID )
+                # final_09_01-13/BuildFSM.g:223:12: ID
                 pass 
                 self.match(self.input, ID, self.FOLLOW_ID_in_labelName513)
 
@@ -1152,13 +1164,13 @@ class BuildFSM(TreeParser):
 
 
     # $ANTLR start "roleDef"
-    # src/SavedFSM/BuildFSM.g:224:1: roleDef : ID ;
+    # final_09_01-13/BuildFSM.g:224:1: roleDef : ID ;
     def roleDef(self, ):
 
         try:
             try:
-                # src/SavedFSM/BuildFSM.g:224:8: ( ID )
-                # src/SavedFSM/BuildFSM.g:224:10: ID
+                # final_09_01-13/BuildFSM.g:224:8: ( ID )
+                # final_09_01-13/BuildFSM.g:224:10: ID
                 pass 
                 self.match(self.input, ID, self.FOLLOW_ID_in_roleDef519)
 
@@ -1177,13 +1189,13 @@ class BuildFSM(TreeParser):
 
 
     # $ANTLR start "primitivetype"
-    # src/SavedFSM/BuildFSM.g:225:1: primitivetype : INT ;
+    # final_09_01-13/BuildFSM.g:225:1: primitivetype : INT ;
     def primitivetype(self, ):
 
         try:
             try:
-                # src/SavedFSM/BuildFSM.g:225:15: ( INT )
-                # src/SavedFSM/BuildFSM.g:225:16: INT
+                # final_09_01-13/BuildFSM.g:225:15: ( INT )
+                # final_09_01-13/BuildFSM.g:225:16: INT
                 pass 
                 self.match(self.input, INT, self.FOLLOW_INT_in_primitivetype525)
 
@@ -1208,47 +1220,47 @@ class BuildFSM(TreeParser):
 
     FOLLOW_PROTOCOL_in_description52 = frozenset([2])
     FOLLOW_roleName_in_description54 = frozenset([24])
-    FOLLOW_parameterDefs_in_description56 = frozenset([12, 13, 18, 19, 22, 49, 51, 52])
-    FOLLOW_activityDef_in_description58 = frozenset([3, 12, 13, 18, 19, 22, 49, 51, 52])
+    FOLLOW_parameterDefs_in_description56 = frozenset([12, 13, 18, 19, 22, 54, 56, 57])
+    FOLLOW_activityDef_in_description58 = frozenset([3, 12, 13, 18, 19, 22, 54, 56, 57])
     FOLLOW_ROLES_in_parameterDefs71 = frozenset([2])
-    FOLLOW_roleName_in_parameterDefs73 = frozenset([3, 26])
+    FOLLOW_roleName_in_parameterDefs73 = frozenset([3, 29])
     FOLLOW_RESV_in_activityDef85 = frozenset([2])
     FOLLOW_ID_in_activityDef98 = frozenset([15])
     FOLLOW_VALUE_in_activityDef110 = frozenset([2])
-    FOLLOW_ID_in_activityDef116 = frozenset([3, 5, 6, 26])
-    FOLLOW_set_in_activityDef120 = frozenset([3, 26])
+    FOLLOW_ID_in_activityDef116 = frozenset([3, 5, 6, 29])
+    FOLLOW_set_in_activityDef120 = frozenset([3, 29])
     FOLLOW_ID_in_activityDef141 = frozenset([21])
     FOLLOW_ASSERT_in_activityDef151 = frozenset([2])
     FOLLOW_ASSERTION_in_activityDef156 = frozenset([3])
     FOLLOW_SEND_in_activityDef169 = frozenset([2])
     FOLLOW_ID_in_activityDef182 = frozenset([15])
     FOLLOW_VALUE_in_activityDef201 = frozenset([2])
-    FOLLOW_ID_in_activityDef207 = frozenset([3, 5, 6, 26])
-    FOLLOW_set_in_activityDef212 = frozenset([3, 26])
+    FOLLOW_ID_in_activityDef207 = frozenset([3, 5, 6, 29])
+    FOLLOW_set_in_activityDef212 = frozenset([3, 29])
     FOLLOW_ID_in_activityDef236 = frozenset([21])
     FOLLOW_ASSERT_in_activityDef246 = frozenset([2])
     FOLLOW_ASSERTION_in_activityDef251 = frozenset([3])
-    FOLLOW_49_in_activityDef270 = frozenset([2])
+    FOLLOW_54_in_activityDef270 = frozenset([2])
     FOLLOW_BRANCH_in_activityDef280 = frozenset([2])
-    FOLLOW_activityDef_in_activityDef286 = frozenset([3, 12, 13, 18, 19, 22, 49, 51, 52])
+    FOLLOW_activityDef_in_activityDef286 = frozenset([3, 12, 13, 18, 19, 22, 54, 56, 57])
     FOLLOW_PARALLEL_in_activityDef305 = frozenset([2])
     FOLLOW_BRANCH_in_activityDef322 = frozenset([2])
-    FOLLOW_activityDef_in_activityDef331 = frozenset([3, 12, 13, 18, 19, 22, 49, 51, 52])
-    FOLLOW_51_in_activityDef352 = frozenset([2])
+    FOLLOW_activityDef_in_activityDef331 = frozenset([3, 12, 13, 18, 19, 22, 54, 56, 57])
+    FOLLOW_56_in_activityDef352 = frozenset([2])
     FOLLOW_BRANCH_in_activityDef361 = frozenset([2])
-    FOLLOW_activityDef_in_activityDef364 = frozenset([3, 12, 13, 18, 19, 22, 49, 51, 52])
-    FOLLOW_52_in_activityDef388 = frozenset([2])
+    FOLLOW_activityDef_in_activityDef364 = frozenset([3, 12, 13, 18, 19, 22, 54, 56, 57])
+    FOLLOW_57_in_activityDef388 = frozenset([2])
     FOLLOW_ID_in_activityDef394 = frozenset([16])
     FOLLOW_BRANCH_in_activityDef410 = frozenset([2])
-    FOLLOW_activityDef_in_activityDef413 = frozenset([3, 12, 13, 18, 19, 22, 49, 51, 52])
+    FOLLOW_activityDef_in_activityDef413 = frozenset([3, 12, 13, 18, 19, 22, 54, 56, 57])
     FOLLOW_RECLABEL_in_activityDef431 = frozenset([2])
     FOLLOW_ID_in_activityDef438 = frozenset([3])
     FOLLOW_GLOBAL_ESCAPE_in_activityDef452 = frozenset([2])
-    FOLLOW_58_in_activityDef461 = frozenset([2])
-    FOLLOW_activityDef_in_activityDef464 = frozenset([3, 12, 13, 18, 19, 22, 49, 51, 52])
-    FOLLOW_59_in_activityDef477 = frozenset([2])
-    FOLLOW_roleName_in_activityDef479 = frozenset([12, 13, 18, 19, 22, 49, 51, 52])
-    FOLLOW_activityDef_in_activityDef488 = frozenset([3, 12, 13, 18, 19, 22, 49, 51, 52])
+    FOLLOW_69_in_activityDef461 = frozenset([2])
+    FOLLOW_activityDef_in_activityDef464 = frozenset([3, 12, 13, 18, 19, 22, 54, 56, 57])
+    FOLLOW_72_in_activityDef477 = frozenset([2])
+    FOLLOW_roleName_in_activityDef479 = frozenset([12, 13, 18, 19, 22, 54, 56, 57])
+    FOLLOW_activityDef_in_activityDef488 = frozenset([3, 12, 13, 18, 19, 22, 54, 56, 57])
     FOLLOW_ID_in_roleName505 = frozenset([1])
     FOLLOW_ID_in_labelName513 = frozenset([1])
     FOLLOW_ID_in_roleDef519 = frozenset([1])
