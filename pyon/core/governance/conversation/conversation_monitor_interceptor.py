@@ -63,6 +63,7 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
                 invocation.message_annotations[GovernanceDispatcher.CONVERSATION__STATUS_ANNOTATION] = GovernanceDispatcher.STATUS_COMPLETE
         else:
             self._report_error(invocation, GovernanceDispatcher.STATUS_SKIPPED, 'The message cannot be monitored since the conversation roles are not in the headers')
+        print 'Invocation is', invocation.__dict__
         return invocation
 
     def incoming(self, invocation):
@@ -124,16 +125,18 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
     def _get_in_session_msg_type(self, invocation):
         return invocation.get_header_value('conv-msg-type') & MSG_TYPE_MASKS.IN_SESSION
 
-    def  _check(self, invocation, op_type, self_principal, target_principal):
+    def _check(self, invocation, op_type, self_principal, target_principal):
+
         operation = invocation.get_header_value('op', '')
         cid = invocation.get_header_value('conv-id', 0)
         conv_seq = invocation.get_header_value('conv-seq', 0)
         conversation_key = self._get_conversation_context_key(self_principal,  invocation)
+        print 'conversation key', conversation_key
 
         # INITIALIZE FSM
         if ((conv_seq == 1 and self._should_be_monitored(invocation, self_principal, operation)) and
             not((conversation_key in self.conversation_context))):
-
+            print 'conversation key', conversation_key
             role_spec = self._get_protocol_spec(self_principal, operation)
             if not role_spec:
                 self._report_error(invocation, GovernanceDispatcher.STATUS_SKIPPED, 'The message cannot be monitored since the protocol specification was not found: %s')
@@ -166,6 +169,7 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
 
         #Check the message by running the fsm.
             (msg_correct, error, should_pop)= self._is_msg_correct(invocation, fsm, transition)
+            print 'Should pop', should_pop
             if not msg_correct:
                 self._report_error(invocation, GovernanceDispatcher.STATUS_REJECT, error)
 
@@ -176,6 +180,12 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
     def _is_msg_correct(self, invocation, fsm, transition):
         details = ''
         status = ''
+
+        print """@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        The current state before is :
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        """, fsm.current_state, fsm.state_transitions
         try:
             fsm.process(transition)
             status = 'CORRECT'
@@ -188,6 +198,13 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
             details = e.value
             return (False, e.value, True)
         finally:
+
+            print """@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            The current state after is :
+            @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+            """, fsm.current_state
+
             log.debug("""\n
         ----------------Checking message:-----------------------------------------------
         Message is: =%s  \n
@@ -200,6 +217,11 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         cur_label = invocation.get_header_value('op', None)
         if not cur_label: invocation.get_header_value('conv-id', 'Unknown')
         msg_from = self._get_sender(invocation)
+
+        print """@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            ERROR ERROR ERROR !!! :
+            @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        """
 
         err_msg = 'Conversation interceptor error for message %s from %s: %s' %(cur_label, msg_from, error)
         invocation.message_annotations[GovernanceDispatcher.CONVERSATION__STATUS_ANNOTATION] = dispatcher_status
