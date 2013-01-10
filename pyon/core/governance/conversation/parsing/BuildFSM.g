@@ -8,11 +8,11 @@ options
 }
 
 @header{
-from core.fsm import FSM
-from core.fsm import ExceptionFSM
-from core.transition import TransitionFactory
-from core.LocalType import LocalType
-from extensions.SimpleLogic import *
+from pyon.core.governance.conversation.core.fsm import FSM
+from pyon.core.governance.conversation.core.fsm import ExceptionFSM
+from pyon.core.governance.conversation.core.transition import TransitionFactory
+from pyon.core.governance.conversation.core.local_type import LocalType
+from pyon.core.governance.conversation.extensions.simple_logic import *
 
 def checkMessages(fsm):
 	print "Message is checked: \%s" \%(fsm.input_symbol)
