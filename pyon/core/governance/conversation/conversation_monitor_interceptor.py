@@ -20,8 +20,14 @@ class ConversationProvider(object):
     def get_protocol_mapping(cls, op):
         return {'request': op}
 
+    @classmethod
+    def get_spec_by_role_and_op(cls, role, op):
+        return 'rpc_generic/local/%s_%s.scr' %(op, role)
+
+
 # The current interceptor can monitor only one conversation at a time for a given principal
 class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
+    _auto_generic_enabled = True
     def __init__(self):
         self.spec_path = os.path.normpath("%s/../specs/" %__file__)
         self._initialize_conversation_for_monitoring()
@@ -34,8 +40,7 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         #self.conversations_for_monitoring = {'bank':{'buy_bonds':'bank/local/BuyBonds_Bank.srt',
         #                                             'new_account':'bank/local/NewAccount_Bank.srt'},
         #                                     'trade':{'exercise':'bank/local/BuyBonds_Trade.srt'}
-        #                                    }
-
+        #
         self.conversations_for_monitoring = {'requester': 'rpc_generic/local/rpc_requester.srt',
                                              'provider': 'rpc_generic/local/rpc_provider.srt'}
 
@@ -98,25 +103,17 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
             self._report_error(invocation, GovernanceDispatcher.STATUS_SKIPPED, 'The message cannot be monitored since the conversation roles are not in the headers')
 
         return invocation
-    '''
-    def _initialize_conversation_context(self, cid, role_spec, self_principal, target_principal, op):
-        parser = ANTLRScribbleParser()
-        res = parser.parse(os.path.join(self.spec_path,role_spec))
-        builder = parser.walk(res)
-        mapping = ConversationProvider.get_protocol_mapping(op)
-        return ConversationContext(builder, cid, [self_principal, target_principal], mapping)
-    '''
 
     def _initialize_conversation_context(self, cid, role_spec, self_principal, target_principal, op):
 
         #Cache the parsing of static protocol specifications
         if not self.parsed_conversation_protocols.has_key(self_principal):
+            print role_spec
             self.parsed_conversation_protocols[self_principal] = self.parser.parse(os.path.join(self.spec_path,role_spec))
 
         builder = self.parser.walk(self.parsed_conversation_protocols[self_principal])
-        mapping = ConversationProvider.get_protocol_mapping(op)
+        mapping = ConversationProvider.get_protocol_mapping(op) if self._auto_generic_enabled else None
         return ConversationContext(builder, cid, [self_principal, target_principal], mapping)
-
 
     def _get_control_conv_msg(self, invocation):
             return invocation.get_header_value('conv-msg-type') & MSG_TYPE_MASKS.CONTROL
@@ -206,8 +203,6 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         invocation.message_annotations[GovernanceDispatcher.CONVERSATION__STATUS_REASON_ANNOTATION] = err_msg
         log.debug("ConversationMonitorInterceptor error: %s", err_msg)
 
-
-
     def _get_conversation_context_key(self, principal, invocation):
         #initiating_conv_id = invocation.get_header_value('initiating-conv-id', None)
         initiating_conv_id = invocation.get_header_value('conv-id', None)
@@ -223,6 +218,9 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         return True
 
     def _get_protocol_spec(self, role, operation ):
+        if self._auto_generic_enabled:
+            return ConversationProvider.get_spec_by_role_and_op(role, operation)
+        else:
          return self.conversations_for_monitoring[role]
 
     def _get_sender_queue(self, invocation):
