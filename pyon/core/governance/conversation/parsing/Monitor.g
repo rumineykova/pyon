@@ -10,7 +10,7 @@ tokens {
 	INTERACTION = 'interaction';
 	INT = 'int';
 	STRING = 'string';
-	PLUS 	= '+' ;
+	PLUS 	= '+' ;	
 	MINUS	= '-' ;
 	MULT	= '*' ;
 	DIV	= '/' ;
@@ -30,13 +30,20 @@ tokens {
 	GLOBAL_ESCAPE = 'GLOBAL_ESCAPE';
 	EMPTY = 'EMPTY';
 	ROLES = 'ROLES';
+	WITH = 'with';
+	INTR = 'INTR';
+	DO = 'DO';
 }
 
 /*------------------------------------------------------------------
  * PARSER RULES
 *------------------------------------------------------------------*/
 
-description: ( ( ANNOTATION )* ( importProtocolStatement | importTypeStatement ) )* ( ANNOTATION )* protocolDef -> protocolDef;
+description: ( ( ANNOTATION )* ( importProtocolStatement | importTypeStatement | packageDef ) )* ( ANNOTATION )* protocolDef -> protocolDef;
+
+packageDef: 'package' packageName ';';
+
+packageName: ID ('.' ID)*;  	 
 
 importProtocolStatement: 'import' 'protocol' importProtocolDef ( ','! importProtocolDef )* ';'! ;
 
@@ -50,8 +57,8 @@ dataTypeDef: StringLiteral ;
 
 simpleName: ID ;
 
-protocolDef: 'protocol' protocolName ( 'at' roleName )? ( parameterDefs )? '{' protocolBlockDef ( ( ANNOTATION )* protocolDef )* '}'
-	     -> ^(PROTOCOL roleName  parameterDefs* protocolBlockDef+);
+protocolDef: 'local' 'protocol' protocolName ( 'at' roleName ) ( parameterDefs )? '{' ( protocolBlockDef )? '}'
+	     -> ^(PROTOCOL roleName  parameterDefs* protocolBlockDef*);
 
 protocolName: ID ;
 
@@ -65,13 +72,14 @@ blockDef: '{' activityListDef '}' -> ^(BRANCH activityListDef);
 	 	  
 assertDef : (ASSERTION)? -> ^(ASSERT ASSERTION?);
 
-activityListDef: ( ( ANNOTATION )* activityDef )* -> activityDef+;
+activityListDef: ( ( ANNOTATION )* activityDef )* -> activityDef*;
 
-primitivetype :(INT -> INT|STRING-> STRING);
+primitivetype :(INT -> INT
+               |STRING-> STRING);
 
-activityDef: ( introducesDef | interactionDef | inlineDef | runDef | recursionDef | endDef | RECLABEL ) ';'! | 
+activityDef: ( introducesDef | interactionDef | inlineDef | runDef | recursionDef | endDef | doDef ) ';'! | 
 			choiceDef | directedChoiceDef | parallelDef | repeatDef | unorderedDef |
-			recBlockDef | globalEscapeDef ;
+			recBlockDef | globalEscapeDef;
 
 introducesDef: roleDef 'introduces' roleDef ( ',' roleDef )* ;
 
@@ -79,8 +87,9 @@ roleDef: ID -> ID;
 
 roleName: ID -> ID;
 
-typeReferenceDef: ID ->ID;
-interactionSignatureDef: ((typeReferenceDef ('(' valueDecl (',' valueDecl)* ')')? -> typeReferenceDef ^(VALUE valueDecl*))
+typeReferenceDef: ID ->ID ;
+
+interactionSignatureDef: ((typeReferenceDef '(' (valueDecl (',' valueDecl)* )? ')' -> typeReferenceDef ^(VALUE valueDecl*))
 			 | (('(' valueDecl (',' valueDecl)* ')') -> ^(VALUE valueDecl*)));
 
 valueDecl : ID (':'! primitivetype)?;	 
@@ -92,7 +101,7 @@ interactionDef:
 		'from' role= roleName  (assertDef)-> ^(RESV interactionSignatureDef $role assertDef)
 	      | 'to' roleName  (assertDef) -> ^(SEND interactionSignatureDef roleName assertDef));
 
-choiceDef: 'choice' ( 'at' roleName )? blockDef ( 'or' blockDef )* -> ^('choice' blockDef+);
+choiceDef: 'choice' 'at' roleName blockDef ( 'or' blockDef )* -> ^('choice' blockDef+);
 
 directedChoiceDef: ( 'from' roleName )? ( 'to' roleName ( ','! roleName )* )? '{' ( onMessageDef )+ '}';
 
@@ -106,7 +115,7 @@ recBlockDef: 'rec' labelName blockDef -> ^('rec' labelName blockDef);
 
 labelName: ID -> ID ;
 
-recursionDef: labelName -> ^(RECLABEL labelName);
+recursionDef: 'continue' labelName -> ^(RECLABEL labelName);
 
 // TODO: check end
 endDef: 'end'^ ;
@@ -123,17 +132,20 @@ parameter: declarationName ;
 // TODO: inline
 inlineDef: 'inline'^ protocolRefDef ( '('! parameter ( ','! parameter )* ')'! )? ;
 
-parallelDef: 'parallel' blockDef ( 'and' blockDef )* -> ^(PARALLEL blockDef+);
+parallelDef: 'par' blockDef ( 'and' blockDef )* -> ^(PARALLEL blockDef+);
 
-// TODO: interruptDef
-doBlockDef: 'do' '{' activityListDef  '}' -> ^('do' activityListDef);	  
+globalEscapeDef: 'interruptible' blockDef interruptDef -> ^(INTR blockDef interruptDef);
 
-interruptDef: 'interrupt' 'by' roleName '{' activityListDef '}' -> ^('interrupt' roleName activityListDef);
-
-globalEscapeDef:  doBlockDef  interruptDef -> ^(GLOBAL_ESCAPE doBlockDef interruptDef);
+//interruptDef: ^ blockDef;
+interruptDef : 'with' (
+		     'throw' interactionSignatureDef (',' interactionSignatureDef)* 'by' roleName (',' roleName)*  ';'-> ^('throw' interactionSignatureDef+ ^('by' roleName+))
+                     |'catch' interactionSignatureDef (',' interactionSignatureDef)* 'by' roleName (',' roleName)*  ';'-> ^('catch' interactionSignatureDef+ ^('by' roleName+)));
 
 unorderedDef: 'unordered' '{' ( ( ANNOTATION )* activityDef )* '}' -> ^(PARALLEL ^(BRANCH activityDef)+);
 
+aliasDef: roleName 'as' ID -> ^('as' roleName ID) ;	 
+
+doDef: 'do' protocolName ('[' interactionSignatureDef (',' interactionSignatureDef)* ']')* '(' aliasDef (',' aliasDef)* ')' -> ^(DO protocolName ^(BRANCH interactionSignatureDef+) ^(BRANCH aliasDef+));	 
 
 /*-----------------------------------------------
 TO DO:
