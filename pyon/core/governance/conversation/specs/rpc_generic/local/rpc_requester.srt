@@ -2,10 +2,13 @@ protocol RPC at requester(role provider, role requester)
 {
     request to provider;
     choice at provider {
-        accept from provider;
+        accept() from provider;
             choice at provider {
                 (inform) from provider;
             } or {
                 (failure) from provider;}
     } or {
-        reject to provider;}}
+        reject() to provider;}}
+
+do RPC<hello, (string)>
+do RPC<hello, (string)>

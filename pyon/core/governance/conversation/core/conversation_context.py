@@ -5,11 +5,12 @@ __license__ = 'Apache 2.0'
 
 
 class ConversationContext(object):
-    def __init__(self, builder, conv_id, principals, op_mapping):
+    def __init__(self, builder, conv_id, principals, op_mapping = None):
         self.builder = builder
         self.builder.main_fsm.fsm.reset()
         self.unset_roles = iter(self.builder.roles)
-        self.builder.main_fsm.fsm.instantiate_generics(op_mapping)
+        if op_mapping:
+            self.builder.main_fsm.fsm.instantiate_generics(op_mapping)
         # principal -> role
         self.role_mapper = {}
         self.conv_id = conv_id

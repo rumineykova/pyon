@@ -5,6 +5,7 @@ __author__ = 'sphenrie'
 from pyon.public import Container, ImmediateProcess
 #from pyon.ion.endpoint import ProcessRPCClient
 from pyon.util.context import LocalContextMixin
+from pyon.ion.conversation import CONV, generate_id
 
 from interface.services.examples.hello.ihello_service  import HelloServiceProcessClient
 from interface.services.icontainer_agent import ContainerAgentProcessClient
@@ -37,16 +38,19 @@ class HelloClientProcess(ImmediateProcess):
         pass
 
 def hello_client(container, actor_id='anonymous', text='mytext 123'):
-
     try:
         client = HelloServiceProcessClient(node=container.node, process=FakeProcess())
+        cid = generate_id()
 
-        actor_headers = container.governance_controller.build_actor_header(actor_id)
-        ret = client.hello(text)
+        ret = client.hello(text, headers = {'conv-cmd':CONV.START, 'app-conv-id':cid})
         print "Returned: " + str(ret)
 
-        ret = client.hello('second message text')
+        ret = client.bye('second message text', headers = {'conv-cmd':CONV.END, 'app-conv-id':cid})
         print "Returned: " + str(ret)
+
+
+        #ret = client.hello(text, headers = {'parent-conv-id':'1234'})
+        #print "Returned: " + str(ret)
 
     except Exception, e:
         print "client.hello() failed: " + e.message
