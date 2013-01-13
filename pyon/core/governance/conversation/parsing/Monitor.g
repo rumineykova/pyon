@@ -1,7 +1,7 @@
 grammar Monitor;
 
 options {
-        language=Python;
+        language=Java;
 	output=AST;
 	backtrack=true;
 }

@@ -23,6 +23,7 @@ class ConversationProvider(object):
     @classmethod
     def get_spec_by_role_and_op(cls, role, op):
         return 'rpc_generic/local/%s_%s.scr' %(op, role)
+        #return 'rpc_generic/local/%s_%s.scr' %(op, role)
 
 
 # The current interceptor can monitor only one conversation at a time for a given principal
@@ -63,7 +64,8 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         if conv_msg_type and self_principal and target_principal:
         #    target_principal = self._get_receiver(invocation)
         #    op_type = LocalType.SEND;
-            self._check(invocation, op_type, self_principal, target_principal)
+            if self_principal == 'requester':
+                self._check(invocation, op_type, self_principal, target_principal)
             if invocation.message_annotations[GovernanceDispatcher.CONVERSATION__STATUS_ANNOTATION] == GovernanceDispatcher.STATUS_STARTED:
                 invocation.message_annotations[GovernanceDispatcher.CONVERSATION__STATUS_ANNOTATION] = GovernanceDispatcher.STATUS_COMPLETE
         else:
@@ -95,7 +97,8 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         #        self._check(invocation, op_type, self_principal, target_principal)
         #    else: self._check(invocation, op_type, self_principal, target_principal, target_principal_queue)
 
-            self._check(invocation, op_type, self_principal, target_principal)
+            if self_principal == 'requester':
+                self._check(invocation, op_type, self_principal, target_principal)
 
             if invocation.message_annotations[GovernanceDispatcher.CONVERSATION__STATUS_ANNOTATION] == GovernanceDispatcher.STATUS_STARTED:
                 invocation.message_annotations[GovernanceDispatcher.CONVERSATION__STATUS_ANNOTATION] = GovernanceDispatcher.STATUS_COMPLETE
@@ -123,12 +126,20 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
 
     def  _check(self, invocation, op_type, self_principal, target_principal):
         operation = invocation.get_header_value('op', '')
-        cid = invocation.get_header_value('conv-id', 0)
+        cid = invocation.get_header_value('app-conv-id', 0)
         conv_seq = invocation.get_header_value('conv-seq', 0)
         conversation_key = self._get_conversation_context_key(self_principal,  invocation)
+        conv_cmd = invocation.get_header_value('conv-cmd', "")
+        print """=======================================================
+        ===============================================================%s"""%(conv_cmd)
 
         # INITIALIZE FSM
-        if ((conv_seq == 1 and self._should_be_monitored(invocation, self_principal, operation)) and
+        #if ((conv_seq == 1 and self._should_be_monitored(invocation, self_principal, operation)) and
+        if (conversation_key in self.conversation_context) and (conv_cmd =='start'):
+            self._report_error(invocation, GovernanceDispatcher.STATUS_SKIPPED, 'Conversation is already runnning: %s')
+            return
+
+        if ((conv_seq ==1) and (conv_cmd=='start') and
             not((conversation_key in self.conversation_context))):
 
             role_spec = self._get_protocol_spec(self_principal, operation)
@@ -139,7 +150,6 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
                                                                         self_principal, target_principal,
                                                                         operation)
                 if conversation_context: self.conversation_context[conversation_key] = conversation_context
-
         # CHECK
         if (conversation_key in self.conversation_context):
             conversation_context = self.conversation_context[conversation_key]
@@ -150,14 +160,16 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
                 #conversation_context.set_role_mapping(target_role, target_principal_queue)
             fsm = conversation_context.get_fsm()
 
-            control_conv_msg_type = self._get_control_conv_msg(invocation)
+            # ================================APP Change============================================
+            #control_conv_msg_type = self._get_control_conv_msg(invocation)
 
-            if (control_conv_msg_type == MSG_TYPE.ACCEPT):
-                transition = TransitionFactory.create(op_type, 'accept', target_role)
-                (msg_correct, error, should_pop)= self._is_msg_correct(invocation, fsm, transition)
-                if not msg_correct:
-                    self._report_error(invocation, GovernanceDispatcher.STATUS_REJECT, error)
-                    return
+            #if (control_conv_msg_type == MSG_TYPE.ACCEPT):
+            #    transition = TransitionFactory.create(op_type, 'accept', target_role)
+            #    (msg_correct, error, should_pop) = self._is_msg_correct(invocation, fsm, transition)
+            #    if not msg_correct:
+            #        self._report_error(invocation, GovernanceDispatcher.STATUS_REJECT, error)
+            #        return
+            # ================================APP Change============================================
 
             transition = TransitionFactory.create(op_type, operation, target_role)
 
@@ -167,8 +179,12 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
                 self._report_error(invocation, GovernanceDispatcher.STATUS_REJECT, error)
 
             # Stop monitoring if msg is wrong or this is the response of the request that had started the conversation
-            if (should_pop) and (conversation_context.get_conversation_id() == cid):
+            if (conv_cmd=='end'): #or ((should_pop) and (conversation_context.get_conversation_id() == cid)):
+                if not should_pop:
+                    self._report_error(invocation, GovernanceDispatcher.STATUS_REJECT, "Unexpected end")
                 self.conversation_context.pop(conversation_key)
+        else:
+            self._report_error(invocation, GovernanceDispatcher.STATUS_REJECT, 'Conversation does not exist')
 
     def _is_msg_correct(self, invocation, fsm, transition):
         details = ''
@@ -205,7 +221,8 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
 
     def _get_conversation_context_key(self, principal, invocation):
         #initiating_conv_id = invocation.get_header_value('initiating-conv-id', None)
-        initiating_conv_id = invocation.get_header_value('conv-id', None)
+        # TODO: Change
+        initiating_conv_id = invocation.get_header_value('app-conv-id', None)
         # Note, one principal can play only one role, but in general the key should be: (conv_id, prinicpla.od, role)
         key = (initiating_conv_id, principal)
         return key
