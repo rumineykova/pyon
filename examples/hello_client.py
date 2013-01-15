@@ -43,14 +43,13 @@ def hello_client(container, actor_id='anonymous', text='mytext 123'):
 
         actor_headers = container.governance_controller.build_actor_header(actor_id)
 
-        
         ret = client.hello(text)
 
         cid = generate_id()
 
-        ret = client.hello(text, headers = {'conv-cmd':CONV.START, 'app-conv-id':cid})
+        ret = client.hello(text, headers = {'conv-cmd':'start', 'app-conv-id':'1234'})
 #                                            'sender-role':'A', 'receiver-role':'B'})
-        ret = client.hello(text, headers = {'conv-cmd':CONV.END, 'app-conv-id':cid})
+        ret = client.hello(text, headers = {'conv-cmd':'end', 'app-conv-id':'1234'})
         print "Returned: " + str(ret)
 
 #        ret = client.hello(text, headers = {'conv-cmd':CONV.END,'app-conv-id':cid,

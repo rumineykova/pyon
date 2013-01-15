@@ -21,12 +21,12 @@ class ConversationProvider(object):
         return {'request': op}
 
     @classmethod
-    def get_spec_by_op_and_role(cls, op, role):
-        return 'rpc_generic/local/%s_%s.scr', op, role
+    def get_spec_by_role_and_op(cls, role, op):
+        return 'rpc_generic/local/%s_%s.scr' %(op, role)
 
 # The current interceptor can monitor only one conversation at a time for a given principal
 class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
-    _is_auto_generics_turned_on = True
+    _auto_generic_enabled = True
     def __init__(self):
         self.spec_path = os.path.normpath("%s/../specs/" %__file__)
         self._initialize_conversation_for_monitoring()
@@ -107,7 +107,6 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         return invocation
 
     def _initialize_conversation_context(self, cid, role_spec, self_principal, target_principal, op):
-
         #Cache the parsing of static protocol specifications
         if not self.parsed_conversation_protocols.has_key(self_principal):
             print role_spec
@@ -130,7 +129,8 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         conv_seq = invocation.get_header_value('conv-seq', 0)
         conversation_key = self._get_conversation_context_key(self_principal,  invocation)
         conv_cmd = invocation.get_header_value('conv-cmd', "")
-
+        print "conv_cmd", conv_cmd
+        print 'CID is', cid
         # INITIALIZE FSM
         #if ((conv_seq == 1 and self._should_be_monitored(invocation, self_principal, operation)) and
         if (conversation_key in self.conversation_context) and (conv_cmd =='start'):

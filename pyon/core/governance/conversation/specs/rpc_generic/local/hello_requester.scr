@@ -1,10 +1,9 @@
 package hello_A;
-local protocol Hello_A at A (role A, role B)
+local protocol Hello_A at A(role B)
 {
 hello() to B;
 (string) from B;
 hello() to B;
 (string) from B;
-
 }
 
