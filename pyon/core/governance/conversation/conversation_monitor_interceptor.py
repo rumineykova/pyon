@@ -21,24 +21,12 @@ class ConversationProvider(object):
         return {'request': op}
 
     @classmethod
-<<<<<<< HEAD
     def get_spec_by_op_and_role(cls, op, role):
         return 'rpc_generic/local/%s_%s.scr', op, role
 
 # The current interceptor can monitor only one conversation at a time for a given principal
 class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
     _is_auto_generics_turned_on = True
-
-=======
-    def get_spec_by_role_and_op(cls, role, op):
-        return 'rpc_generic/local/%s_%s.scr' %(op, role)
-        #return 'rpc_generic/local/%s_%s.scr' %(op, role)
-
-
-# The current interceptor can monitor only one conversation at a time for a given principal
-class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
-    _auto_generic_enabled = True
->>>>>>> 0be4e402ab4ffeca4dc58485921ec74f571dec7a
     def __init__(self):
         self.spec_path = os.path.normpath("%s/../specs/" %__file__)
         self._initialize_conversation_for_monitoring()

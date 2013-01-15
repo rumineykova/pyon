@@ -40,21 +40,23 @@ class HelloClientProcess(ImmediateProcess):
 def hello_client(container, actor_id='anonymous', text='mytext 123'):
     try:
         client = HelloServiceProcessClient(node=container.node, process=FakeProcess())
-<<<<<<< HEAD
+
         actor_headers = container.governance_controller.build_actor_header(actor_id)
 
         
         ret = client.hello(text)
-=======
+
         cid = generate_id()
 
         ret = client.hello(text, headers = {'conv-cmd':CONV.START, 'app-conv-id':cid})
->>>>>>> 0be4e402ab4ffeca4dc58485921ec74f571dec7a
+#                                            'sender-role':'A', 'receiver-role':'B'})
+        ret = client.hello(text, headers = {'conv-cmd':CONV.END, 'app-conv-id':cid})
         print "Returned: " + str(ret)
 
-        ret = client.bye('second message text', headers = {'conv-cmd':CONV.END, 'app-conv-id':cid})
-        print "Returned: " + str(ret)
+#        ret = client.hello(text, headers = {'conv-cmd':CONV.END,'app-conv-id':cid,
+#                                            'sender-role':'A', 'receiver-role':'B'})
 
+        print "Returned: " + str(ret)
 
         #ret = client.hello(text, headers = {'parent-conv-id':'1234'})
         #print "Returned: " + str(ret)

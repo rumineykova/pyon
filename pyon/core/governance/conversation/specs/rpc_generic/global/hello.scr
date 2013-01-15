@@ -1,0 +1,9 @@
+package hello;
+type <python> "string" from "Lib/string.py" as string;
+
+global protocol Hello(role A, role B)
+{   hello() from A to B;
+    (string) from B to A;
+    how_are_you() from A to B;
+    (string) from B to A;
+}
