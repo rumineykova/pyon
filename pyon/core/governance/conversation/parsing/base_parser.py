@@ -9,6 +9,7 @@ from MonitorLexer import MonitorLexer
 from MonitorParser import MonitorParser
 from BuildFSM import BuildFSM
 from abc import ABCMeta, abstractmethod
+from collections import deque
 
 class BaseParser:
     __metaclass__= ABCMeta
@@ -19,20 +20,23 @@ class BaseParser:
 class ANTLRScribbleParser(BaseParser):
     # TODO: add exception handling for wrong file extension
     def parse(self, filename):
-        input = antlr3.FileStream (filename)
-        lexer = MonitorLexer (input)
-        tokens = antlr3.CommonTokenStream (lexer)
-        parser = MonitorParser (tokens)
-        adaptor = CommonTreeAdaptor()
-        parser.setTreeAdaptor(adaptor)
-        res = parser.description ()
-        return res
-    def walk(self, parsedResult):
-        ast = parsedResult.tree;
-        nodes = CommonTreeNodeStream(ast);
-        fsmBuilder =  BuildFSM(nodes);
-        fsmBuilder.description()
-        return fsmBuilder
+            input = antlr3.FileStream (filename)
+            lexer = MonitorLexer (input)
+            tokens = antlr3.CommonTokenStream (lexer)
+            parser = MonitorParser (tokens)
+            adaptor = CommonTreeAdaptor()
+            parser.setTreeAdaptor(adaptor)
+            res = parser.description ()
+            return res
+
+    def walk(self, parsedResult, **kwargs):
+            ast = parsedResult.tree
+            nodes = CommonTreeNodeStream(ast)
+            fsmBuilder =  BuildFSM(nodes)
+            for kw, val in kwargs.iteritems():
+                fsmBuilder.__dict__[kw] = val
+            fsmBuilder.description()
+            return fsmBuilder
 
 def main(args):
      pass

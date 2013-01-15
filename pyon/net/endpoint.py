@@ -30,7 +30,6 @@ rpclog = logging.getLogger('rpc')
 class EndpointError(StandardError):
     pass
 
-
 class EndpointUnit(object):
     """
     A unit of conversation or one-way messaging.
@@ -162,7 +161,7 @@ class EndpointUnit(object):
         inv_prime = self._intercept_msg_out(inv)
         new_msg = inv_prime.message
         new_headers = inv_prime.headers
-
+        print 'HEADERES ARE', new_headers
         return new_msg, new_headers
 
     def _intercept_msg_out(self, inv):

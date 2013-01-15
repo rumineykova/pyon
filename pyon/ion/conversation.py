@@ -193,8 +193,6 @@ class ConversationEndpoint(object):
             pass
 
 
-
-
 class Participant(object):
 
     def __init__(self, name):
@@ -299,6 +297,9 @@ class RPCRequesterEndpointUnit(ProcessRPCRequestEndpointUnit):
 
         return result_data, result_headers
 
+    def start_conversation(self):
+        self.app_conv_id = RPCRequesterEndpointUnit._build_conv_id()
+
     #Overridden method to hook into message sending process
     def send(self, msg, headers=None, **kwargs):
 
@@ -316,7 +317,6 @@ class RPCRequesterEndpointUnit(ProcessRPCRequestEndpointUnit):
         return result_data, result_headers
 
 
-
 class ConversationRPCClient(ProcessRPCClient):
     endpoint_unit_type = RPCRequesterEndpointUnit
 
@@ -328,8 +328,6 @@ class ConversationRPCClient(ProcessRPCClient):
             self._participant = Participant(self._process.name)
         else:
             self._participant = Participant(self._send_name)
-
-
 
     def create_endpoint(self, to_name=None, existing_channel=None, **kwargs):
         return ProcessRPCClient.create_endpoint(self, to_name, existing_channel, **kwargs)

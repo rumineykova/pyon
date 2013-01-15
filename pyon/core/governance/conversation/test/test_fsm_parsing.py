@@ -32,6 +32,11 @@ def rpc_events():
     events.append(TransitionFactory.create(LocalType.SEND, '', 'requester'))
     return events
 
+def do_events():
+    events = []
+    events.append(TransitionFactory.create(LocalType.SEND, 'query_status', 'Seller'))
+    events.append(TransitionFactory.create(LocalType.RESV, 'answer_status', 'Seller'))
+    return events
 
 def recAtBuyer_events():
     events = []
@@ -39,6 +44,15 @@ def recAtBuyer_events():
     events.append(TransitionFactory.create(LocalType.RESV, 'Invoice', 'Seller'))
     events.append(TransitionFactory.create(LocalType.SEND, 'Order', 'Seller'))
     events.append(TransitionFactory.create(LocalType.RESV, 'Invoice', 'Seller'))
+    return events
+
+
+
+def recAndChoice_events():
+    events = []
+    events.append(TransitionFactory.create(LocalType.SEND, 'Order', 'Seller'))
+    events.append(TransitionFactory.create(LocalType.SEND, 'Order', 'Seller'))
+    events.append(TransitionFactory.create(LocalType.RESV, 'Stop', 'Seller'))
     return events
 
 def parallelAtSeller1_events():
@@ -126,6 +140,11 @@ class TestFSM(unittest.TestCase):
         except ExceptionFSM:
             raise
 
+    def test_do(self):
+        self.base('DoProt.scr', do_events())
+        self.assertEqual(1, 1)
+
+
     def test_interaction_sequence(self):
         self.base('InteractionSequence.scr', interaction_sequence_events())
         self.assertEqual(1, 1)
@@ -133,8 +152,8 @@ class TestFSM(unittest.TestCase):
     # fix it
     """def test_empty_protocol(self):
         self.base('EmptyProtocol.scr', [])
-        self.assertEqual(1, 1)"""
-
+        self.assertEqual(1, 1)
+"""
     def test_choice(self):
         # Test The First branch
         self.base('SimpleChoice.scr', choice_events()[0:2])
@@ -150,6 +169,17 @@ class TestFSM(unittest.TestCase):
 
     def test_rpc(self):
         self.base('RPCProvider.scr', rpc_events())
+        self.assertEqual(1, 1)
+
+    def test_rec(self):
+        self.base('Recursion.scr', recAtBuyer_events())
+        self.assertEqual(1, 1)
+
+    def test_rec_wrong(self):
+        self.assertRaises(ExceptionFSM,  self.base, 'Recursion.scr',  recAtBuyer_events()[0:-2] +recAtBuyer_events()[-1:])
+
+    def test_rec_and_choice(self):
+        self.base('RecursionChoice.scr', recAndChoice_events())
         self.assertEqual(1, 1)
 
 """
@@ -172,13 +202,6 @@ class TestFSM(unittest.TestCase):
         self.base('LocateChoiceAtBuyer.spr', locateChoiceAtBuyer_events()[0:2])
         # Test The Second branch
         self.assertRaises(ExceptionFSM,  self.base, 'LocateChoiceAtBuyer.spr',  locateChoiceAtBuyer_events()[1:4])
-
-    def test_rec(self):
-        self.base('RecAtBuyer.spr', recAtBuyer_events())
-        self.assertEqual(1, 1)
-
-    def test_rec_wrong(self):
-        self.assertRaises(ExceptionFSM,  self.base, 'RecAtBuyer.spr',  recAtBuyer_events()[0:-2] +recAtBuyer_events()[-1:])
 
     def test_parallel(self):
         self.base('ParallelAtSeller1.spr', parallelAtSeller1_events())

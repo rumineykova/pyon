@@ -40,8 +40,9 @@ def hello_client(container, actor_id='anonymous', text='mytext 123'):
 
     try:
         client = HelloServiceProcessClient(node=container.node, process=FakeProcess())
-
         actor_headers = container.governance_controller.build_actor_header(actor_id)
+
+        
         ret = client.hello(text)
         print "Returned: " + str(ret)
 

@@ -1,12 +1,13 @@
 grammar Monitor;
 
 options {
-        language=Python;
+        language= Python;
 	output=AST;
 	backtrack=true;
 }
 
 tokens {
+//==================Used for AST ===================
 	INTERACTION = 'interaction';
 	INT = 'int';
 	STRING = 'string';
@@ -30,49 +31,80 @@ tokens {
 	GLOBAL_ESCAPE = 'GLOBAL_ESCAPE';
 	EMPTY = 'EMPTY';
 	ROLES = 'ROLES';
-	WITH = 'with';
 	INTR = 'INTR';
 	DO = 'DO';
+	PARAMETERLIST ='PARAMS';
+	ABSTRACT = 'ABSTRACT';
+	FULLNAME = 'FULLNAME';
+	
+//==================================================
+//=======KEYWORDS===================================
+	PACKAGEKW = 'package';
+	IMPORTKW = 'import';
+	TYPEKW = 'type';
+	PROTOCOLKW = 'protocol';
+	GLOBALKW = 'global';
+	LOCALKW = 'local';
+	ROLEKW = 'role';
+	SIGKW = 'sig';
+	INSTANTIATESKW = 'instantiates';
+
+	FROMKW = 'from';
+	TOKW = 'to';
+	CHOICEKW = 'choice';
+	ATKW = 'at';
+	ORKW = 'or';
+	RECKW = 'rec';
+	CONTINUEKW = 'continue';
+	PARALLELKW = 'par';  // FIXME: should be PARKW
+	ANDKW = 'and';
+	INTERRUPTIBLEKW = 'interruptible';
+	WITHKW = 'with';
+	BYKW = 'by';  // from for interrupts is more expected, but from is not good for multiple roles (generally, the comma in interrupt message list and role list looks like "and" rather than "or")
+	DOKW = 'do';
+	ASKW = 'as';
+	SPAWNKW = 'spawn';
+	THROWSKW = 'throws';
+	CATCHESKW = 'catches';
+	SIGKW = 'sig';
 }
 
 /*------------------------------------------------------------------
  * PARSER RULES
 *------------------------------------------------------------------*/
 
-description: ( ( ANNOTATION )* ( importProtocolStatement | importTypeStatement | packageDef ) )* ( ANNOTATION )* protocolDef -> protocolDef;
 
-packageDef: 'package' packageName ';';
+// Not processed for now only recognised
+module: packagedecl (importdecl)* (payloadtypedecl)* (protocolDef)*;
+packagedecl: PACKAGEKW packagename ';';
 
-packageName: ID ('.' ID)*;  	 
+packagename: ID ('.' ID)*;
 
-importProtocolStatement: 'import' 'protocol' importProtocolDef ( ','! importProtocolDef )* ';'! ;
+importdecl: IMPORTKW ID ('.' ID)* ';'	
+	   | FROMKW packagename '.' ID IMPORTKW ID ';'	
+	   | FROMKW packagename '.' ID IMPORTKW ID ASKW ID ';';
 
-importProtocolDef: ID 'from'! StringLiteral;
-						
-importTypeStatement: 'import' ( simpleName )? importTypeDef ( ','! importTypeDef )* ( 'from'! StringLiteral )? ';'! ;
+// FIXME: payload types, not message types
+payloadtypedecl:  TYPEKW '<' ID '>' EXTID FROMKW EXTID ASKW ID ';';
 
-importTypeDef: ( dataTypeDef 'as'! )? ID ;
+description: ( ( packagedecl | importdecl | module ) )* protocolDef -> protocolDef;
 
-dataTypeDef: StringLiteral ;
+parameterList: '<' SIGKW ID (',' SIGKW ID)* '>' -> ^(PARAMETERLIST (ID)+);
 
-simpleName: ID ;
+protocolDef: 'local' 'protocol' protocolName ( 'at' roleName )  ( parameterList )? roleList '{' ( protocolBlockDef ) '}'
+	     -> ^(PROTOCOL roleName parameterList* roleList+ protocolBlockDef*);
 
-protocolDef: 'local' 'protocol' protocolName ( 'at' roleName ) ( parameterDefs )? '{' ( protocolBlockDef )? '}'
-	     -> ^(PROTOCOL roleName  parameterDefs* protocolBlockDef*);
+roleList: '(' roleparameDef ( ',' roleparameDef )* ')' -> ^(ROLES roleparameDef+);
+protocolName: ID;
+roleparameDef: 'role' ID -> ID;
 
-protocolName: ID ;
-
-parameterDefs: '(' roleparameDef ( ',' roleparameDef )* ')' -> ^(ROLES roleparameDef+);
-
-roleparameDef: 'role' simpleName -> simpleName;
-
-protocolBlockDef: activityListDef -> activityListDef;
+protocolBlockDef: activityListDef -> activityListDef;	
 
 blockDef: '{' activityListDef '}' -> ^(BRANCH activityListDef);
 	 	  
 assertDef : (ASSERTION)? -> ^(ASSERT ASSERTION?);
 
-activityListDef: ( ( ANNOTATION )* activityDef )* -> activityDef*;
+activityListDef: ( activityDef )* -> activityDef*;
 
 primitivetype :(INT -> INT
                |STRING-> STRING);
@@ -89,7 +121,8 @@ roleName: ID -> ID;
 
 typeReferenceDef: ID ->ID ;
 
-interactionSignatureDef: ((typeReferenceDef '(' (valueDecl (',' valueDecl)* )? ')' -> typeReferenceDef ^(VALUE valueDecl*))
+interactionSignatureDef: ((typeReferenceDef -> ^(ABSTRACT typeReferenceDef))
+			 | (typeReferenceDef '(' (valueDecl (',' valueDecl)* )? ')' -> typeReferenceDef ^(VALUE valueDecl*))
 			 | (('(' valueDecl (',' valueDecl)* ')') -> ^(VALUE valueDecl*)));
 
 valueDecl : ID (':'! primitivetype)?;	 
@@ -107,7 +140,7 @@ directedChoiceDef: ( 'from' roleName )? ( 'to' roleName ( ','! roleName )* )? '{
 
 onMessageDef: interactionSignatureDef ':' activityList ; 
 
-activityList: ( ( ANNOTATION )* activityDef )*;
+activityList: ( activityDef )*;
 
 repeatDef: 'repeat' ( 'at' roleName ( ',' roleName )* )? blockDef  -> ^('repeat' blockDef);
 
@@ -141,11 +174,14 @@ interruptDef : 'with' (
 		     'throw' interactionSignatureDef (',' interactionSignatureDef)* 'by' roleName (',' roleName)*  ';'-> ^('throw' interactionSignatureDef+ ^('by' roleName+))
                      |'catch' interactionSignatureDef (',' interactionSignatureDef)* 'by' roleName (',' roleName)*  ';'-> ^('catch' interactionSignatureDef+ ^('by' roleName+)));
 
-unorderedDef: 'unordered' '{' ( ( ANNOTATION )* activityDef )* '}' -> ^(PARALLEL ^(BRANCH activityDef)+);
+unorderedDef: 'unordered' '{' ( activityDef )* '}' -> ^(PARALLEL ^(BRANCH activityDef)+);
 
 aliasDef: roleName 'as' ID -> ^('as' roleName ID) ;	 
 
-doDef: 'do' protocolName ('[' interactionSignatureDef (',' interactionSignatureDef)* ']')* '(' aliasDef (',' aliasDef)* ')' -> ^(DO protocolName ^(BRANCH interactionSignatureDef+) ^(BRANCH aliasDef+));	 
+
+doDef: 'do' EXTID ('<' interactionSignatureDef (',' interactionSignatureDef)* '>')? '(' aliasDef (',' aliasDef)* ')' -> ^(DO EXTID ^(PARAMETERLIST interactionSignatureDef*) ^(ROLES aliasDef+));	 
+
+	 
 
 /*-----------------------------------------------
 TO DO:
@@ -165,17 +201,13 @@ factor	: NUMBER ;
  *------------------------------------------------------------------*/
 	 
 
-ID : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
-
 NUMBER	: (DIGIT)+ ;
 
 WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ 	{ $channel = HIDDEN; } ;
 
-fragment DIGIT	: '0'..'9' ;
 
 ASSERTION : '@{' (options {greedy=false;} : .)* '}' ;
 
-ANNOTATION : '[[' (options {greedy=false;} : .)* ']]' ;
 
 ML_COMMENT
     :   '/*' (options {greedy=false;} : .)* '*/' {$channel=HIDDEN;}
@@ -184,3 +216,33 @@ ML_COMMENT
 LINE_COMMENT : '//' (options {greedy=false;} : .)* '\n' {$channel=HIDDEN;} ;
 
 StringLiteral: '"' ( ~('\\'|'"') )* '"' ;
+
+
+ID:
+	(LETTER | UNDERSCORE) (LETTER | DIGIT | UNDERSCORE)*
+;
+
+/*MESSAGEOPERATOR:  // rule "subsumed" by identifier, lexer doesn't like it (also because it is a potentially empty token)
+	(LETTER | DIGIT | UNDERSCORE)*
+;*/
+
+EXTID:
+	'\"' (LETTER | UNDERSCORE) (LETTER | DIGIT | SYMBOL)* '\"'
+;
+
+fragment SYMBOL:
+	'{' | '}' | '(' | ')' | '[' | ']' | ':' | '/' | '\\' | '.' | '\#' | '&' | '?' | '!'	| UNDERSCORE
+;
+
+fragment LETTER:
+	'a'..'z' | 'A'..'Z'
+;
+
+fragment DIGIT:
+	'0'..'9'
+;
+
+fragment UNDERSCORE:
+	'_'
+;
+

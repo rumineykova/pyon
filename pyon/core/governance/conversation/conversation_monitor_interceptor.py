@@ -20,8 +20,14 @@ class ConversationProvider(object):
     def get_protocol_mapping(cls, op):
         return {'request': op}
 
+    @classmethod
+    def get_spec_by_op_and_role(cls, op, role):
+        return 'rpc_generic/local/%s_%s.scr', op, role
+
 # The current interceptor can monitor only one conversation at a time for a given principal
 class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
+    _is_auto_generics_turned_on = True
+
     def __init__(self):
         self.spec_path = os.path.normpath("%s/../specs/" %__file__)
         self._initialize_conversation_for_monitoring()
