@@ -1,6 +1,6 @@
 protocol RPC at requester(role provider, role requester)
 {
-    request to provider;
+    request() to provider;
     choice at provider {
         accept() from provider;
             choice at provider {
@@ -9,6 +9,3 @@ protocol RPC at requester(role provider, role requester)
                 (failure) from provider;}
     } or {
         reject() to provider;}}
-
-do RPC<hello, (string)>
-do RPC<hello, (string)>

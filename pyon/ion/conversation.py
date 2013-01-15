@@ -316,7 +316,6 @@ class RPCRequesterEndpointUnit(ProcessRPCRequestEndpointUnit):
     def send(self, msg, headers=None, **kwargs):
         conv_cmd =  headers['conv-cmd'] if headers.has_key('conv-cmd') else ""
         if conv_cmd == 'end':
-            print 'I am changing it'
             headers['conv-cmd']='last-msg'
             self.end_conversation = True
 
