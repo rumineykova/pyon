@@ -1,0 +1,6 @@
+protocol RPC at requester(role provider, role requester)
+{  hello() to provider;
+   (inform) from provider;
+   hello() to provider;
+   (inform) from provider;
+ }

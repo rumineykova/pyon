@@ -1,7 +1,11 @@
 grammar Monitor;
 
 options {
+<<<<<<< HEAD
         language= Python;
+=======
+        language=Java;
+>>>>>>> 0be4e402ab4ffeca4dc58485921ec74f571dec7a
 	output=AST;
 	backtrack=true;
 }

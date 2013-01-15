@@ -764,6 +764,8 @@ class BidirectionalListeningEndpointUnit(EndpointUnit):
 
 
 class RequestEndpointUnit(BidirectionalEndpointUnit):
+    end_conversation = False
+
     def _get_response(self, conv_id, timeout):
         """
         Gets a response message to the conv_id within the given timeout.
@@ -780,6 +782,9 @@ class RequestEndpointUnit(BidirectionalEndpointUnit):
             # it and consume again
             while True:
                 rmsg, rheaders, rdtag = self.channel.recv()
+                if self.end_conversation:
+                    rheaders.update({'conv-cmd':'end'})
+                    self.end_conversation
                 try:
                     nm, nh = self.intercept_in(rmsg, rheaders)
                 finally:
@@ -790,6 +795,7 @@ class RequestEndpointUnit(BidirectionalEndpointUnit):
                     return nm, nh   # breaks loop
                 else:
                     log.warn("Discarding unknown message, likely from a previous timed out request (conv-id: %s, seq: %s, perf: %s)", nh.get('conv-id', "no conv id"), nh.get('conv-seq', 'no conv seq'), nh.get('performative', 'None'))
+
 
     def _send(self, msg, headers=None, **kwargs):
 
