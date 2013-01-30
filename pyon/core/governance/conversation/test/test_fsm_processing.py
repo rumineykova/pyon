@@ -1,11 +1,13 @@
 __author__ = 'rn710'
-import unittest
-from pyon.core.governance.conversation.core.transition import TransitionFactory
+import os, inspect
+from  pyon.core.governance.conversation.core.transition import TransitionFactory
 from pyon.core.governance.conversation.core.local_type import LocalType
 from pyon.core.governance.conversation.core.fsm import ExceptionFSM, ExceptionFailAssertion
 from pyon.core.governance.conversation.parsing.base_parser import ANTLRScribbleParser
+from pyon.util.unit_test import PyonTestCase
+from nose.plugins.attrib import attr
 
-def interaction_sequence_events():
+def purchasingAtBuyer_events():
     events = []
     events.append(TransitionFactory.create(LocalType.SEND, 'Order', 'Broker'))
     events.append(TransitionFactory.create(LocalType.RESV, 'Confirmation', 'Seller'))
@@ -15,7 +17,7 @@ def interaction_sequence_events():
     events.append(TransitionFactory.create(LocalType.RESV, 'Confirmation', 'Seller'))
     return events
 
-def choice_events():
+def locateChoiceAtBuyer_events():
     events = []
     events.append(TransitionFactory.create(LocalType.RESV, 'Confirmation', 'Seller'))
     events.append(TransitionFactory.create(LocalType.SEND, 'OK', 'Seller'))
@@ -24,14 +26,6 @@ def choice_events():
     events.append(TransitionFactory.create(LocalType.RESV, 'OutOfStock', 'Seller'))
     events.append(TransitionFactory.create(LocalType.SEND, 'Finish', 'Seller'))
     return events
-
-def rpc_events():
-    events = []
-    events.append(TransitionFactory.create(LocalType.RESV, 'request', 'requester'))
-    events.append(TransitionFactory.create(LocalType.SEND, 'accept', 'requester'))
-    events.append(TransitionFactory.create(LocalType.SEND, '', 'requester'))
-    return events
-
 
 def recAtBuyer_events():
     events = []
@@ -66,14 +60,6 @@ def main_auction_events():
     events.append(TransitionFactory.create(LocalType.SEND, 'OK', 'Buyer'))
     return events
 
-def UnorderedAtBuyer_events():
-    events = []
-    events.append(TransitionFactory.create(LocalType.SEND, 'Order', 'Seller'))
-    events.append(TransitionFactory.create(LocalType.RESV, 'Confirmation', 'Seller'))
-    events.append(TransitionFactory.create(LocalType.RESV, 'Order', 'Seller1'))
-    events.append(TransitionFactory.create(LocalType.SEND, 'OK', 'Seller'))
-    return events
-
 def logic_events():
     events = []
     events.append(TransitionFactory.create(LocalType.SEND, 'Order', 'Seller'))
@@ -92,17 +78,16 @@ def recAsRepeat_events():
     events.append(TransitionFactory.create(LocalType.SEND, 'OK', 'Seller'))
     return events
 
-class TestFSM(unittest.TestCase):
+attr('INT')
+class TestFSM(PyonTestCase):
     def setUp(self):
-        #self.path = 'C:/Users/rumi/workspace/MonitorPrototype/src/specs/'
-        self.path = '/homes/rn710/workspace/MonitorPrototype/src/specs/test/'
-
+        cur_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+        self.path = '%s/specs/'%cur_dir
     def base(self, lt_filename, events):
         try:
             myparser = ANTLRScribbleParser()
             res = myparser.parse(self.path + lt_filename)
             builder = myparser.walk(res)
-            #print builder.main_fsm.fsm
             print builder.memory
             print builder.main_fsm.fsm.memory
             print builder.main_fsm.recursions_states
@@ -115,9 +100,6 @@ class TestFSM(unittest.TestCase):
             myparser = ANTLRScribbleParser()
             res = myparser.parse(self.path + lt_filename)
             builder = myparser.walk(res)
-            #print builder.main_fsm.fsm
-            #print builder.memory
-            #print builder.main_fsm.fsm
             print builder.current_fsm.fsm.state_transitions
             builder.main_fsm.fsm.set_assertion_check_on()
             builder.main_fsm.fsm.process_list(events, payloads)
@@ -126,33 +108,6 @@ class TestFSM(unittest.TestCase):
         except ExceptionFSM:
             raise
 
-    def test_interaction_sequence(self):
-        self.base('InteractionSequence.scr', interaction_sequence_events())
-        self.assertEqual(1, 1)
-
-    # fix it
-    """def test_empty_protocol(self):
-        self.base('EmptyProtocol.scr', [])
-        self.assertEqual(1, 1)"""
-
-    def test_choice(self):
-        # Test The First branch
-        self.base('SimpleChoice.scr', choice_events()[0:2])
-        # Test The Second branch
-        self.base('SimpleChoice.scr', choice_events()[2:6])
-        self.assertEqual(1, 1)
-
-    def test_choice_wrong(self):
-        # Test The First branch
-        self.base('SimpleChoice.scr', choice_events()[0:2])
-        # Test The Second branch
-        self.assertRaises(ExceptionFSM,  self.base, 'SimpleChoice.scr',  choice_events()[1:4])
-
-    def test_rpc(self):
-        self.base('RPCProvider.scr', rpc_events())
-        self.assertEqual(1, 1)
-
-"""
     def test_rec_as_repeat(self):
         self.base('RecAsRepeat.spr', recAsRepeat_events())
         self.assertEqual(1, 1)
@@ -184,15 +139,8 @@ class TestFSM(unittest.TestCase):
         self.base('ParallelAtSeller1.spr', parallelAtSeller1_events())
         self.assertEqual(1, 1)
 
-    def t1est_parallel_wrong(self):
+    def test_parallel_wrong(self):
         self.assertRaises(ExceptionFSM,  self.base, 'ParallelAtSeller1.spr', recAtBuyer_events()[1:])
-
-    def test_unordered(self):
-        self.base('UnorderedAtBuyer.spr', UnorderedAtBuyer_events())
-        self.assertEqual(1, 1)
-
-    def test_unordered_wrong(self):
-        self.assertRaises(ExceptionFSM,  self.base, 'UnorderedAtBuyer.spr', UnorderedAtBuyer_events()[1:])
 
     def test_logic(self):
         payloads = [[1], ["a"], [5], [4]]
@@ -215,7 +163,3 @@ class TestFSM(unittest.TestCase):
     def test_interrupt_when_interrupt_occur(self):
         self.base('Interrupt.spr', (Interrupt_events()[0:2]+Interrupt_events()[4:6]))
         self.assertEqual(1, 1)
-"""
-
-if __name__ == '__main__':
-    unittest.main()
