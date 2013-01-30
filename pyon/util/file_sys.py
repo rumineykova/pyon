@@ -50,7 +50,7 @@ class FileSystem(object):
     @classmethod 
     def _clean(cls, config):
         for k,v in FileSystem.FS_DIRECTORY.iteritems():
-            s = v.lower() # Lower case string
+            s = v.lower() 
             conf = config.get_safe('container.filesystem.%s' % s, None)
             if conf:
                 FileSystem.FS_DIRECTORY[k] = conf
@@ -59,7 +59,6 @@ class FileSystem(object):
             if os.path.exists(FS_DIRECTORY[k]):
                 log.info('Removing %s' , FS_DIRECTORY[k])
                 shutil.rmtree(FS_DIRECTORY[k])
-                cls.__makedirs(FileSystem.FS_DIRECTORY[k]) # Catches race condition where concurrent container does the same thing
 
 
     def __init__(self, CFG):
@@ -79,7 +78,6 @@ class FileSystem(object):
                 raise OSError('You are attempting to perform an operation beyond the scope of your permission. (%s is set to \'%s\')' % (k,FileSystem.FS_DIRECTORY[k]))
             if not os.path.exists(FS_DIRECTORY[k]):
                 log.info('Making path: %s', FS_DIRECTORY[k])
-                self.__makedirs(FileSystem.FS_DIRECTORY[k]) # Catches race condition where concurrent container does the same thing
 
     @classmethod
     def __makedirs(cls,path):

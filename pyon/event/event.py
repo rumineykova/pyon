@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import sys
+import traceback
 """Events and Notifications"""
 
 __author__ = 'Dave Foster <dfoster@asascience.com>, Michael Meisinger'
@@ -8,7 +10,7 @@ __license__ = 'Apache 2.0'
 from gevent import event as gevent_event
 
 from pyon.core import bootstrap
-from pyon.core.exception import BadRequest, IonException
+from pyon.core.exception import BadRequest, IonException, StreamException
 from pyon.datastore.datastore import DataStore
 from pyon.net.endpoint import Publisher, Subscriber
 from pyon.util.async import spawn
@@ -16,6 +18,8 @@ from pyon.util.containers import get_ion_ts
 from pyon.util.log import log
 
 from interface.objects import Event
+
+import functools
 
 # @TODO: configurable
 EVENTS_XP = "pyon.events"
@@ -184,7 +188,7 @@ class EventSubscriber(Subscriber, BaseEventSubscriberMixin):
     ALL_EVENTS = "#"
 
     def __init__(self, xp_name=None, event_type=None, origin=None, queue_name=None, callback=None,
-                 sub_type=None, origin_type=None, pattern=None, *args, **kwargs):
+                 sub_type=None, origin_type=None, pattern=None, auto_delete=None, *args, **kwargs):
         """
         Initializer.
 
@@ -195,6 +199,7 @@ class EventSubscriber(Subscriber, BaseEventSubscriberMixin):
         Note: an EventSubscriber needs to be closed to free broker resources
         """
         self._cbthread = None
+        self._auto_delete = auto_delete
 
         BaseEventSubscriberMixin.__init__(self, xp_name=xp_name, event_type=event_type, origin=origin,
                                           queue_name=queue_name, sub_type=sub_type, origin_type=origin_type, pattern=pattern)
@@ -224,6 +229,16 @@ class EventSubscriber(Subscriber, BaseEventSubscriberMixin):
 
     def __str__(self):
         return "EventSubscriber at %s:\n\trecv_name: %s\n\tcb: %s" % (hex(id(self)), str(self._recv_name), str(self._callback))
+
+    def _create_channel(self, **kwargs):
+        """
+        Override to set the channel's queue_auto_delete property.
+        """
+        ch = Subscriber._create_channel(self, **kwargs)
+        if self._auto_delete is not None:
+            ch.queue_auto_delete = self._auto_delete
+
+        return ch
 
 class EventRepository(object):
     """
@@ -323,3 +338,22 @@ class EventGate(EventSubscriber):
 
     def check_or_await(self):
         pass
+
+
+
+def handle_stream_exception(iorigin="stream_exception"):
+    """
+    decorator for stream exceptions
+    """
+    def real_decorator(fn):
+        @functools.wraps(fn)
+        def wrapped(*args, **kwargs):
+            try:
+                fn(*args, **kwargs)
+            except StreamException as e:
+                info = "".join(traceback.format_tb(sys.exc_info()[2]))
+                pub = EventPublisher(event_type="ExceptionEvent")        
+                pub.publish_event(origin=iorigin, description="stream exception event", exception_type=str(type(e)), message=info)
+        return wrapped
+    return real_decorator
+
