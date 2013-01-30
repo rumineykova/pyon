@@ -1,13 +1,9 @@
 grammar Monitor;
 
 options {
-<<<<<<< HEAD
         language= Python;
-=======
-        language=Java;
->>>>>>> 0be4e402ab4ffeca4dc58485921ec74f571dec7a
-	output=AST;
-	backtrack=true;
+        output=AST;
+        backtrack=true;
 }
 
 tokens {
@@ -91,11 +87,11 @@ importdecl: IMPORTKW ID ('.' ID)* ';'
 // FIXME: payload types, not message types
 payloadtypedecl:  TYPEKW '<' ID '>' EXTID FROMKW EXTID ASKW ID ';';
 
-description: ( ( packagedecl | importdecl | module ) )* protocolDef -> protocolDef;
+description:  (packagedecl)* (importdecl)* (payloadtypedecl)* protocolDef -> protocolDef;
 
 parameterList: '<' SIGKW ID (',' SIGKW ID)* '>' -> ^(PARAMETERLIST (ID)+);
 
-protocolDef: 'local' 'protocol' protocolName ( 'at' roleName )  ( parameterList )? roleList '{' ( protocolBlockDef ) '}'
+protocolDef: LOCALKW PROTOCOLKW protocolName ( 'at' roleName )  ( parameterList )? roleList '{' ( protocolBlockDef ) '}'
 	     -> ^(PROTOCOL roleName parameterList* roleList+ protocolBlockDef*);
 
 roleList: '(' roleparameDef ( ',' roleparameDef )* ')' -> ^(ROLES roleparameDef+);
@@ -183,7 +179,7 @@ unorderedDef: 'unordered' '{' ( activityDef )* '}' -> ^(PARALLEL ^(BRANCH activi
 aliasDef: roleName 'as' ID -> ^('as' roleName ID) ;	 
 
 
-doDef: 'do' EXTID ('<' interactionSignatureDef (',' interactionSignatureDef)* '>')? '(' aliasDef (',' aliasDef)* ')' -> ^(DO EXTID ^(PARAMETERLIST interactionSignatureDef*) ^(ROLES aliasDef+));	 
+doDef: 'do' ID ('<' interactionSignatureDef (',' interactionSignatureDef)* '>')?  '(' aliasDef (',' aliasDef)* ')' -> ^(DO ID ^(PARAMETERLIST interactionSignatureDef*) ^(ROLES aliasDef+));	 
 
 	 
 
@@ -233,6 +229,7 @@ ID:
 EXTID:
 	'\"' (LETTER | UNDERSCORE) (LETTER | DIGIT | SYMBOL)* '\"'
 ;
+
 
 fragment SYMBOL:
 	'{' | '}' | '(' | ')' | '[' | ']' | ':' | '/' | '\\' | '.' | '\#' | '&' | '?' | '!'	| UNDERSCORE

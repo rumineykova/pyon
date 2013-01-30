@@ -22,7 +22,7 @@ class ConversationProvider(object):
 
     @classmethod
     def get_spec_by_role_and_op(cls, role, op):
-        return 'rpc_generic/local/%s_%s.scr' %(op, role)
+        return '%s_%s.scr' %(op, role)
 
 # The current interceptor can monitor only one conversation at a time for a given principal
 class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
@@ -123,14 +123,14 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         return invocation.get_header_value('conv-msg-type') & MSG_TYPE_MASKS.IN_SESSION
 
     def _check(self, invocation, op_type, self_principal, target_principal):
-
+        print 'Invocation is', invocation.__dict__
         operation = invocation.get_header_value('op', '')
         cid = invocation.get_header_value('app-conv-id', 0)
         conv_seq = invocation.get_header_value('conv-seq', 0)
         conversation_key = self._get_conversation_context_key(self_principal,  invocation)
         conv_cmd = invocation.get_header_value('conv-cmd', "")
-        print "conv_cmd", conv_cmd
-        print 'CID is', cid
+        spec = invocation.get_header_value('spec', "")
+
         # INITIALIZE FSM
         #if ((conv_seq == 1 and self._should_be_monitored(invocation, self_principal, operation)) and
         if (conversation_key in self.conversation_context) and (conv_cmd =='start'):
@@ -140,7 +140,7 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
         if ((conv_seq ==1) and (conv_cmd=='start') and
             not((conversation_key in self.conversation_context))):
             print 'conversation key', conversation_key
-            role_spec = self._get_protocol_spec(self_principal, operation)
+            role_spec = self._get_protocol_spec(self_principal, spec)
             if not role_spec:
                 self._report_error(invocation, GovernanceDispatcher.STATUS_SKIPPED, 'The message cannot be monitored since the protocol specification was not found: %s')
             else:
@@ -182,8 +182,8 @@ class ConversationMonitorInterceptor(BaseInternalGovernanceInterceptor):
                 if not should_pop:
                     self._report_error(invocation, GovernanceDispatcher.STATUS_REJECT, "Unexpected end")
                 self.conversation_context.pop(conversation_key)
-        else:
-            self._report_error(invocation, GovernanceDispatcher.STATUS_REJECT, 'Conversation does not exist')
+        #else:
+        #    self._report_error(invocation, GovernanceDispatcher.STATUS_REJECT, 'Conversation does not exist')
 
     def _is_msg_correct(self, invocation, fsm, transition):
         details = ''

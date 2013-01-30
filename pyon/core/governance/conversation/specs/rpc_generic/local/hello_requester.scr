@@ -1,9 +1,10 @@
-package hello_A;
-local protocol Hello_A at A(role B)
+package hello_requester;
+
+local protocol Hello_requester at requester (role requester, role provider)
 {
-hello() to B;
-(string) from B;
-hello() to B;
-(string) from B;
+hello() to provider;
+(fine:string) from provider;
+how_are_you() to provider;
+(howareyou:string) from provider;
 }
 

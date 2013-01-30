@@ -106,10 +106,27 @@ def recAsRepeat_events():
     events.append(TransitionFactory.create(LocalType.SEND, 'OK', 'Seller'))
     return events
 
+def recNegotiation():
+    events = []
+    events.append(TransitionFactory.create(LocalType.SEND, 'propose', 'CounterParty'))
+    events.append(TransitionFactory.create(LocalType.RESV, 'propose', 'CounterParty'))
+    events.append(TransitionFactory.create(LocalType.SEND, 'accept', 'CounterParty'))
+    return events
+
+def helloDo():
+    events = []
+    events.append(TransitionFactory.create(LocalType.SEND, 'hello', 'provider'))
+    events.append(TransitionFactory.create(LocalType.RESV, '', 'provider'))
+    events.append(TransitionFactory.create(LocalType.SEND, 'how_are_you', 'provider'))
+    events.append(TransitionFactory.create(LocalType.RESV, '', 'provider'))
+    return events
+
+
 class TestFSM(unittest.TestCase):
     def setUp(self):
         #self.path = 'C:/Users/rumi/workspace/MonitorPrototype/src/specs/'
-        self.path = '/homes/rn710/workspace/MonitorPrototype/src/specs/test/'
+        #self.path = '/homes/rn710/workspace/MonitorPrototype/src/specs/test/'
+        self.path = '/home/rumi/Repository/pyon/pyon/core/governance/conversation/specs/'
 
     def base(self, lt_filename, events):
         try:
@@ -140,20 +157,40 @@ class TestFSM(unittest.TestCase):
         except ExceptionFSM:
             raise
 
-    def test_do(self):
-        self.base('DoProt.scr', do_events())
+
+    def test_negotiation(self):
+        self.base('Negotiation_Initiator.scr',recNegotiation())
+        #do_events())
         self.assertEqual(1, 1)
 
+    def test_hello_do(self):
+        self.base('helloDo_requester.scr',helloDo()[0:2])
+        #do_events())
+        self.assertEqual(1, 1)
 
+        self.base('helloDo_requester.scr',helloDo()[2:4])
+        #do_events())
+        self.assertEqual(1, 1)
+
+        self.base('helloDo_requester.scr',helloDo()[0:4])
+        #do_events())
+        self.assertEqual(1, 1)
+
+    def test_hello(self):
+        self.base('hello_requester.scr',[])
+        #do_events())
+        self.assertEqual(1, 1)
+
+    """def test_do(self):
+        self.base('/rpc_generic/local/helloDo_requester.scr',[])
+            #do_events())
+        self.assertEqual(1, 1)"""
+
+"""
     def test_interaction_sequence(self):
         self.base('InteractionSequence.scr', interaction_sequence_events())
         self.assertEqual(1, 1)
 
-    # fix it
-    """def test_empty_protocol(self):
-        self.base('EmptyProtocol.scr', [])
-        self.assertEqual(1, 1)
-"""
     def test_choice(self):
         # Test The First branch
         self.base('SimpleChoice.scr', choice_events()[0:2])
@@ -182,6 +219,7 @@ class TestFSM(unittest.TestCase):
         self.base('RecursionChoice.scr', recAndChoice_events())
         self.assertEqual(1, 1)
 
+"""
 """
     def test_rec_as_repeat(self):
         self.base('RecAsRepeat.spr', recAsRepeat_events())
@@ -239,6 +277,5 @@ class TestFSM(unittest.TestCase):
         self.base('Interrupt.spr', (Interrupt_events()[0:2]+Interrupt_events()[4:6]))
         self.assertEqual(1, 1)
 """
-
 if __name__ == '__main__':
     unittest.main()
