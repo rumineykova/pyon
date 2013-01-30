@@ -113,7 +113,7 @@ class TestFSM(PyonTestCase):
         self.assertEqual(1, 1)
 
     def test_simpleInteraction(self):
-        self.base('purchasingAtBuyerFSMTest.txt', purchasingAtBuyer_events())
+        self.base('purchasingAtBuyer.spr', purchasingAtBuyer_events())
         self.assertEqual(1, 1)
 
     def test_choice(self):
