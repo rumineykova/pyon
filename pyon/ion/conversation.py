@@ -36,7 +36,7 @@ MSG_TYPE = enum(TRANSMIT = 1, INVITE=8, ACCEPT=16, REJECT = 24)
 MSG_TYPE_MASKS = enum(IN_SESSION = 7, CONTROL= 56)
 
 #==================================For App level yConversation Demo==============
-CONV = enum(START = 1, END = 2)
+CONV = enum(START = 'start', END = 'end')
 CONV_MASK = enum(NONE = 0, BOTH=3)
 
 def generate_id():
@@ -126,6 +126,7 @@ class ConversationEndpoint(object):
             self._send(to_role, to_role_name, "", headers)
 
     def send(self, to_role, msg, headers = None, **kwargs):
+        print 'Headers are:...................', headers
         headers = headers if headers else {}
         if self._is_originator and not self._conversation.has_role(to_role):
             _, is_invited  = self._invitation_table.get(to_role)

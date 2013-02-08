@@ -1,0 +1,15 @@
+package helloDo;
+type <python> "string" from "Lib/string.py" as string;
+
+global protocol RPC_generic
+	<sig request, sig reply>(role R, role P)
+{
+	request from R to P;
+	reply from R to P;
+}
+
+global protocol Hello(role requester, role provider)
+{
+	do RPC_generic<hello(), (hello:string)>(requester as R, provider as P);
+    do RPC_generic<how_are_you(), (fine:string)>(requester as R, provider as P);
+}

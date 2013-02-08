@@ -1,0 +1,5 @@
+local protocol Query_instrument_status3_Client at Client (role requester, role provider)
+{
+    do RPCRequester<hello(hello:string), (hello:string)>(requester as Requester, provider as Requestee);
+    do RPCRequester<how_are_you(hello:string), (fine:string)>(requester as Requester, provider as Requestee);
+}

@@ -1,6 +1,10 @@
-protocol RPC at requester(role provider, role requester)
-{  hello() to provider;
-   (inform) from provider;
-   hello() to provider;
-   (inform) from provider;
- }
+package hello_requester;
+
+local protocol Hello_requester at requester (role requester, role provider)
+{
+hello() to provider;
+(fine:string) from provider;
+how_are_you() to provider;
+(howareyou:string) from provider;
+}
+

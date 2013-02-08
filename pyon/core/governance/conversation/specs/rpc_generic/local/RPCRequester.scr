@@ -1,0 +1,8 @@
+package ooi.confluence.RPC_Requester;
+
+local protocol RPC_generic_Requester at Requester <sig request, sig reply>(role Requester, role Requestee)
+{
+request to Requestee;
+reply from Requestee;
+}
+

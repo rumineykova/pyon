@@ -14,6 +14,7 @@ from pyon.core.governance.conversation.core.transition import TransitionFactory
 from pyon.core.governance.conversation.core.local_type import LocalType
 from pyon.core.governance.conversation.extensions.simple_logic import *
 import pyon
+import os
 
 def checkMessages(fsm):
 	print "Message is checked: \%s" \%(fsm.input_symbol)
@@ -106,7 +107,7 @@ self.sig_map = {}
 self.main_fsm = FSMBuilderState()
 self.parser = pyon.core.governance.conversation.parsing.base_parser.ANTLRScribbleParser()
 self.current_fsm = self.main_fsm
-self.import_path = '/homes/rn710/workspace/MonitorPrototype/src/specs/test/'
+self.import_path = '/home/rumi/Repository/pyon/pyon/core/governance/conversation/specs'
 }
 
 description: ^(PROTOCOL roleName parameterList roleList activityDef+);	 
@@ -241,20 +242,26 @@ activityDef:
 	   {self.memory.append('before setting interrupt_transition to True')
 	    self.current_fsm.interrupt_start_state = self.current_fsm.move_current_state()
 	    self.current_fsm.set_interrupt_transition = True} (activityDef+))))
-	|^(FULLNAME  (path=EXTID{
+	|^(DO  (path=ID{
 		path = $path.text
 		self.memory.append('START DO')
 		do_sig_params = []
 		do_role_params = {}})
-		(^(PARAMETERLIST  (label=ID (^(VALUE ID*)) {do_sig_params.append($label.text)} )+))
+		(^(PARAMETERLIST  ((label=ID)? (^(VALUE ID*)) {
+			if label is not None: 
+				do_sig_params.append($label.text)
+				label = None
+			else: do_sig_params.append('')
+			} )+))
 		(^(ROLES  (^('as' new_role =ID orig_role=ID){
 		do_role_params[$orig_role.text]=$new_role.text})+))){
 	   self.memory.append('do statement is processed')
-	   print protocol
 	   print 'role_params', do_role_params
-	   full_name = path.split('.')
-	   full_name[-2] = full_path[-2] + '.scr'
-	   full_name = os.path.join(self.import_path, *full_name[:-1])
+	   #full_name = path.split('.')
+	   #full_name[-2] = full_path[-2] + '.scr'
+	   #full_name = os.path.join(self.import_path, *full_name[:-1])
+	   full_name = path + '.scr'
+	   full_name = os.path.join(self.import_path, full_name) 
 	   print 'full name is', full_name
 	   parsed = self.parser.parse(full_name)
 	   print parsed.tree
