@@ -2,6 +2,7 @@ from collections import deque
 from pydoc import deque
 from pyon.core.governance.conversation.core.transition import DefaultTransition
 from transition import Transition, AssertionTransition
+from ooi.logging import log
 
 class ExceptionFSM(Exception):
     """This is the FSM Exception class."""
@@ -77,6 +78,7 @@ class FSM:
                     new_transition = DefaultTransition(old_transition.lt_type, op_mapping[input], old_transition.role)
                     self.state_transitions[(new_transition.get_trigger(), state)] = val
                     break
+
 
     def reset (self):
 
@@ -224,10 +226,7 @@ class FSM:
         (local_context, action, next_state) = (None, None, None)
         fsmList = self.memory[state]
         fired_fsm = None
-        print 'In memory', self.memory[state]
-        is_do = False
         for cur_fsm in fsmList:
-            is_do = is_do or str(cur_fsm.current_state).find('_') == -1
             (local_context, action, next_state) = cur_fsm.get_transition(input_symbol, 
                                                                          cur_fsm.current_state, 
                                                                          (None, None, None))
@@ -238,11 +237,8 @@ class FSM:
 
         # Important: here we assume that recursion has a control message that is send in order to end the reccursion
         if fired_fsm is not None:
-            if (((next_state == state) and not is_do) or (cur_fsm.has_transition(self.END_PAR_TRANSITION, next_state))):
-                print 'Remove from state', state
+            if ((next_state == state) or (cur_fsm.has_transition(self.END_PAR_TRANSITION, next_state))):
                 self.memory[state].remove(cur_fsm)
-                if not self.memory[state]: self.memory.pop(state)
-                print self.memory
             return (local_context, action, state)
         else:
             raise ExceptionFSM ('Transition is undefined: (%s, %s).' %
@@ -281,16 +277,16 @@ class FSM:
     
             4. No transition was defined. If we get here then raise an exception.
             """
+            
             has_memory = self.memory.get(state, None)
             # TODO: Change to fsm to work without empty state 
             while (((self.empty_transition, state) in self.state_transitions) and
-                    (not self.memory.has_key(state) and not has_memory)):
+                    (state not in self.memory or not has_memory)):
                     (self.current_context, self.action, self.current_state) = self.state_transitions[(self.EMPTY_TRANSITION, state)]
+            
+            
                     state = self.current_state
-
-
-            if ((input_symbol is not self.EMPTY_TRANSITION) and self.memory.has_key(self.current_state)):
-                print 'before getting to is_memory'
+            if ((input_symbol is not self.EMPTY_TRANSITION) and has_memory):
                 return self.get_transition_from_memory(input_symbol, state)
             if self.state_transitions.has_key((input_symbol, state)):
                 return self.state_transitions[(input_symbol, state)]
@@ -344,8 +340,7 @@ class FSM:
             
         (self.current_context, self.action, self.next_state) = self.get_transition(self.input_symbol,
                                                                                     self.current_state)
-        print 'The next state is:', self.next_state
-
+        
         if (self.check_assertions):
             if (self.current_context is not None):
                 self.add_to_context(self.current_context)
@@ -369,11 +364,11 @@ class FSM:
              for (value, type_sig), payload in zip(local_context, self.current_payload)]
             
     def execute_transition_action(self, assertion, context):
-        print 'context is' %(context)
+        log.debug('context is %s', context)
         result =  assertion.check(context)
         if not result: raise ExceptionFailAssertion('Assertion fail for input transition:%s , context: %s and assertion:%s' 
                                                     %(self.input_symbol, context, assertion.statement))
-        else: print 'Message %s is checked' %(self.input_symbol) 
+        else: log.debug('Message %s is checked', self.input_symbol)
             
     def __eq__(self, other) : 
         return self.__dict__ == other.__dict__

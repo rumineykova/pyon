@@ -13,8 +13,6 @@ from pyon.core.governance.conversation.core.fsm import ExceptionFSM
 from pyon.core.governance.conversation.core.transition import TransitionFactory
 from pyon.core.governance.conversation.core.local_type import LocalType
 from pyon.core.governance.conversation.extensions.simple_logic import *
-import pyon
-import os
 
 def checkMessages(fsm):
 	print "Message is checked: \%s" \%(fsm.input_symbol)
@@ -22,7 +20,6 @@ def checkMessages(fsm):
 
 def nothing(fsm):
 	print "I am invoked for empty transition"
-	
 def generate_ints():
 	x = 1
     	while True:
@@ -71,7 +68,7 @@ class FSMBuilderState(object):
 		return self.current_state
 		
 	def add_transition(self, transition, assertion = None, transition_context  = None):	        
-	        print 'Adding transition' 
+	       
 	        if assertion is not None: preprocess_assertion = Assertion.create(assertion) 
 	        else: preprocess_assertion = assertion
 	        
@@ -103,60 +100,37 @@ class FSMBuilderState(object):
 # We append bebugging information to memory so we can print it later. 
 self.memory = []
 self.roles = []
-self.sig_map = {}
 self.main_fsm = FSMBuilderState()
-self.parser = pyon.core.governance.conversation.parsing.base_parser.ANTLRScribbleParser()
 self.current_fsm = self.main_fsm
-self.import_path = '/home/rumi/Repository/pyon/pyon/core/governance/conversation/specs'
 }
 
-description: ^(PROTOCOL roleName parameterList roleList activityDef+);	 
-parameterList: ^(PARAMETERLIST {self.sig_map_list = []} sigName+ {
-	for i, s in enumerate(self.sig_map_list):
-		self.sig_map[s] = i});	 
-roleList: ^(ROLES roleName+);	 
+description: ^(PROTOCOL roleName parameterDefs activityDef+) {print "ProtocolDefinition"};	 
+parameterDefs: ^(ROLES roleName+);	 
 activityDef:
 	^(RESV {
 		local_context = []
 		label = ''}
-           (ABSTRACT siglabel = ID {
-           	sig = $siglabel.text
-           	if self.sig_map.has_key(sig): label = self.sig_params[self.sig_map.get(sig)]
-           	else: raise ExceptionFSM('Reference to undefined label')})?		
 	   (rlabel = ID {
 	   	if ($rlabel is not None): label = $rlabel.text
 	   	self.memory.append('before setting the label:' +  label)})?
-	   (^(VALUE ((val=ID vtype=(INT|STRING)?){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))?
-	   role = ID {if not($role.text in self.roles): self.roles.append($role.text)}
+	   (^(VALUE ((val=ID vtype=(INT|STRING)?){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))
+	   role = ID { if not($role.text in self.roles): self.roles.append($role.text)}
 	   (^(ASSERT (assertion=ASSERTION)?)))
 	{
 	 self.memory.append('label is:' +  label);
-	 print $role.text
-	 if hasattr(self,'sig_roles'): role = self.sig_roles[$role.text]
-	 print role
-	 self.current_fsm.add_transition(TransitionFactory.create(LocalType.RESV, label, role), $assertion, local_context)
+	 self.current_fsm.add_transition(TransitionFactory.create(LocalType.RESV, label, $role), $assertion, local_context)
 	}
 	|^(SEND {
 		local_context = []
 		label = ''}
-	   (ABSTRACT siglabel = ID {
-           	sig = $siglabel.text
-           	if self.sig_map.has_key(sig): label = self.sig_params[self.sig_map.get(sig)]
-           	else: raise ExceptionFSM('Reference to undefined label')})?
 	   (slabel = ID {
 	   		self.memory.append('send' + $slabel.text)
 	   		if ($slabel is not None): label = $slabel.text})?
-       	   (^(VALUE ((val=ID vtype= (INT|STRING)?){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))?  
-	    role = ID {
-	    	print 'Role printing...', role 
-	    	if not($role.text in self.roles): self.roles.append($role.text)}
+       	   (^(VALUE ((val=ID vtype= (INT|STRING)?){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))  
+	    role = ID { if not($role.text in self.roles): self.roles.append($role.text)}
 	   (^(ASSERT (assertion=ASSERTION)?)))	  {self.memory.append('In SEND assertion')}
 	{
-	 print 'Adding transition', label
-	 print $role.text
-	 if hasattr(self,'sig_roles'): role = self.sig_roles[$role.text]
-	 print role 
-	 self.current_fsm.add_transition(TransitionFactory.create(LocalType.SEND, label, role), $assertion, local_context)
+	 self.current_fsm.add_transition(TransitionFactory.create(LocalType.SEND, label, $role), $assertion, local_context)
 	} 
 
 	|^('choice' 
@@ -237,50 +211,18 @@ activityDef:
         #self.current_fsm.fsm.copy_transitions(self.current_fsm.recursions_states[$labelID.text], self.current_fsm.get_current_state())
 	}
 	|^(GLOBAL_ESCAPE 
-	   (^('interruptible' (activityDef+){self.current_fsm.fsm.final_state = self.current_fsm.get_current_state()}))
-	   (^('catch' roleName
+	   (^('do' (activityDef+){self.current_fsm.fsm.final_state = self.current_fsm.get_current_state()}))
+	   (^('interrupt' roleName
 	   {self.memory.append('before setting interrupt_transition to True')
 	    self.current_fsm.interrupt_start_state = self.current_fsm.move_current_state()
 	    self.current_fsm.set_interrupt_transition = True} (activityDef+))))
-	|^(DO  (path=ID{
-		path = $path.text
-		self.memory.append('START DO')
-		do_sig_params = []
-		do_role_params = {}})
-		(^(PARAMETERLIST  ((label=ID)? (^(VALUE ID*)) {
-			if label is not None: 
-				do_sig_params.append($label.text)
-				label = None
-			else: do_sig_params.append('')
-			} )+))
-		(^(ROLES  (^('as' new_role =ID orig_role=ID){
-		do_role_params[$orig_role.text]=$new_role.text})+))){
-	   self.memory.append('do statement is processed')
-	   print 'role_params', do_role_params
-	   #full_name = path.split('.')
-	   #full_name[-2] = full_path[-2] + '.scr'
-	   #full_name = os.path.join(self.import_path, *full_name[:-1])
-	   full_name = path + '.scr'
-	   full_name = os.path.join(self.import_path, full_name) 
-	   print 'full name is', full_name
-	   parsed = self.parser.parse(full_name)
-	   print parsed.tree
-	   builder = self.parser.walk(parsed, sig_params =do_sig_params, sig_roles =do_role_params)
-	   print 'sig params in init', builder.sig_params
-	   print builder.current_fsm.fsm.state_transitions
-	   self.memory.append('do statement processing finished')
-	   builder.current_fsm.add_transition(self.current_fsm.fsm.END_PAR_TRANSITION)
-	   self.current_fsm.fsm.add_fsm_to_memory(self.current_fsm.get_current_state(), builder.current_fsm.fsm)
-	   self.current_fsm.fsm.add_transition(self.current_fsm.fsm.EMPTY_TRANSITION, self.current_fsm.get_current_state(), self.current_fsm.move_current_state())	   
-	   }
 	;
-roleName: role = ID {
-	print 'printing...', role
-	if not($role.text in self.roles): self.roles.append($role.text)};
-sigName: sig = ID {self.sig_map_list.append($sig.text)};	 
+roleName: role = ID { 
+	if not($role.text in self.roles): 
+		self.roles.append($role.text)};
 labelName: ID;
 roleDef: ID;
-primitivetype:INT;
+primitivetype :INT;
 
 
 
