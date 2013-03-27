@@ -1,6 +1,0 @@
-local protocol RPC at provider(role requester, role provider)
-{   request() from requester;
-    choice at provider {
-        accept() to requester;
-        () to requester;
-     or {reject() from requester;}}
