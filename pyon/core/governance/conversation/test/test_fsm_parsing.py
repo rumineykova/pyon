@@ -139,11 +139,11 @@ class TestFSM(unittest.TestCase):
             print builder.main_fsm.fsm.interrupt_start_state
         except ExceptionFSM:
             raise
-
+    """
     def test_do(self):
         self.base('DoProt.scr', do_events())
         self.assertEqual(1, 1)
-
+"""
 
     def test_interaction_sequence(self):
         self.base('InteractionSequence.scr', interaction_sequence_events())
