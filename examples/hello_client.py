@@ -3,12 +3,11 @@ __author__ = 'sphenrie'
 
 
 from pyon.public import Container, ImmediateProcess
-#from pyon.ion.endpoint import ProcessRPCClient
 from pyon.util.context import LocalContextMixin
 from pyon.core.governance import get_actor_header
 from pyon.core.governance.conversation.conversation_monitor_interceptor import Conversation
 
-from interface.services.examples.hello.ihello_service  import HelloServiceProcessClient, BasicProvider
+from interface.services.examples.hello.ihello_service  import BasicProvider
 from interface.services.icontainer_agent import ContainerAgentProcessClient
 import uuid as _uuid
 
@@ -148,6 +147,9 @@ def negotiate_guard(container):
             # propose(text:string) to provider;
             # (x:string) from provider;
             reply = provider.send.propose(result)
+
+            result = adviser.send.consult(offer)
+            print "Returned: " + str(result)
 
         print "Returned: " + str(reply)
 

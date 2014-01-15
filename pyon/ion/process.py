@@ -6,7 +6,8 @@ __license__ = 'Apache 2.0'
 from pyon.util.log import log
 from pyon.core.thread import PyonThreadManager, PyonThread, ThreadManager, PyonThreadTraceback, PyonHeartbeatError
 from pyon.ion.service import BaseService
-from gevent.event import Event, waitall, AsyncResult
+import gevent
+from gevent.event import Event, AsyncResult
 from gevent.queue import Queue
 from gevent import greenlet, Timeout
 from pyon.util.async import spawn
@@ -433,7 +434,7 @@ class IonProcessThread(PyonThread):
                 self.add_endpoint(listener)
 
             with Timeout(seconds=CFG.get_safe('cc.timeout.start_listener', 10)):
-                waitall([x.get_ready_event() for x in self.listeners])
+                gevent.joinall([x.get_ready_event() for x in self.listeners])
 
         except Timeout:
 
