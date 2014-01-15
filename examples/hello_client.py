@@ -50,6 +50,7 @@ def start_conversation(container, protocol):
                             conversation=c, role='adviser')
     return c, provider, adviser
 
+# Test
 def negotiate_ok(container):
 
     try:
@@ -159,7 +160,6 @@ def negotiate_guard(container):
         c.close()
     except Exception, e:
         print "negotiate_n failed: " + e.message
-
 
 if __name__ == '__main__':
     container = Container()
