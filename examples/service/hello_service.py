@@ -34,8 +34,8 @@ class HelloService(BaseHelloService):
             log.exception("No good")
         return "BACK:%s" % text
 
-    def noop(self, text=''):
-        return "k"
+    def get_offer(self, text=''):
+        return "BACK:%s" % text
 
     def deny_noop(self, msg, header):
         if header['op'] == 'noop':

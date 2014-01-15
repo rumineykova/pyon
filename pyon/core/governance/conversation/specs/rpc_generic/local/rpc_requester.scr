@@ -1,0 +1,18 @@
+protocol Negotiation at requester(role provider, role requester)
+{
+    hello(text:string) to provider;
+    (x:string) from provider;
+    rec Start{
+        choice at requester {
+            accept(text:string) to provider;
+            (x:string) from provider;
+        } or {
+            reject to provider;
+            (x:string) from provider;
+       } or {
+            @{guard: repeat<2}
+            propose(text:string) to provider;
+            (x:string) from provider;
+            Start;}
+    }
+}

@@ -2,8 +2,8 @@ grammar Monitor;
 
 options {
         language=Python;
-	output=AST;
-	backtrack=true;
+        output=AST;
+        backtrack=True;
 }
 
 tokens {
@@ -13,6 +13,7 @@ tokens {
 	PLUS 	= '+' ;
 	MINUS	= '-' ;
 	MULT	= '*' ;
+	
 	DIV	= '/' ;
 	FULLSTOP = '.' ;
 	RESV = 'RESV';
@@ -63,7 +64,7 @@ protocolBlockDef: activityListDef -> activityListDef;
 
 blockDef: '{' activityListDef '}' -> ^(BRANCH activityListDef);
 	 	  
-assertDef : (ASSERTION)? -> ^(ASSERT ASSERTION?);
+assertDef : (ASSERTION)* -> ^(ASSERT ASSERTION*);
 
 activityListDef: ( ( ANNOTATION )* activityDef )* -> activityDef+;
 
@@ -88,9 +89,9 @@ firstValueDecl	: valueDecl;
 
 // TODO: add the to roleNames
 interactionDef: 
-	     interactionSignatureDef (
-		'from' role= roleName  (assertDef)-> ^(RESV interactionSignatureDef $role assertDef)
-	      | 'to' roleName  (assertDef) -> ^(SEND interactionSignatureDef roleName assertDef));
+	       assertDef   interactionSignatureDef   (
+	       'from' role= roleName  -> ^(RESV interactionSignatureDef $role assertDef)
+	      |  'to' roleName   -> ^(SEND interactionSignatureDef roleName assertDef));
 
 choiceDef: 'choice' ( 'at' roleName )? blockDef ( 'or' blockDef )* -> ^('choice' blockDef+);
 

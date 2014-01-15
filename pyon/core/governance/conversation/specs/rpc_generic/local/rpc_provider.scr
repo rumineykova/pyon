@@ -1,0 +1,18 @@
+protocol RPC at provider(role requester, role provider)
+{
+    hello(text:string) from requester;
+    (x:string) to requester;
+    rec Start{
+        choice at requester {
+            reject(text:string) from requester;
+            (reason:string) to requester;
+        } or {
+            accept(text:string) from requester;
+            (confirmation:string) to requester;
+        } or {
+            @{assert: text!=x}
+            propose(text:string) from requester;
+            (agreement:string) to requester;
+            Start;}
+            }
+}

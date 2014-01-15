@@ -197,10 +197,11 @@ class ConversationEndpoint(object):
 
 class Participant(object):
 
-    def __init__(self, name):
+    def __init__(self, name, runtime_conv=None):
         self._name = name
         self._conversation_end_points = {}
         self._recv_queue = gqueue.Queue()
+        self.app_conv_id = runtime_conv.id if runtime_conv else None
 
     @property
     def name(self):
@@ -286,11 +287,16 @@ class RPCRequesterEndpointUnit(ProcessRPCRequestEndpointUnit):
         return self._endpoint._conv_type
 
     def _message_send(self, msg, headers=None, **kwargs):
+        if 'app-conv-id' not in headers:
+            headers.update({'app-conv-id': self.participant.app_conv_id})
+
         return ProcessRPCRequestEndpointUnit.send(self, msg, headers,  **kwargs)
 
     #Overridden method to hook into message received process
     def _get_response(self, conv_id, timeout):
         result_data, result_headers = ProcessRPCRequestEndpointUnit._get_response(self, conv_id, timeout)
+        if 'app-conv-id' not in result_headers:
+            result_headers.update({'app-conv-id': self.participant.app_conv_id})
 
         if 'conv-msg-type' in result_headers:
             c = self.participant.get_conversation_endpoint(conv_id)
@@ -307,8 +313,11 @@ class RPCRequesterEndpointUnit(ProcessRPCRequestEndpointUnit):
         c = self.participant.start_conversation_endpoint(self.conv_type.protocol, self.conv_type.client_role, self, convo_id)
 
         c.invite(self.conv_type.server_role, self._endpoint._send_name, merge_with_first_send = True)
-        result_data, result_headers = c.send(self.conv_type.server_role, msg, headers, **kwargs)
 
+        if 'app-conv-id' not in headers:
+            headers.update({'app-conv-id': self.participant.app_conv_id})
+
+        result_data, result_headers = c.send(self.conv_type.server_role, msg, headers, **kwargs)
         c = self.participant.get_conversation_endpoint(convo_id)
         if c:
             self.participant.end_conversation_endpoint(c)
@@ -321,13 +330,23 @@ class ConversationRPCClient(ProcessRPCClient):
     endpoint_unit_type = RPCRequesterEndpointUnit
 
     def __init__(self, **kwargs):
+        conv=None
+        if 'conversation' in kwargs:
+            conv = kwargs.pop('conversation')
+
+        if 'role' in kwargs:
+            role = kwargs.pop('role')
+        else:
+            role = None
+
         ProcessRPCClient.__init__(self, **kwargs)
-        self._conv_type = RPCConversationType()
+        self._conv_type = RPCConversationType(server_role=role)
+
 
         if hasattr(self._process, 'name'):
-            self._participant = Participant(self._process.name)
+            self._participant = Participant(self._process.name, conv)
         else:
-            self._participant = Participant(self._send_name)
+            self._participant = Participant(self._send_name, conv)
 
 
 
@@ -360,7 +379,12 @@ class RPCProviderEndpointUnit(ProcessRPCResponseEndpointUnit):
             #TODO = reject an invitation is not supported yet
             self.participant.accept_next_invitation(self, merge_with_first_send = True)
 
+        if 'app-conv-id' in headers:
+            self.participant.app_conv_id = headers['app-conv-id']
         result, response_headers = ProcessRPCResponseEndpointUnit.message_received(self, msg, headers)
+
+        if 'app-conv-id' not in response_headers:
+            response_headers.update({'app-conv-id': self.participant.app_conv_id})
 
         return result, response_headers
 

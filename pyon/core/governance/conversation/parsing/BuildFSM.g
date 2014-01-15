@@ -8,11 +8,11 @@ options
 }
 
 @header{
-from core.fsm import FSM
-from core.fsm import ExceptionFSM
-from core.transition import TransitionFactory
-from core.LocalType import LocalType
-from extensions.SimpleLogic import *
+from pyon.core.governance.conversation.core.fsm import FSM
+from pyon.core.governance.conversation.core.fsm import ExceptionFSM
+from pyon.core.governance.conversation.core.transition import TransitionFactory
+from pyon.core.governance.conversation.core.local_type import LocalType
+from pyon.core.governance.conversation.extensions.annotation_processor import *
 
 def checkMessages(fsm):
 	print "Message is checked: \%s" \%(fsm.input_symbol)
@@ -67,10 +67,13 @@ class FSMBuilderState(object):
 	def get_current_state(self):
 		return self.current_state
 		
-	def add_transition(self, transition, assertion = None, transition_context  = None):	        
+	def add_transition(self, transition, assertions = None, transition_context  = None):	        
 	       
-	        if assertion is not None: preprocess_assertion = Assertion.create(assertion) 
-	        else: preprocess_assertion = assertion
+	        if assertions: 
+	        	preprocess_assertion = {}
+	        	for assertion in assertions:
+	        		preprocess_assertion.update(Assertion.create(assertion))
+	        else: preprocess_assertion = assertions
 	        
 		if self.parent is not None: 
 			suffix = self.parent.get_current_state()
@@ -108,6 +111,7 @@ description: ^(PROTOCOL roleName parameterDefs activityDef+) {print "ProtocolDef
 parameterDefs: ^(ROLES roleName+);	 
 activityDef:
 	^(RESV {
+		assertions = []
 		local_context = []
 		label = ''}
 	   (rlabel = ID {
@@ -115,22 +119,23 @@ activityDef:
 	   	self.memory.append('before setting the label:' +  label)})?
 	   (^(VALUE ((val=ID vtype=(INT|STRING)?){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))
 	   role = ID { if not($role.text in self.roles): self.roles.append($role.text)}
-	   (^(ASSERT (assertion=ASSERTION)?)))
+	   (^(ASSERT (assertion=ASSERTION  {assertions.append($assertion.text)})*)))
 	{
 	 self.memory.append('label is:' +  label);
-	 self.current_fsm.add_transition(TransitionFactory.create(LocalType.RESV, label, $role), $assertion, local_context)
+	 self.current_fsm.add_transition(TransitionFactory.create(LocalType.RESV, label, $role), assertions, local_context)
 	}
 	|^(SEND {
 		local_context = []
+		assertions = []
 		label = ''}
 	   (slabel = ID {
 	   		self.memory.append('send' + $slabel.text)
 	   		if ($slabel is not None): label = $slabel.text})?
        	   (^(VALUE ((val=ID vtype= (INT|STRING)?){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))  
 	    role = ID { if not($role.text in self.roles): self.roles.append($role.text)}
-	   (^(ASSERT (assertion=ASSERTION)?)))	  {self.memory.append('In SEND assertion')}
+	   (^(ASSERT (assertion=ASSERTION {assertions.append($assertion.text)})*)))	  {self.memory.append('In SEND assertion')}
 	{
-	 self.current_fsm.add_transition(TransitionFactory.create(LocalType.SEND, label, $role), $assertion, local_context)
+	 self.current_fsm.add_transition(TransitionFactory.create(LocalType.SEND, label, $role), assertions,  local_context)
 	} 
 
 	|^('choice' 

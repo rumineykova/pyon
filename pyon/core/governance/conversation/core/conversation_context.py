@@ -9,7 +9,7 @@ class ConversationContext(object):
         self.builder = builder
         self.builder.main_fsm.fsm.reset()
         self.unset_roles = iter(self.builder.roles)
-        self.builder.main_fsm.fsm.instantiate_generics(op_mapping)
+        # self.builder.main_fsm.fsm.instantiate_generics(op_mapping)
         # principal -> role
         self.role_mapper = {}
         self.conv_id = conv_id
