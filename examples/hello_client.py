@@ -149,6 +149,11 @@ def negotiate_guard(container):
             # (x:string) from provider;
             reply = provider.send.propose(result)
 
+            # consult() to adviser;
+            # () from adviser;
+            result = adviser.send.consult(offer)
+            print "Returned: " + str(result)
+
         print "Returned: " + str(reply)
 
         c.close()
