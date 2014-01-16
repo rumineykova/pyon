@@ -1,17 +1,18 @@
 protocol Negotiation at adviser(role requester, role provider, role adviser)
 {
-    consult(text:string) from requester;
-    (proposal:string) to requester;
+    consult(offer:string) from requester;
+    (result:string) to requester;
     rec Start{
             choice at requester {
-                reject() from requester;
+                accept(text:string) from requester;
                 () to requester;
             } or {
-                accept() from requester;
+                reject(text:string) from requester;
                 () to requester;
+
             } or {
-                consult() from requester;
-                () to requester;
+                consult(cond:string) from requester;
+                (result:string) to requester;
                 Start;}
                 }
-}
+}s
