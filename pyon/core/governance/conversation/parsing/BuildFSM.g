@@ -117,7 +117,7 @@ activityDef:
 	   (rlabel = ID {
 	   	if ($rlabel is not None): label = $rlabel.text
 	   	self.memory.append('before setting the label:' +  label)})?
-	   (^(VALUE ((val=ID vtype=(INT|STRING)?){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))
+	   (^(VALUE ((val=ID? vtype=(INT|STRING)){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))
 	   role = ID { if not($role.text in self.roles): self.roles.append($role.text)}
 	   (^(ASSERT (assertion=ASSERTION  {assertions.append($assertion.text)})*)))
 	{
@@ -131,7 +131,7 @@ activityDef:
 	   (slabel = ID {
 	   		self.memory.append('send' + $slabel.text)
 	   		if ($slabel is not None): label = $slabel.text})?
-       	   (^(VALUE ((val=ID vtype= (INT|STRING)?){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))  
+       	   (^(VALUE ((val=ID? vtype= (INT|STRING)){if (($val is not None) and ($vtype is not None)): local_context.append(($val.text, $vtype.text))})*))  
 	    role = ID { if not($role.text in self.roles): self.roles.append($role.text)}
 	   (^(ASSERT (assertion=ASSERTION {assertions.append($assertion.text)})*)))	  {self.memory.append('In SEND assertion')}
 	{

@@ -1,17 +1,17 @@
 protocol Negotiation at provider(role requester, role provider, role adviser)
 {
-    get_offer(text:string) from requester;
-    (offer:string) to requester;
+    propose(string) from requester;
+    (string) to requester;
     rec Start{
         choice at requester {
-            reject(text:string) from requester;
+            reject(string) from requester;
             () to requester;
         } or {
-            accept(text:string) from requester;
+            accept(string) from requester;
             () to requester;
         } or {
-            propose(text:string) from requester;
-            (offer:string) to requester;
+            propose(string) from requester;
+            (string) to requester;
             Start;}
             }
 }

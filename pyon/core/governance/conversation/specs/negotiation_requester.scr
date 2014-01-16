@@ -1,27 +1,27 @@
 protocol Negotiation at requester(role provider, role requester, role adviser)
 {
-    get_offer(text:string) to provider;
-    (offer:string) from provider;
-    consult(offer:string) to adviser;
-    (result:string) from adviser;
+    propose(string) to provider;
+    (string) from provider;
+    consult(string) to adviser;
+    (string) from adviser;
     @{guard: repeat=0}
     rec Start{
         choice at requester {
-            accept(text:string) to provider;
+            accept(string) to provider;
             () from provider;
-            accept(text:string) to adviser;
+            accept(string) to adviser;
             () from adviser;
         } or {
-            reject(text:string) to provider;
+            reject(string) to provider;
             () from provider;
-            reject(text:string) to adviser;
+            reject(string) to adviser;
             () from adviser;
        } or {
             @{guard: repeat<4}
-            propose(text:string) to provider;
-            (offer:string) from provider;
-            consult(offer:string) to adviser;
-            (result:string) from adviser;
+            propose(string) to provider;
+            (string) from provider;
+            consult(string) to adviser;
+            (string) from adviser;
             Start;}
     }
 }

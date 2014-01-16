@@ -55,9 +55,9 @@ def negotiate_ok(container):
     try:
         c, provider, adviser = start_conversation(container, 'negotiate.scr')
 
-        # get_offer(text:string) to provider;
+        # propose(text:string) to provider;
         # (offer:string) from provider;
-        offer = provider.ask.get_offer('send me your offer')
+        offer = provider.ask.propose('send me your offer')
 
         # consult(offer:string) to adviser;
         # (result:string) from adviser;
@@ -89,9 +89,9 @@ def negotiate_nok(container):
     try:
         c, provider, adviser = start_conversation(container, 'negotiate.scr')
 
-        # get_offer(text:string) to provider;
+        # propose(text:string) to provider;
         # (offer:string) from provider
-        offer = provider.ask.get_offer('send me your offer')
+        offer = provider.ask.propose('send me your offer')
 
         # consult(offer:string) to adviser;
         # (result:string) from adviser;
@@ -113,9 +113,9 @@ def negotiate_assert(container):
     try:
         c, provider, adviser = start_conversation(container, 'negotiate.scr')
 
-        # get_offer(text:string) to provider;
+        # propose(text:string) to provider;
         # (offer:string) from provider
-        offer = provider.ask.get_offer('send me your offer')
+        offer = provider.ask.propose('send me your offer')
 
         # consult(offer:string) to adviser;
         # (result:string) from adviser;
@@ -135,9 +135,9 @@ def negotiate_guard(container):
     try:
         c, provider, adviser = start_conversation(container, 'negotiate.scr')
 
-        # get_offer(text:string) to provider;
+        # propose(text:string) to provider;
         # (offer:string) from provider
-        offer = provider.ask.get_offer('send me your offer')
+        offer = provider.ask.propose('send me your offer')
 
         # consult(offer:string) to adviser;
         # (result:string) from adviser;

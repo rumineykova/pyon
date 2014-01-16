@@ -1,4 +1,4 @@
-# $ANTLR 3.1.3 Mar 18, 2009 10:09:25 Generate/Monitor.g 2014-01-16 13:57:56
+# $ANTLR 3.1.3 Mar 18, 2009 10:09:25 Generate/Monitor.g 2014-01-16 18:57:08
 
 import sys
 from antlr3 import *
@@ -2502,7 +2502,7 @@ class MonitorParser(Parser):
                         alt22 = 2
                         LA22_0 = self.input.LA(1)
 
-                        if (LA22_0 == ID) :
+                        if ((INT <= LA22_0 <= STRING) or LA22_0 == ID) :
                             alt22 = 1
                         if alt22 == 1:
                             # Generate/Monitor.g:84:52: valueDecl
@@ -2599,7 +2599,7 @@ class MonitorParser(Parser):
                     alt25 = 2
                     LA25_0 = self.input.LA(1)
 
-                    if (LA25_0 == ID) :
+                    if ((INT <= LA25_0 <= STRING) or LA25_0 == ID) :
                         alt25 = 1
                     if alt25 == 1:
                         # Generate/Monitor.g:85:15: valueDecl
@@ -2712,7 +2712,7 @@ class MonitorParser(Parser):
 
 
     # $ANTLR start "valueDecl"
-    # Generate/Monitor.g:87:1: valueDecl : ID ( ':' primitivetype )? ;
+    # Generate/Monitor.g:87:1: valueDecl : ( ID ':' )? primitivetype ;
     def valueDecl(self, ):
 
         retval = self.valueDecl_return()
@@ -2730,34 +2730,34 @@ class MonitorParser(Parser):
 
         try:
             try:
-                # Generate/Monitor.g:87:11: ( ID ( ':' primitivetype )? )
-                # Generate/Monitor.g:87:13: ID ( ':' primitivetype )?
+                # Generate/Monitor.g:87:11: ( ( ID ':' )? primitivetype )
+                # Generate/Monitor.g:87:13: ( ID ':' )? primitivetype
                 pass 
                 root_0 = self._adaptor.nil()
 
-                ID89=self.match(self.input, ID, self.FOLLOW_ID_in_valueDecl830)
-
-                ID89_tree = self._adaptor.createWithPayload(ID89)
-                self._adaptor.addChild(root_0, ID89_tree)
-
-                # Generate/Monitor.g:87:16: ( ':' primitivetype )?
+                # Generate/Monitor.g:87:13: ( ID ':' )?
                 alt28 = 2
                 LA28_0 = self.input.LA(1)
 
-                if (LA28_0 == 47) :
+                if (LA28_0 == ID) :
                     alt28 = 1
                 if alt28 == 1:
-                    # Generate/Monitor.g:87:17: ':' primitivetype
+                    # Generate/Monitor.g:87:15: ID ':'
                     pass 
-                    char_literal90=self.match(self.input, 47, self.FOLLOW_47_in_valueDecl833)
-                    self._state.following.append(self.FOLLOW_primitivetype_in_valueDecl836)
-                    primitivetype91 = self.primitivetype()
+                    ID89=self.match(self.input, ID, self.FOLLOW_ID_in_valueDecl832)
 
-                    self._state.following.pop()
-                    self._adaptor.addChild(root_0, primitivetype91.tree)
+                    ID89_tree = self._adaptor.createWithPayload(ID89)
+                    self._adaptor.addChild(root_0, ID89_tree)
+
+                    char_literal90=self.match(self.input, 47, self.FOLLOW_47_in_valueDecl834)
 
 
 
+                self._state.following.append(self.FOLLOW_primitivetype_in_valueDecl840)
+                primitivetype91 = self.primitivetype()
+
+                self._state.following.pop()
+                self._adaptor.addChild(root_0, primitivetype91.tree)
 
 
 
@@ -2808,7 +2808,7 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                self._state.following.append(self.FOLLOW_valueDecl_in_firstValueDecl847)
+                self._state.following.append(self.FOLLOW_valueDecl_in_firstValueDecl849)
                 valueDecl92 = self.valueDecl()
 
                 self._state.following.pop()
@@ -2875,12 +2875,12 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:91:15: ( assertDef interactionSignatureDef ( 'from' role= roleName -> ^( RESV interactionSignatureDef $role assertDef ) | 'to' roleName -> ^( SEND interactionSignatureDef roleName assertDef ) ) )
                 # Generate/Monitor.g:92:9: assertDef interactionSignatureDef ( 'from' role= roleName -> ^( RESV interactionSignatureDef $role assertDef ) | 'to' roleName -> ^( SEND interactionSignatureDef roleName assertDef ) )
                 pass 
-                self._state.following.append(self.FOLLOW_assertDef_in_interactionDef864)
+                self._state.following.append(self.FOLLOW_assertDef_in_interactionDef866)
                 assertDef93 = self.assertDef()
 
                 self._state.following.pop()
                 stream_assertDef.add(assertDef93.tree)
-                self._state.following.append(self.FOLLOW_interactionSignatureDef_in_interactionDef868)
+                self._state.following.append(self.FOLLOW_interactionSignatureDef_in_interactionDef870)
                 interactionSignatureDef94 = self.interactionSignatureDef()
 
                 self._state.following.pop()
@@ -2901,9 +2901,9 @@ class MonitorParser(Parser):
                 if alt29 == 1:
                     # Generate/Monitor.g:93:9: 'from' role= roleName
                     pass 
-                    string_literal95=self.match(self.input, 38, self.FOLLOW_38_in_interactionDef882) 
+                    string_literal95=self.match(self.input, 38, self.FOLLOW_38_in_interactionDef884) 
                     stream_38.add(string_literal95)
-                    self._state.following.append(self.FOLLOW_roleName_in_interactionDef887)
+                    self._state.following.append(self.FOLLOW_roleName_in_interactionDef889)
                     role = self.roleName()
 
                     self._state.following.pop()
@@ -2951,9 +2951,9 @@ class MonitorParser(Parser):
                 elif alt29 == 2:
                     # Generate/Monitor.g:94:11: 'to' roleName
                     pass 
-                    string_literal96=self.match(self.input, 48, self.FOLLOW_48_in_interactionDef913) 
+                    string_literal96=self.match(self.input, 48, self.FOLLOW_48_in_interactionDef915) 
                     stream_48.add(string_literal96)
-                    self._state.following.append(self.FOLLOW_roleName_in_interactionDef915)
+                    self._state.following.append(self.FOLLOW_roleName_in_interactionDef917)
                     roleName97 = self.roleName()
 
                     self._state.following.pop()
@@ -3055,7 +3055,7 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:96:10: ( 'choice' ( 'at' roleName )? blockDef ( 'or' blockDef )* -> ^( 'choice' ( blockDef )+ ) )
                 # Generate/Monitor.g:96:12: 'choice' ( 'at' roleName )? blockDef ( 'or' blockDef )*
                 pass 
-                string_literal98=self.match(self.input, 49, self.FOLLOW_49_in_choiceDef937) 
+                string_literal98=self.match(self.input, 49, self.FOLLOW_49_in_choiceDef939) 
                 stream_49.add(string_literal98)
                 # Generate/Monitor.g:96:21: ( 'at' roleName )?
                 alt30 = 2
@@ -3066,9 +3066,9 @@ class MonitorParser(Parser):
                 if alt30 == 1:
                     # Generate/Monitor.g:96:23: 'at' roleName
                     pass 
-                    string_literal99=self.match(self.input, 40, self.FOLLOW_40_in_choiceDef941) 
+                    string_literal99=self.match(self.input, 40, self.FOLLOW_40_in_choiceDef943) 
                     stream_40.add(string_literal99)
-                    self._state.following.append(self.FOLLOW_roleName_in_choiceDef943)
+                    self._state.following.append(self.FOLLOW_roleName_in_choiceDef945)
                     roleName100 = self.roleName()
 
                     self._state.following.pop()
@@ -3076,7 +3076,7 @@ class MonitorParser(Parser):
 
 
 
-                self._state.following.append(self.FOLLOW_blockDef_in_choiceDef948)
+                self._state.following.append(self.FOLLOW_blockDef_in_choiceDef950)
                 blockDef101 = self.blockDef()
 
                 self._state.following.pop()
@@ -3093,9 +3093,9 @@ class MonitorParser(Parser):
                     if alt31 == 1:
                         # Generate/Monitor.g:96:51: 'or' blockDef
                         pass 
-                        string_literal102=self.match(self.input, 50, self.FOLLOW_50_in_choiceDef952) 
+                        string_literal102=self.match(self.input, 50, self.FOLLOW_50_in_choiceDef954) 
                         stream_50.add(string_literal102)
-                        self._state.following.append(self.FOLLOW_blockDef_in_choiceDef954)
+                        self._state.following.append(self.FOLLOW_blockDef_in_choiceDef956)
                         blockDef103 = self.blockDef()
 
                         self._state.following.pop()
@@ -3217,12 +3217,12 @@ class MonitorParser(Parser):
                 if alt32 == 1:
                     # Generate/Monitor.g:98:22: 'from' roleName
                     pass 
-                    string_literal104=self.match(self.input, 38, self.FOLLOW_38_in_directedChoiceDef975)
+                    string_literal104=self.match(self.input, 38, self.FOLLOW_38_in_directedChoiceDef977)
 
                     string_literal104_tree = self._adaptor.createWithPayload(string_literal104)
                     self._adaptor.addChild(root_0, string_literal104_tree)
 
-                    self._state.following.append(self.FOLLOW_roleName_in_directedChoiceDef977)
+                    self._state.following.append(self.FOLLOW_roleName_in_directedChoiceDef979)
                     roleName105 = self.roleName()
 
                     self._state.following.pop()
@@ -3239,12 +3239,12 @@ class MonitorParser(Parser):
                 if alt34 == 1:
                     # Generate/Monitor.g:98:43: 'to' roleName ( ',' roleName )*
                     pass 
-                    string_literal106=self.match(self.input, 48, self.FOLLOW_48_in_directedChoiceDef984)
+                    string_literal106=self.match(self.input, 48, self.FOLLOW_48_in_directedChoiceDef986)
 
                     string_literal106_tree = self._adaptor.createWithPayload(string_literal106)
                     self._adaptor.addChild(root_0, string_literal106_tree)
 
-                    self._state.following.append(self.FOLLOW_roleName_in_directedChoiceDef986)
+                    self._state.following.append(self.FOLLOW_roleName_in_directedChoiceDef988)
                     roleName107 = self.roleName()
 
                     self._state.following.pop()
@@ -3261,8 +3261,8 @@ class MonitorParser(Parser):
                         if alt33 == 1:
                             # Generate/Monitor.g:98:59: ',' roleName
                             pass 
-                            char_literal108=self.match(self.input, 36, self.FOLLOW_36_in_directedChoiceDef990)
-                            self._state.following.append(self.FOLLOW_roleName_in_directedChoiceDef993)
+                            char_literal108=self.match(self.input, 36, self.FOLLOW_36_in_directedChoiceDef992)
+                            self._state.following.append(self.FOLLOW_roleName_in_directedChoiceDef995)
                             roleName109 = self.roleName()
 
                             self._state.following.pop()
@@ -3274,7 +3274,7 @@ class MonitorParser(Parser):
 
 
 
-                char_literal110=self.match(self.input, 41, self.FOLLOW_41_in_directedChoiceDef1001)
+                char_literal110=self.match(self.input, 41, self.FOLLOW_41_in_directedChoiceDef1003)
 
                 char_literal110_tree = self._adaptor.createWithPayload(char_literal110)
                 self._adaptor.addChild(root_0, char_literal110_tree)
@@ -3292,7 +3292,7 @@ class MonitorParser(Parser):
                     if alt35 == 1:
                         # Generate/Monitor.g:98:85: onMessageDef
                         pass 
-                        self._state.following.append(self.FOLLOW_onMessageDef_in_directedChoiceDef1005)
+                        self._state.following.append(self.FOLLOW_onMessageDef_in_directedChoiceDef1007)
                         onMessageDef111 = self.onMessageDef()
 
                         self._state.following.pop()
@@ -3307,7 +3307,7 @@ class MonitorParser(Parser):
                         raise eee
 
                     cnt35 += 1
-                char_literal112=self.match(self.input, 42, self.FOLLOW_42_in_directedChoiceDef1010)
+                char_literal112=self.match(self.input, 42, self.FOLLOW_42_in_directedChoiceDef1012)
 
                 char_literal112_tree = self._adaptor.createWithPayload(char_literal112)
                 self._adaptor.addChild(root_0, char_literal112_tree)
@@ -3366,17 +3366,17 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                self._state.following.append(self.FOLLOW_interactionSignatureDef_in_onMessageDef1017)
+                self._state.following.append(self.FOLLOW_interactionSignatureDef_in_onMessageDef1019)
                 interactionSignatureDef113 = self.interactionSignatureDef()
 
                 self._state.following.pop()
                 self._adaptor.addChild(root_0, interactionSignatureDef113.tree)
-                char_literal114=self.match(self.input, 47, self.FOLLOW_47_in_onMessageDef1019)
+                char_literal114=self.match(self.input, 47, self.FOLLOW_47_in_onMessageDef1021)
 
                 char_literal114_tree = self._adaptor.createWithPayload(char_literal114)
                 self._adaptor.addChild(root_0, char_literal114_tree)
 
-                self._state.following.append(self.FOLLOW_activityList_in_onMessageDef1021)
+                self._state.following.append(self.FOLLOW_activityList_in_onMessageDef1023)
                 activityList115 = self.activityList()
 
                 self._state.following.pop()
@@ -3452,7 +3452,7 @@ class MonitorParser(Parser):
                             if alt36 == 1:
                                 # Generate/Monitor.g:102:19: ANNOTATION
                                 pass 
-                                ANNOTATION116=self.match(self.input, ANNOTATION, self.FOLLOW_ANNOTATION_in_activityList1034)
+                                ANNOTATION116=self.match(self.input, ANNOTATION, self.FOLLOW_ANNOTATION_in_activityList1036)
 
                                 ANNOTATION116_tree = self._adaptor.createWithPayload(ANNOTATION116)
                                 self._adaptor.addChild(root_0, ANNOTATION116_tree)
@@ -3461,7 +3461,7 @@ class MonitorParser(Parser):
 
                             else:
                                 break #loop36
-                        self._state.following.append(self.FOLLOW_activityDef_in_activityList1039)
+                        self._state.following.append(self.FOLLOW_activityDef_in_activityList1041)
                         activityDef117 = self.activityDef()
 
                         self._state.following.pop()
@@ -3532,7 +3532,7 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:104:10: ( 'repeat' ( 'at' roleName ( ',' roleName )* )? blockDef -> ^( 'repeat' blockDef ) )
                 # Generate/Monitor.g:104:12: 'repeat' ( 'at' roleName ( ',' roleName )* )? blockDef
                 pass 
-                string_literal118=self.match(self.input, 51, self.FOLLOW_51_in_repeatDef1049) 
+                string_literal118=self.match(self.input, 51, self.FOLLOW_51_in_repeatDef1051) 
                 stream_51.add(string_literal118)
                 # Generate/Monitor.g:104:21: ( 'at' roleName ( ',' roleName )* )?
                 alt39 = 2
@@ -3543,9 +3543,9 @@ class MonitorParser(Parser):
                 if alt39 == 1:
                     # Generate/Monitor.g:104:23: 'at' roleName ( ',' roleName )*
                     pass 
-                    string_literal119=self.match(self.input, 40, self.FOLLOW_40_in_repeatDef1053) 
+                    string_literal119=self.match(self.input, 40, self.FOLLOW_40_in_repeatDef1055) 
                     stream_40.add(string_literal119)
-                    self._state.following.append(self.FOLLOW_roleName_in_repeatDef1055)
+                    self._state.following.append(self.FOLLOW_roleName_in_repeatDef1057)
                     roleName120 = self.roleName()
 
                     self._state.following.pop()
@@ -3562,9 +3562,9 @@ class MonitorParser(Parser):
                         if alt38 == 1:
                             # Generate/Monitor.g:104:39: ',' roleName
                             pass 
-                            char_literal121=self.match(self.input, 36, self.FOLLOW_36_in_repeatDef1059) 
+                            char_literal121=self.match(self.input, 36, self.FOLLOW_36_in_repeatDef1061) 
                             stream_36.add(char_literal121)
-                            self._state.following.append(self.FOLLOW_roleName_in_repeatDef1061)
+                            self._state.following.append(self.FOLLOW_roleName_in_repeatDef1063)
                             roleName122 = self.roleName()
 
                             self._state.following.pop()
@@ -3576,7 +3576,7 @@ class MonitorParser(Parser):
 
 
 
-                self._state.following.append(self.FOLLOW_blockDef_in_repeatDef1069)
+                self._state.following.append(self.FOLLOW_blockDef_in_repeatDef1071)
                 blockDef123 = self.blockDef()
 
                 self._state.following.pop()
@@ -3668,19 +3668,19 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:106:12: ( assertDef 'rec' labelName blockDef -> ^( 'rec' labelName blockDef ) )
                 # Generate/Monitor.g:106:14: assertDef 'rec' labelName blockDef
                 pass 
-                self._state.following.append(self.FOLLOW_assertDef_in_recBlockDef1085)
+                self._state.following.append(self.FOLLOW_assertDef_in_recBlockDef1087)
                 assertDef124 = self.assertDef()
 
                 self._state.following.pop()
                 stream_assertDef.add(assertDef124.tree)
-                string_literal125=self.match(self.input, 52, self.FOLLOW_52_in_recBlockDef1087) 
+                string_literal125=self.match(self.input, 52, self.FOLLOW_52_in_recBlockDef1089) 
                 stream_52.add(string_literal125)
-                self._state.following.append(self.FOLLOW_labelName_in_recBlockDef1089)
+                self._state.following.append(self.FOLLOW_labelName_in_recBlockDef1091)
                 labelName126 = self.labelName()
 
                 self._state.following.pop()
                 stream_labelName.add(labelName126.tree)
-                self._state.following.append(self.FOLLOW_blockDef_in_recBlockDef1091)
+                self._state.following.append(self.FOLLOW_blockDef_in_recBlockDef1093)
                 blockDef127 = self.blockDef()
 
                 self._state.following.pop()
@@ -3765,7 +3765,7 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:108:10: ( ID -> ID )
                 # Generate/Monitor.g:108:12: ID
                 pass 
-                ID128=self.match(self.input, ID, self.FOLLOW_ID_in_labelName1108) 
+                ID128=self.match(self.input, ID, self.FOLLOW_ID_in_labelName1110) 
                 stream_ID.add(ID128)
 
                 # AST Rewrite
@@ -3839,7 +3839,7 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:110:13: ( labelName -> ^( RECLABEL labelName ) )
                 # Generate/Monitor.g:110:15: labelName
                 pass 
-                self._state.following.append(self.FOLLOW_labelName_in_recursionDef1120)
+                self._state.following.append(self.FOLLOW_labelName_in_recursionDef1122)
                 labelName129 = self.labelName()
 
                 self._state.following.pop()
@@ -3924,7 +3924,7 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                string_literal130=self.match(self.input, 53, self.FOLLOW_53_in_endDef1136)
+                string_literal130=self.match(self.input, 53, self.FOLLOW_53_in_endDef1138)
 
                 string_literal130_tree = self._adaptor.createWithPayload(string_literal130)
                 root_0 = self._adaptor.becomeRoot(string_literal130_tree, root_0)
@@ -3995,12 +3995,12 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                string_literal131=self.match(self.input, 54, self.FOLLOW_54_in_runDef1146)
+                string_literal131=self.match(self.input, 54, self.FOLLOW_54_in_runDef1148)
 
                 string_literal131_tree = self._adaptor.createWithPayload(string_literal131)
                 root_0 = self._adaptor.becomeRoot(string_literal131_tree, root_0)
 
-                self._state.following.append(self.FOLLOW_protocolRefDef_in_runDef1149)
+                self._state.following.append(self.FOLLOW_protocolRefDef_in_runDef1151)
                 protocolRefDef132 = self.protocolRefDef()
 
                 self._state.following.pop()
@@ -4014,8 +4014,8 @@ class MonitorParser(Parser):
                 if alt41 == 1:
                     # Generate/Monitor.g:116:33: '(' parameter ( ',' parameter )* ')'
                     pass 
-                    char_literal133=self.match(self.input, 43, self.FOLLOW_43_in_runDef1153)
-                    self._state.following.append(self.FOLLOW_parameter_in_runDef1156)
+                    char_literal133=self.match(self.input, 43, self.FOLLOW_43_in_runDef1155)
+                    self._state.following.append(self.FOLLOW_parameter_in_runDef1158)
                     parameter134 = self.parameter()
 
                     self._state.following.pop()
@@ -4032,8 +4032,8 @@ class MonitorParser(Parser):
                         if alt40 == 1:
                             # Generate/Monitor.g:116:50: ',' parameter
                             pass 
-                            char_literal135=self.match(self.input, 36, self.FOLLOW_36_in_runDef1160)
-                            self._state.following.append(self.FOLLOW_parameter_in_runDef1163)
+                            char_literal135=self.match(self.input, 36, self.FOLLOW_36_in_runDef1162)
+                            self._state.following.append(self.FOLLOW_parameter_in_runDef1165)
                             parameter136 = self.parameter()
 
                             self._state.following.pop()
@@ -4042,16 +4042,16 @@ class MonitorParser(Parser):
 
                         else:
                             break #loop40
-                    char_literal137=self.match(self.input, 44, self.FOLLOW_44_in_runDef1168)
+                    char_literal137=self.match(self.input, 44, self.FOLLOW_44_in_runDef1170)
 
 
 
-                string_literal138=self.match(self.input, 38, self.FOLLOW_38_in_runDef1174)
+                string_literal138=self.match(self.input, 38, self.FOLLOW_38_in_runDef1176)
 
                 string_literal138_tree = self._adaptor.createWithPayload(string_literal138)
                 self._adaptor.addChild(root_0, string_literal138_tree)
 
-                self._state.following.append(self.FOLLOW_roleName_in_runDef1176)
+                self._state.following.append(self.FOLLOW_roleName_in_runDef1178)
                 roleName139 = self.roleName()
 
                 self._state.following.pop()
@@ -4110,7 +4110,7 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                ID140=self.match(self.input, ID, self.FOLLOW_ID_in_protocolRefDef1184)
+                ID140=self.match(self.input, ID, self.FOLLOW_ID_in_protocolRefDef1186)
 
                 ID140_tree = self._adaptor.createWithPayload(ID140)
                 self._adaptor.addChild(root_0, ID140_tree)
@@ -4124,12 +4124,12 @@ class MonitorParser(Parser):
                 if alt42 == 1:
                     # Generate/Monitor.g:118:22: 'at' roleName
                     pass 
-                    string_literal141=self.match(self.input, 40, self.FOLLOW_40_in_protocolRefDef1188)
+                    string_literal141=self.match(self.input, 40, self.FOLLOW_40_in_protocolRefDef1190)
 
                     string_literal141_tree = self._adaptor.createWithPayload(string_literal141)
                     self._adaptor.addChild(root_0, string_literal141_tree)
 
-                    self._state.following.append(self.FOLLOW_roleName_in_protocolRefDef1190)
+                    self._state.following.append(self.FOLLOW_roleName_in_protocolRefDef1192)
                     roleName142 = self.roleName()
 
                     self._state.following.pop()
@@ -4187,7 +4187,7 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                ID143=self.match(self.input, ID, self.FOLLOW_ID_in_declarationName1201)
+                ID143=self.match(self.input, ID, self.FOLLOW_ID_in_declarationName1203)
 
                 ID143_tree = self._adaptor.createWithPayload(ID143)
                 self._adaptor.addChild(root_0, ID143_tree)
@@ -4242,7 +4242,7 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                self._state.following.append(self.FOLLOW_declarationName_in_parameter1209)
+                self._state.following.append(self.FOLLOW_declarationName_in_parameter1211)
                 declarationName144 = self.declarationName()
 
                 self._state.following.pop()
@@ -4309,12 +4309,12 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                string_literal145=self.match(self.input, 55, self.FOLLOW_55_in_inlineDef1218)
+                string_literal145=self.match(self.input, 55, self.FOLLOW_55_in_inlineDef1220)
 
                 string_literal145_tree = self._adaptor.createWithPayload(string_literal145)
                 root_0 = self._adaptor.becomeRoot(string_literal145_tree, root_0)
 
-                self._state.following.append(self.FOLLOW_protocolRefDef_in_inlineDef1221)
+                self._state.following.append(self.FOLLOW_protocolRefDef_in_inlineDef1223)
                 protocolRefDef146 = self.protocolRefDef()
 
                 self._state.following.pop()
@@ -4328,8 +4328,8 @@ class MonitorParser(Parser):
                 if alt44 == 1:
                     # Generate/Monitor.g:125:39: '(' parameter ( ',' parameter )* ')'
                     pass 
-                    char_literal147=self.match(self.input, 43, self.FOLLOW_43_in_inlineDef1225)
-                    self._state.following.append(self.FOLLOW_parameter_in_inlineDef1228)
+                    char_literal147=self.match(self.input, 43, self.FOLLOW_43_in_inlineDef1227)
+                    self._state.following.append(self.FOLLOW_parameter_in_inlineDef1230)
                     parameter148 = self.parameter()
 
                     self._state.following.pop()
@@ -4346,8 +4346,8 @@ class MonitorParser(Parser):
                         if alt43 == 1:
                             # Generate/Monitor.g:125:56: ',' parameter
                             pass 
-                            char_literal149=self.match(self.input, 36, self.FOLLOW_36_in_inlineDef1232)
-                            self._state.following.append(self.FOLLOW_parameter_in_inlineDef1235)
+                            char_literal149=self.match(self.input, 36, self.FOLLOW_36_in_inlineDef1234)
+                            self._state.following.append(self.FOLLOW_parameter_in_inlineDef1237)
                             parameter150 = self.parameter()
 
                             self._state.following.pop()
@@ -4356,7 +4356,7 @@ class MonitorParser(Parser):
 
                         else:
                             break #loop43
-                    char_literal151=self.match(self.input, 44, self.FOLLOW_44_in_inlineDef1240)
+                    char_literal151=self.match(self.input, 44, self.FOLLOW_44_in_inlineDef1242)
 
 
 
@@ -4416,9 +4416,9 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:127:12: ( 'parallel' blockDef ( 'and' blockDef )* -> ^( PARALLEL ( blockDef )+ ) )
                 # Generate/Monitor.g:127:14: 'parallel' blockDef ( 'and' blockDef )*
                 pass 
-                string_literal152=self.match(self.input, 56, self.FOLLOW_56_in_parallelDef1252) 
+                string_literal152=self.match(self.input, 56, self.FOLLOW_56_in_parallelDef1254) 
                 stream_56.add(string_literal152)
-                self._state.following.append(self.FOLLOW_blockDef_in_parallelDef1254)
+                self._state.following.append(self.FOLLOW_blockDef_in_parallelDef1256)
                 blockDef153 = self.blockDef()
 
                 self._state.following.pop()
@@ -4435,9 +4435,9 @@ class MonitorParser(Parser):
                     if alt45 == 1:
                         # Generate/Monitor.g:127:36: 'and' blockDef
                         pass 
-                        string_literal154=self.match(self.input, 57, self.FOLLOW_57_in_parallelDef1258) 
+                        string_literal154=self.match(self.input, 57, self.FOLLOW_57_in_parallelDef1260) 
                         stream_57.add(string_literal154)
-                        self._state.following.append(self.FOLLOW_blockDef_in_parallelDef1260)
+                        self._state.following.append(self.FOLLOW_blockDef_in_parallelDef1262)
                         blockDef155 = self.blockDef()
 
                         self._state.following.pop()
@@ -4541,16 +4541,16 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:130:11: ( 'do' '{' activityListDef '}' -> ^( 'do' activityListDef ) )
                 # Generate/Monitor.g:130:13: 'do' '{' activityListDef '}'
                 pass 
-                string_literal156=self.match(self.input, 58, self.FOLLOW_58_in_doBlockDef1280) 
+                string_literal156=self.match(self.input, 58, self.FOLLOW_58_in_doBlockDef1282) 
                 stream_58.add(string_literal156)
-                char_literal157=self.match(self.input, 41, self.FOLLOW_41_in_doBlockDef1282) 
+                char_literal157=self.match(self.input, 41, self.FOLLOW_41_in_doBlockDef1284) 
                 stream_41.add(char_literal157)
-                self._state.following.append(self.FOLLOW_activityListDef_in_doBlockDef1284)
+                self._state.following.append(self.FOLLOW_activityListDef_in_doBlockDef1286)
                 activityListDef158 = self.activityListDef()
 
                 self._state.following.pop()
                 stream_activityListDef.add(activityListDef158.tree)
-                char_literal159=self.match(self.input, 42, self.FOLLOW_42_in_doBlockDef1287) 
+                char_literal159=self.match(self.input, 42, self.FOLLOW_42_in_doBlockDef1289) 
                 stream_42.add(char_literal159)
 
                 # AST Rewrite
@@ -4645,23 +4645,23 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:132:13: ( 'interrupt' 'by' roleName '{' activityListDef '}' -> ^( 'interrupt' roleName activityListDef ) )
                 # Generate/Monitor.g:132:15: 'interrupt' 'by' roleName '{' activityListDef '}'
                 pass 
-                string_literal160=self.match(self.input, 59, self.FOLLOW_59_in_interruptDef1305) 
+                string_literal160=self.match(self.input, 59, self.FOLLOW_59_in_interruptDef1307) 
                 stream_59.add(string_literal160)
-                string_literal161=self.match(self.input, 60, self.FOLLOW_60_in_interruptDef1307) 
+                string_literal161=self.match(self.input, 60, self.FOLLOW_60_in_interruptDef1309) 
                 stream_60.add(string_literal161)
-                self._state.following.append(self.FOLLOW_roleName_in_interruptDef1309)
+                self._state.following.append(self.FOLLOW_roleName_in_interruptDef1311)
                 roleName162 = self.roleName()
 
                 self._state.following.pop()
                 stream_roleName.add(roleName162.tree)
-                char_literal163=self.match(self.input, 41, self.FOLLOW_41_in_interruptDef1311) 
+                char_literal163=self.match(self.input, 41, self.FOLLOW_41_in_interruptDef1313) 
                 stream_41.add(char_literal163)
-                self._state.following.append(self.FOLLOW_activityListDef_in_interruptDef1313)
+                self._state.following.append(self.FOLLOW_activityListDef_in_interruptDef1315)
                 activityListDef164 = self.activityListDef()
 
                 self._state.following.pop()
                 stream_activityListDef.add(activityListDef164.tree)
-                char_literal165=self.match(self.input, 42, self.FOLLOW_42_in_interruptDef1315) 
+                char_literal165=self.match(self.input, 42, self.FOLLOW_42_in_interruptDef1317) 
                 stream_42.add(char_literal165)
 
                 # AST Rewrite
@@ -4745,12 +4745,12 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:134:16: ( doBlockDef interruptDef -> ^( GLOBAL_ESCAPE doBlockDef interruptDef ) )
                 # Generate/Monitor.g:134:19: doBlockDef interruptDef
                 pass 
-                self._state.following.append(self.FOLLOW_doBlockDef_in_globalEscapeDef1333)
+                self._state.following.append(self.FOLLOW_doBlockDef_in_globalEscapeDef1335)
                 doBlockDef166 = self.doBlockDef()
 
                 self._state.following.pop()
                 stream_doBlockDef.add(doBlockDef166.tree)
-                self._state.following.append(self.FOLLOW_interruptDef_in_globalEscapeDef1336)
+                self._state.following.append(self.FOLLOW_interruptDef_in_globalEscapeDef1338)
                 interruptDef167 = self.interruptDef()
 
                 self._state.following.pop()
@@ -4846,9 +4846,9 @@ class MonitorParser(Parser):
                 # Generate/Monitor.g:136:13: ( 'unordered' '{' ( ( ANNOTATION )* activityDef )* '}' -> ^( PARALLEL ( ^( BRANCH activityDef ) )+ ) )
                 # Generate/Monitor.g:136:15: 'unordered' '{' ( ( ANNOTATION )* activityDef )* '}'
                 pass 
-                string_literal168=self.match(self.input, 61, self.FOLLOW_61_in_unorderedDef1353) 
+                string_literal168=self.match(self.input, 61, self.FOLLOW_61_in_unorderedDef1355) 
                 stream_61.add(string_literal168)
-                char_literal169=self.match(self.input, 41, self.FOLLOW_41_in_unorderedDef1355) 
+                char_literal169=self.match(self.input, 41, self.FOLLOW_41_in_unorderedDef1357) 
                 stream_41.add(char_literal169)
                 # Generate/Monitor.g:136:31: ( ( ANNOTATION )* activityDef )*
                 while True: #loop47
@@ -4874,13 +4874,13 @@ class MonitorParser(Parser):
                             if alt46 == 1:
                                 # Generate/Monitor.g:136:35: ANNOTATION
                                 pass 
-                                ANNOTATION170=self.match(self.input, ANNOTATION, self.FOLLOW_ANNOTATION_in_unorderedDef1361) 
+                                ANNOTATION170=self.match(self.input, ANNOTATION, self.FOLLOW_ANNOTATION_in_unorderedDef1363) 
                                 stream_ANNOTATION.add(ANNOTATION170)
 
 
                             else:
                                 break #loop46
-                        self._state.following.append(self.FOLLOW_activityDef_in_unorderedDef1366)
+                        self._state.following.append(self.FOLLOW_activityDef_in_unorderedDef1368)
                         activityDef171 = self.activityDef()
 
                         self._state.following.pop()
@@ -4889,7 +4889,7 @@ class MonitorParser(Parser):
 
                     else:
                         break #loop47
-                char_literal172=self.match(self.input, 42, self.FOLLOW_42_in_unorderedDef1371) 
+                char_literal172=self.match(self.input, 42, self.FOLLOW_42_in_unorderedDef1373) 
                 stream_42.add(char_literal172)
 
                 # AST Rewrite
@@ -4989,7 +4989,7 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                self._state.following.append(self.FOLLOW_term_in_expr1396)
+                self._state.following.append(self.FOLLOW_term_in_expr1398)
                 term173 = self.term()
 
                 self._state.following.pop()
@@ -5017,7 +5017,7 @@ class MonitorParser(Parser):
                             raise mse
 
 
-                        self._state.following.append(self.FOLLOW_term_in_expr1411)
+                        self._state.following.append(self.FOLLOW_term_in_expr1413)
                         term175 = self.term()
 
                         self._state.following.pop()
@@ -5080,7 +5080,7 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                self._state.following.append(self.FOLLOW_factor_in_term1423)
+                self._state.following.append(self.FOLLOW_factor_in_term1425)
                 factor176 = self.factor()
 
                 self._state.following.pop()
@@ -5108,7 +5108,7 @@ class MonitorParser(Parser):
                             raise mse
 
 
-                        self._state.following.append(self.FOLLOW_factor_in_term1437)
+                        self._state.following.append(self.FOLLOW_factor_in_term1439)
                         factor178 = self.factor()
 
                         self._state.following.pop()
@@ -5167,7 +5167,7 @@ class MonitorParser(Parser):
                 pass 
                 root_0 = self._adaptor.nil()
 
-                NUMBER179=self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_factor1449)
+                NUMBER179=self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_factor1451)
 
                 NUMBER179_tree = self._adaptor.createWithPayload(NUMBER179)
                 self._adaptor.addChild(root_0, NUMBER179_tree)
@@ -5340,13 +5340,13 @@ class MonitorParser(Parser):
         )
 
     DFA37_min = DFA.unpack(
-        u"\1\22\1\uffff\1\45\1\32\1\uffff\1\32\1\44\1\32\1\46\1\44\1\32\1"
-        u"\46\1\5\1\44\1\5\3\44\1\5\2\44\1\5\4\44"
+        u"\1\22\1\uffff\1\45\1\5\1\uffff\1\5\1\57\2\44\1\5\1\46\1\57\2\44"
+        u"\1\5\1\46\1\5\1\57\2\44\1\5\1\57\2\44\2\5"
         )
 
     DFA37_max = DFA.unpack(
-        u"\1\75\1\uffff\1\60\1\54\1\uffff\1\54\1\57\1\32\1\60\1\57\1\32\1"
-        u"\60\1\6\1\57\1\6\1\57\2\54\1\6\2\54\1\6\4\54"
+        u"\1\75\1\uffff\1\60\1\54\1\uffff\1\54\1\57\2\54\1\32\1\60\1\57\2"
+        u"\54\1\32\1\60\1\6\1\57\2\54\1\6\1\57\2\54\2\6"
         )
 
     DFA37_accept = DFA.unpack(
@@ -5363,29 +5363,29 @@ class MonitorParser(Parser):
         u"\1\4\1\1\1\3\4\uffff\2\4\1\uffff\6\4\1\uffff\1\4\2\uffff\1\4"),
         DFA.unpack(u""),
         DFA.unpack(u"\2\4\4\uffff\1\5\2\uffff\1\4\1\1\1\4"),
-        DFA.unpack(u"\1\6\11\uffff\1\7\7\uffff\1\10"),
+        DFA.unpack(u"\1\7\1\10\23\uffff\1\6\11\uffff\1\11\7\uffff\1\12"),
         DFA.unpack(u""),
-        DFA.unpack(u"\1\11\11\uffff\1\12\7\uffff\1\13"),
-        DFA.unpack(u"\1\7\7\uffff\1\10\2\uffff\1\14"),
-        DFA.unpack(u"\1\15"),
+        DFA.unpack(u"\1\14\1\15\23\uffff\1\13\11\uffff\1\16\7\uffff\1\17"),
+        DFA.unpack(u"\1\20"),
+        DFA.unpack(u"\1\11\7\uffff\1\12"),
+        DFA.unpack(u"\1\11\7\uffff\1\12"),
+        DFA.unpack(u"\1\22\1\23\23\uffff\1\21"),
         DFA.unpack(u"\1\4\10\uffff\1\1\1\4"),
-        DFA.unpack(u"\1\12\7\uffff\1\13\2\uffff\1\16"),
-        DFA.unpack(u"\1\17"),
+        DFA.unpack(u"\1\24"),
+        DFA.unpack(u"\1\16\7\uffff\1\17"),
+        DFA.unpack(u"\1\16\7\uffff\1\17"),
+        DFA.unpack(u"\1\26\1\27\23\uffff\1\25"),
         DFA.unpack(u"\1\4\10\uffff\1\1\1\4"),
-        DFA.unpack(u"\1\20\1\21"),
-        DFA.unpack(u"\1\7\7\uffff\1\10\2\uffff\1\22"),
-        DFA.unpack(u"\1\23\1\24"),
-        DFA.unpack(u"\1\12\7\uffff\1\13\2\uffff\1\25"),
-        DFA.unpack(u"\1\7\7\uffff\1\10"),
-        DFA.unpack(u"\1\7\7\uffff\1\10"),
-        DFA.unpack(u"\1\26\1\27"),
-        DFA.unpack(u"\1\12\7\uffff\1\13"),
-        DFA.unpack(u"\1\12\7\uffff\1\13"),
-        DFA.unpack(u"\1\30\1\31"),
-        DFA.unpack(u"\1\7\7\uffff\1\10"),
-        DFA.unpack(u"\1\7\7\uffff\1\10"),
-        DFA.unpack(u"\1\12\7\uffff\1\13"),
-        DFA.unpack(u"\1\12\7\uffff\1\13")
+        DFA.unpack(u"\1\7\1\10"),
+        DFA.unpack(u"\1\30"),
+        DFA.unpack(u"\1\11\7\uffff\1\12"),
+        DFA.unpack(u"\1\11\7\uffff\1\12"),
+        DFA.unpack(u"\1\14\1\15"),
+        DFA.unpack(u"\1\31"),
+        DFA.unpack(u"\1\16\7\uffff\1\17"),
+        DFA.unpack(u"\1\16\7\uffff\1\17"),
+        DFA.unpack(u"\1\22\1\23"),
+        DFA.unpack(u"\1\26\1\27")
     ]
 
     # class definition for DFA #37
@@ -5474,108 +5474,108 @@ class MonitorParser(Parser):
     FOLLOW_ID_in_roleName729 = frozenset([1])
     FOLLOW_ID_in_typeReferenceDef740 = frozenset([1])
     FOLLOW_typeReferenceDef_in_interactionSignatureDef751 = frozenset([1, 43])
-    FOLLOW_43_in_interactionSignatureDef754 = frozenset([26, 36, 44])
+    FOLLOW_43_in_interactionSignatureDef754 = frozenset([5, 6, 26, 36, 44])
     FOLLOW_valueDecl_in_interactionSignatureDef758 = frozenset([36, 44])
-    FOLLOW_36_in_interactionSignatureDef764 = frozenset([26])
+    FOLLOW_36_in_interactionSignatureDef764 = frozenset([5, 6, 26])
     FOLLOW_valueDecl_in_interactionSignatureDef766 = frozenset([36, 44])
     FOLLOW_44_in_interactionSignatureDef770 = frozenset([1])
-    FOLLOW_43_in_interactionSignatureDef794 = frozenset([26, 36, 44])
+    FOLLOW_43_in_interactionSignatureDef794 = frozenset([5, 6, 26, 36, 44])
     FOLLOW_valueDecl_in_interactionSignatureDef798 = frozenset([36, 44])
-    FOLLOW_36_in_interactionSignatureDef804 = frozenset([26])
+    FOLLOW_36_in_interactionSignatureDef804 = frozenset([5, 6, 26])
     FOLLOW_valueDecl_in_interactionSignatureDef806 = frozenset([36, 44])
     FOLLOW_44_in_interactionSignatureDef810 = frozenset([1])
-    FOLLOW_ID_in_valueDecl830 = frozenset([1, 47])
-    FOLLOW_47_in_valueDecl833 = frozenset([5, 6])
-    FOLLOW_primitivetype_in_valueDecl836 = frozenset([1])
-    FOLLOW_valueDecl_in_firstValueDecl847 = frozenset([1])
-    FOLLOW_assertDef_in_interactionDef864 = frozenset([26, 28, 43])
-    FOLLOW_interactionSignatureDef_in_interactionDef868 = frozenset([38, 48])
-    FOLLOW_38_in_interactionDef882 = frozenset([26])
-    FOLLOW_roleName_in_interactionDef887 = frozenset([1])
-    FOLLOW_48_in_interactionDef913 = frozenset([26])
-    FOLLOW_roleName_in_interactionDef915 = frozenset([1])
-    FOLLOW_49_in_choiceDef937 = frozenset([40, 41])
-    FOLLOW_40_in_choiceDef941 = frozenset([26])
-    FOLLOW_roleName_in_choiceDef943 = frozenset([40, 41])
-    FOLLOW_blockDef_in_choiceDef948 = frozenset([1, 50])
-    FOLLOW_50_in_choiceDef952 = frozenset([40, 41])
-    FOLLOW_blockDef_in_choiceDef954 = frozenset([1, 50])
-    FOLLOW_38_in_directedChoiceDef975 = frozenset([26])
-    FOLLOW_roleName_in_directedChoiceDef977 = frozenset([41, 48])
-    FOLLOW_48_in_directedChoiceDef984 = frozenset([26])
-    FOLLOW_roleName_in_directedChoiceDef986 = frozenset([36, 41])
-    FOLLOW_36_in_directedChoiceDef990 = frozenset([26])
-    FOLLOW_roleName_in_directedChoiceDef993 = frozenset([36, 41])
-    FOLLOW_41_in_directedChoiceDef1001 = frozenset([26, 28, 43])
-    FOLLOW_onMessageDef_in_directedChoiceDef1005 = frozenset([26, 28, 42, 43])
-    FOLLOW_42_in_directedChoiceDef1010 = frozenset([1])
-    FOLLOW_interactionSignatureDef_in_onMessageDef1017 = frozenset([47])
-    FOLLOW_47_in_onMessageDef1019 = frozenset([18, 25, 26, 28, 38, 41, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
-    FOLLOW_activityList_in_onMessageDef1021 = frozenset([1])
-    FOLLOW_ANNOTATION_in_activityList1034 = frozenset([18, 25, 26, 28, 38, 41, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
-    FOLLOW_activityDef_in_activityList1039 = frozenset([1, 18, 25, 26, 28, 38, 41, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
-    FOLLOW_51_in_repeatDef1049 = frozenset([40, 41])
-    FOLLOW_40_in_repeatDef1053 = frozenset([26])
-    FOLLOW_roleName_in_repeatDef1055 = frozenset([36, 40, 41])
-    FOLLOW_36_in_repeatDef1059 = frozenset([26])
-    FOLLOW_roleName_in_repeatDef1061 = frozenset([36, 40, 41])
-    FOLLOW_blockDef_in_repeatDef1069 = frozenset([1])
-    FOLLOW_assertDef_in_recBlockDef1085 = frozenset([52])
-    FOLLOW_52_in_recBlockDef1087 = frozenset([26])
-    FOLLOW_labelName_in_recBlockDef1089 = frozenset([40, 41])
-    FOLLOW_blockDef_in_recBlockDef1091 = frozenset([1])
-    FOLLOW_ID_in_labelName1108 = frozenset([1])
-    FOLLOW_labelName_in_recursionDef1120 = frozenset([1])
-    FOLLOW_53_in_endDef1136 = frozenset([1])
-    FOLLOW_54_in_runDef1146 = frozenset([26])
-    FOLLOW_protocolRefDef_in_runDef1149 = frozenset([38, 43])
-    FOLLOW_43_in_runDef1153 = frozenset([26])
-    FOLLOW_parameter_in_runDef1156 = frozenset([36, 44])
-    FOLLOW_36_in_runDef1160 = frozenset([26])
-    FOLLOW_parameter_in_runDef1163 = frozenset([36, 44])
-    FOLLOW_44_in_runDef1168 = frozenset([38])
-    FOLLOW_38_in_runDef1174 = frozenset([26])
-    FOLLOW_roleName_in_runDef1176 = frozenset([1])
-    FOLLOW_ID_in_protocolRefDef1184 = frozenset([1, 40])
-    FOLLOW_40_in_protocolRefDef1188 = frozenset([26])
-    FOLLOW_roleName_in_protocolRefDef1190 = frozenset([1])
-    FOLLOW_ID_in_declarationName1201 = frozenset([1])
-    FOLLOW_declarationName_in_parameter1209 = frozenset([1])
-    FOLLOW_55_in_inlineDef1218 = frozenset([26])
-    FOLLOW_protocolRefDef_in_inlineDef1221 = frozenset([1, 43])
-    FOLLOW_43_in_inlineDef1225 = frozenset([26])
-    FOLLOW_parameter_in_inlineDef1228 = frozenset([36, 44])
-    FOLLOW_36_in_inlineDef1232 = frozenset([26])
-    FOLLOW_parameter_in_inlineDef1235 = frozenset([36, 44])
-    FOLLOW_44_in_inlineDef1240 = frozenset([1])
-    FOLLOW_56_in_parallelDef1252 = frozenset([40, 41])
-    FOLLOW_blockDef_in_parallelDef1254 = frozenset([1, 57])
-    FOLLOW_57_in_parallelDef1258 = frozenset([40, 41])
-    FOLLOW_blockDef_in_parallelDef1260 = frozenset([1, 57])
-    FOLLOW_58_in_doBlockDef1280 = frozenset([41])
-    FOLLOW_41_in_doBlockDef1282 = frozenset([18, 25, 26, 28, 38, 41, 42, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
-    FOLLOW_activityListDef_in_doBlockDef1284 = frozenset([42])
-    FOLLOW_42_in_doBlockDef1287 = frozenset([1])
-    FOLLOW_59_in_interruptDef1305 = frozenset([60])
-    FOLLOW_60_in_interruptDef1307 = frozenset([26])
-    FOLLOW_roleName_in_interruptDef1309 = frozenset([41])
-    FOLLOW_41_in_interruptDef1311 = frozenset([18, 25, 26, 28, 38, 41, 42, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
-    FOLLOW_activityListDef_in_interruptDef1313 = frozenset([42])
-    FOLLOW_42_in_interruptDef1315 = frozenset([1])
-    FOLLOW_doBlockDef_in_globalEscapeDef1333 = frozenset([59])
-    FOLLOW_interruptDef_in_globalEscapeDef1336 = frozenset([1])
-    FOLLOW_61_in_unorderedDef1353 = frozenset([41])
-    FOLLOW_41_in_unorderedDef1355 = frozenset([18, 25, 26, 28, 38, 41, 42, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
-    FOLLOW_ANNOTATION_in_unorderedDef1361 = frozenset([18, 25, 26, 28, 38, 41, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
-    FOLLOW_activityDef_in_unorderedDef1366 = frozenset([18, 25, 26, 28, 38, 41, 42, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
-    FOLLOW_42_in_unorderedDef1371 = frozenset([1])
-    FOLLOW_term_in_expr1396 = frozenset([1, 7, 8])
-    FOLLOW_set_in_expr1400 = frozenset([29])
-    FOLLOW_term_in_expr1411 = frozenset([1, 7, 8])
-    FOLLOW_factor_in_term1423 = frozenset([1, 9, 10])
-    FOLLOW_set_in_term1427 = frozenset([29])
-    FOLLOW_factor_in_term1437 = frozenset([1, 9, 10])
-    FOLLOW_NUMBER_in_factor1449 = frozenset([1])
+    FOLLOW_ID_in_valueDecl832 = frozenset([47])
+    FOLLOW_47_in_valueDecl834 = frozenset([5, 6, 26])
+    FOLLOW_primitivetype_in_valueDecl840 = frozenset([1])
+    FOLLOW_valueDecl_in_firstValueDecl849 = frozenset([1])
+    FOLLOW_assertDef_in_interactionDef866 = frozenset([26, 28, 43])
+    FOLLOW_interactionSignatureDef_in_interactionDef870 = frozenset([38, 48])
+    FOLLOW_38_in_interactionDef884 = frozenset([26])
+    FOLLOW_roleName_in_interactionDef889 = frozenset([1])
+    FOLLOW_48_in_interactionDef915 = frozenset([26])
+    FOLLOW_roleName_in_interactionDef917 = frozenset([1])
+    FOLLOW_49_in_choiceDef939 = frozenset([40, 41])
+    FOLLOW_40_in_choiceDef943 = frozenset([26])
+    FOLLOW_roleName_in_choiceDef945 = frozenset([40, 41])
+    FOLLOW_blockDef_in_choiceDef950 = frozenset([1, 50])
+    FOLLOW_50_in_choiceDef954 = frozenset([40, 41])
+    FOLLOW_blockDef_in_choiceDef956 = frozenset([1, 50])
+    FOLLOW_38_in_directedChoiceDef977 = frozenset([26])
+    FOLLOW_roleName_in_directedChoiceDef979 = frozenset([41, 48])
+    FOLLOW_48_in_directedChoiceDef986 = frozenset([26])
+    FOLLOW_roleName_in_directedChoiceDef988 = frozenset([36, 41])
+    FOLLOW_36_in_directedChoiceDef992 = frozenset([26])
+    FOLLOW_roleName_in_directedChoiceDef995 = frozenset([36, 41])
+    FOLLOW_41_in_directedChoiceDef1003 = frozenset([26, 28, 43])
+    FOLLOW_onMessageDef_in_directedChoiceDef1007 = frozenset([26, 28, 42, 43])
+    FOLLOW_42_in_directedChoiceDef1012 = frozenset([1])
+    FOLLOW_interactionSignatureDef_in_onMessageDef1019 = frozenset([47])
+    FOLLOW_47_in_onMessageDef1021 = frozenset([18, 25, 26, 28, 38, 41, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
+    FOLLOW_activityList_in_onMessageDef1023 = frozenset([1])
+    FOLLOW_ANNOTATION_in_activityList1036 = frozenset([18, 25, 26, 28, 38, 41, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
+    FOLLOW_activityDef_in_activityList1041 = frozenset([1, 18, 25, 26, 28, 38, 41, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
+    FOLLOW_51_in_repeatDef1051 = frozenset([40, 41])
+    FOLLOW_40_in_repeatDef1055 = frozenset([26])
+    FOLLOW_roleName_in_repeatDef1057 = frozenset([36, 40, 41])
+    FOLLOW_36_in_repeatDef1061 = frozenset([26])
+    FOLLOW_roleName_in_repeatDef1063 = frozenset([36, 40, 41])
+    FOLLOW_blockDef_in_repeatDef1071 = frozenset([1])
+    FOLLOW_assertDef_in_recBlockDef1087 = frozenset([52])
+    FOLLOW_52_in_recBlockDef1089 = frozenset([26])
+    FOLLOW_labelName_in_recBlockDef1091 = frozenset([40, 41])
+    FOLLOW_blockDef_in_recBlockDef1093 = frozenset([1])
+    FOLLOW_ID_in_labelName1110 = frozenset([1])
+    FOLLOW_labelName_in_recursionDef1122 = frozenset([1])
+    FOLLOW_53_in_endDef1138 = frozenset([1])
+    FOLLOW_54_in_runDef1148 = frozenset([26])
+    FOLLOW_protocolRefDef_in_runDef1151 = frozenset([38, 43])
+    FOLLOW_43_in_runDef1155 = frozenset([26])
+    FOLLOW_parameter_in_runDef1158 = frozenset([36, 44])
+    FOLLOW_36_in_runDef1162 = frozenset([26])
+    FOLLOW_parameter_in_runDef1165 = frozenset([36, 44])
+    FOLLOW_44_in_runDef1170 = frozenset([38])
+    FOLLOW_38_in_runDef1176 = frozenset([26])
+    FOLLOW_roleName_in_runDef1178 = frozenset([1])
+    FOLLOW_ID_in_protocolRefDef1186 = frozenset([1, 40])
+    FOLLOW_40_in_protocolRefDef1190 = frozenset([26])
+    FOLLOW_roleName_in_protocolRefDef1192 = frozenset([1])
+    FOLLOW_ID_in_declarationName1203 = frozenset([1])
+    FOLLOW_declarationName_in_parameter1211 = frozenset([1])
+    FOLLOW_55_in_inlineDef1220 = frozenset([26])
+    FOLLOW_protocolRefDef_in_inlineDef1223 = frozenset([1, 43])
+    FOLLOW_43_in_inlineDef1227 = frozenset([26])
+    FOLLOW_parameter_in_inlineDef1230 = frozenset([36, 44])
+    FOLLOW_36_in_inlineDef1234 = frozenset([26])
+    FOLLOW_parameter_in_inlineDef1237 = frozenset([36, 44])
+    FOLLOW_44_in_inlineDef1242 = frozenset([1])
+    FOLLOW_56_in_parallelDef1254 = frozenset([40, 41])
+    FOLLOW_blockDef_in_parallelDef1256 = frozenset([1, 57])
+    FOLLOW_57_in_parallelDef1260 = frozenset([40, 41])
+    FOLLOW_blockDef_in_parallelDef1262 = frozenset([1, 57])
+    FOLLOW_58_in_doBlockDef1282 = frozenset([41])
+    FOLLOW_41_in_doBlockDef1284 = frozenset([18, 25, 26, 28, 38, 41, 42, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
+    FOLLOW_activityListDef_in_doBlockDef1286 = frozenset([42])
+    FOLLOW_42_in_doBlockDef1289 = frozenset([1])
+    FOLLOW_59_in_interruptDef1307 = frozenset([60])
+    FOLLOW_60_in_interruptDef1309 = frozenset([26])
+    FOLLOW_roleName_in_interruptDef1311 = frozenset([41])
+    FOLLOW_41_in_interruptDef1313 = frozenset([18, 25, 26, 28, 38, 41, 42, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
+    FOLLOW_activityListDef_in_interruptDef1315 = frozenset([42])
+    FOLLOW_42_in_interruptDef1317 = frozenset([1])
+    FOLLOW_doBlockDef_in_globalEscapeDef1335 = frozenset([59])
+    FOLLOW_interruptDef_in_globalEscapeDef1338 = frozenset([1])
+    FOLLOW_61_in_unorderedDef1355 = frozenset([41])
+    FOLLOW_41_in_unorderedDef1357 = frozenset([18, 25, 26, 28, 38, 41, 42, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
+    FOLLOW_ANNOTATION_in_unorderedDef1363 = frozenset([18, 25, 26, 28, 38, 41, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
+    FOLLOW_activityDef_in_unorderedDef1368 = frozenset([18, 25, 26, 28, 38, 41, 42, 43, 48, 49, 51, 52, 53, 54, 55, 56, 58, 61])
+    FOLLOW_42_in_unorderedDef1373 = frozenset([1])
+    FOLLOW_term_in_expr1398 = frozenset([1, 7, 8])
+    FOLLOW_set_in_expr1402 = frozenset([29])
+    FOLLOW_term_in_expr1413 = frozenset([1, 7, 8])
+    FOLLOW_factor_in_term1425 = frozenset([1, 9, 10])
+    FOLLOW_set_in_term1429 = frozenset([29])
+    FOLLOW_factor_in_term1439 = frozenset([1, 9, 10])
+    FOLLOW_NUMBER_in_factor1451 = frozenset([1])
 
 
 

@@ -84,7 +84,7 @@ typeReferenceDef: ID ->ID;
 interactionSignatureDef: ((typeReferenceDef ('(' ( valueDecl )? (',' valueDecl)* ')')? -> typeReferenceDef ^(VALUE valueDecl*))
 			 | (('(' ( valueDecl )? (',' valueDecl)* ')') -> ^(VALUE valueDecl*)));
 
-valueDecl : ID (':'! primitivetype)?;	 
+valueDecl : ( ID ':'! )? primitivetype;	 
 firstValueDecl	: valueDecl;
 
 // TODO: add the to roleNames
