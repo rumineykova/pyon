@@ -4,6 +4,7 @@ protocol Negotiation at requester(role provider, role requester, role adviser)
     (offer:string) from provider;
     consult() to adviser;
     () from adviser;
+    @{guard: repeat=0}
     rec Start{
         choice at requester {
             accept(text:string) to provider;
@@ -16,7 +17,7 @@ protocol Negotiation at requester(role provider, role requester, role adviser)
             reject() to adviser;
             () from adviser;
        } or {
-            @{guard: repeat<2}
+            @{guard: repeat<4}
             propose(text:string) to provider;
             (conditions:string) from provider;
             consult() to adviser;
