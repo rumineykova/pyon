@@ -55,28 +55,28 @@ def negotiate_ok(container):
     try:
         c, provider, adviser = start_conversation(container, 'negotiate.scr')
 
-        # propose(text:string) to provider;
-        # (offer:string) from provider;
+        # propose(string) to provider;
+        # (string) from provider;
         offer = provider.ask.propose('send me your offer')
 
-        # consult(offer:string) to adviser;
-        # (result:string) from adviser;
+        # consult(string) to adviser;
+        # (string) from adviser;
         result = adviser.ask.consult(offer)
 
-        # propose(text:string) to provider;
-        # (x:string) from provider;
+        # propose(string) to provider;
+        # (string) from provider;
         conditions = provider.ask.propose(result)
 
-        # consult(offer:string) to adviser;
-        # (result:string) from  adviser;
+        # consult(string) to adviser;
+        # (string) from  adviser;
         result = adviser.ask.consult(conditions)
         print "Returned: " + str(result)
 
-        # accept(text:string) to provider;
+        # accept(string) to provider;
         # () from provider;
         provider.ask.accept(conditions)
 
-        # accept(text:string) to adviser;
+        # accept(string) to adviser;
         # () from adviser;
         adviser.ask.accept(conditions)
 
@@ -89,20 +89,20 @@ def negotiate_nok(container):
     try:
         c, provider, adviser = start_conversation(container, 'negotiate.scr')
 
-        # propose(text:string) to provider;
-        # (offer:string) from provider
+        # propose(string) to provider;
+        # (string) from provider
         offer = provider.ask.propose('send me your offer')
 
-        # consult(offer:string) to adviser;
-        # (result:string) from adviser;
+        # consult(string) to adviser;
+        # (string) from adviser;
         result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
 
-        # reject(text:string) to provider;
+        # reject(string) to provider;
         # () from provider;
         provider.ask.reject('not interested')
 
-        # reject(text:string) to adviser;
+        # reject(string) to adviser;
         # () from adviser;
         adviser.ask.reject('not interested')
 
@@ -118,21 +118,21 @@ def negotiate_assert(container):
     try:
         c, provider, adviser = start_conversation(container, 'negotiate.scr')
 
-        # propose(text:string) to provider;
-        # (offer:string) from provider
+        # propose(string) to provider;
+        # (string) from provider
         offer = provider.ask.propose('send me your offer')
 
-        # consult(offer:string) to adviser;
-        # (result:string) from adviser;
+        # consult(string) to adviser;
+        # (string) from adviser;
         result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
 
 
-        # reject(text:string) to  provider;
+        # reject(string) to  provider;
         # () from provider;
         provider.ask.reject(result)
 
-        # reject(text:string) to  adviser;
+        # reject(string) to  adviser;
         # () from adviser;
         adviser.ask.reject(result)
 
@@ -147,30 +147,30 @@ def negotiate_guard(container):
     try:
         c, provider, adviser = start_conversation(container, 'negotiate.scr')
 
-        # propose(text:string) to provider;
-        # (offer:string) from provider
+        # propose(string) to provider;
+        # (string) from provider
         offer = provider.ask.propose('send me your offer')
 
-        # consult(offer:string) to adviser;
-        # (result:string) from adviser;
+        # consult(string) to adviser;
+        # (string) from adviser;
         result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
 
         for i in range(1, 3):
-            # propose(text:string) to provider;
-            # (offer:string) from provider;
+            # propose(string) to provider;
+            # (string) from provider;
             offer = provider.ask.propose(result)
 
-            # consult(offer:string) to adviser;
-            # (result:string) from adviser;
+            # consult(string) to adviser;
+            # (string) from adviser;
             result = adviser.ask.consult(offer)
             print "Returned: " + str(result)
 
-        # accept(text:string) to  provider;
+        # accept(string) to  provider;
         # () from provider;
         provider.ask.accept(result)
 
-        # accept(text:string) to  adviser;
+        # accept(string) to  adviser;
         # () from adviser;
         adviser.ask.accept(result)
 
