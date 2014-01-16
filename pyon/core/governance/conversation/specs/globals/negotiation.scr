@@ -8,12 +8,12 @@ protocol Negotiation(role provider, role requester, role adviser)
     rec Start{
         choice at requester {
             accept(text:string) from requester to provider;
-            (x:string) from provider to requester;
+            () from provider to requester;
             accept(text:string) from requester to adviser;
             () from adviser to requester;
         } or {
             reject(text:string) from requester to provider;
-            (x:string) from provider to requester;
+            () from provider to requester;
             reject(text:string) from requester to adviser;
             () from adviser to requester;
        } or {
