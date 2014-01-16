@@ -154,8 +154,6 @@ def negotiate_guard(container):
             result = adviser.ask.consult(offer)
             print "Returned: " + str(result)
 
-            result = adviser.ask.consult(offer)
-            print "Returned: " + str(result)
 
         print "Returned: " + str(reply)
 
