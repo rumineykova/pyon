@@ -72,11 +72,11 @@ def negotiate_ok(container):
         result = adviser.ask.consult(conditions)
         print "Returned: " + str(result)
 
-        # accept(text:string) to  provider;
+        # accept(text:string) to provider;
         # () from provider;
         provider.ask.accept(conditions)
 
-        # accept(text:string) to  adviser;
+        # accept(text:string) to adviser;
         # () from adviser;
         adviser.ask.accept(conditions)
 
@@ -102,6 +102,11 @@ def negotiate_nok(container):
         # () from provider;
         provider.ask.reject('not interested')
 
+        # reject(text:string) to adviser;
+        # () from adviser;
+        adviser.ask.reject('not interested')
+
+        # ERROR: Cannot propose after reject
         ret = provider.ask.propose('here is my offer')
         print "Returned: " + str(ret)
 
@@ -122,8 +127,15 @@ def negotiate_assert(container):
         result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
 
-        # propose(text:string) to provider;
-        # (x:string) from provider;
+
+        # reject(text:string) to  provider;
+        # () from provider;
+        provider.ask.reject(result)
+
+        # reject(text:string) to  adviser;
+        # () from adviser;
+        adviser.ask.reject(result)
+
         provider.ask.propose(offer)
 
         c.close()
@@ -147,14 +159,21 @@ def negotiate_guard(container):
         for i in range(1, 3):
             # propose(text:string) to provider;
             # (offer:string) from provider;
-            reply = provider.ask.propose(result)
+            offer = provider.ask.propose(result)
 
             # consult(offer:string) to adviser;
             # (result:string) from adviser;
             result = adviser.ask.consult(offer)
             print "Returned: " + str(result)
 
-        print "Returned: " + str(reply)
+        # accept(text:string) to  provider;
+        # () from provider;
+        provider.ask.accept(result)
+
+        # accept(text:string) to  adviser;
+        # () from adviser;
+        adviser.ask.accept(result)
+
 
         c.close()
     except Exception, e:
