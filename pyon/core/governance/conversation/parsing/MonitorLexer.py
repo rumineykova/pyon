@@ -1,4 +1,4 @@
-# $ANTLR 3.1.3 Mar 18, 2009 10:09:25 Monitor.g 2013-08-14 22:38:39
+# $ANTLR 3.1.3 Mar 18, 2009 10:09:25 Generate/Monitor.g 2014-01-16 13:57:56
 
 import sys
 from antlr3 import *
@@ -72,7 +72,7 @@ STRING=6
 
 class MonitorLexer(Lexer):
 
-    grammarFileName = "Monitor.g"
+    grammarFileName = "Generate/Monitor.g"
     antlr_version = version_str_to_tuple("3.1.3 Mar 18, 2009 10:09:25")
     antlr_version_str = "3.1.3 Mar 18, 2009 10:09:25"
 
@@ -105,8 +105,8 @@ class MonitorLexer(Lexer):
             _type = INTERACTION
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:7:13: ( 'interaction' )
-            # Monitor.g:7:15: 'interaction'
+            # Generate/Monitor.g:7:13: ( 'interaction' )
+            # Generate/Monitor.g:7:15: 'interaction'
             pass 
             self.match("interaction")
 
@@ -130,8 +130,8 @@ class MonitorLexer(Lexer):
             _type = INT
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:8:5: ( 'int' )
-            # Monitor.g:8:7: 'int'
+            # Generate/Monitor.g:8:5: ( 'int' )
+            # Generate/Monitor.g:8:7: 'int'
             pass 
             self.match("int")
 
@@ -155,8 +155,8 @@ class MonitorLexer(Lexer):
             _type = STRING
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:9:8: ( 'string' )
-            # Monitor.g:9:10: 'string'
+            # Generate/Monitor.g:9:8: ( 'string' )
+            # Generate/Monitor.g:9:10: 'string'
             pass 
             self.match("string")
 
@@ -180,8 +180,8 @@ class MonitorLexer(Lexer):
             _type = PLUS
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:10:6: ( '+' )
-            # Monitor.g:10:8: '+'
+            # Generate/Monitor.g:10:6: ( '+' )
+            # Generate/Monitor.g:10:8: '+'
             pass 
             self.match(43)
 
@@ -205,8 +205,8 @@ class MonitorLexer(Lexer):
             _type = MINUS
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:11:7: ( '-' )
-            # Monitor.g:11:9: '-'
+            # Generate/Monitor.g:11:7: ( '-' )
+            # Generate/Monitor.g:11:9: '-'
             pass 
             self.match(45)
 
@@ -230,8 +230,8 @@ class MonitorLexer(Lexer):
             _type = MULT
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:12:6: ( '*' )
-            # Monitor.g:12:8: '*'
+            # Generate/Monitor.g:12:6: ( '*' )
+            # Generate/Monitor.g:12:8: '*'
             pass 
             self.match(42)
 
@@ -255,8 +255,8 @@ class MonitorLexer(Lexer):
             _type = DIV
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:13:5: ( '/' )
-            # Monitor.g:13:7: '/'
+            # Generate/Monitor.g:13:5: ( '/' )
+            # Generate/Monitor.g:13:7: '/'
             pass 
             self.match(47)
 
@@ -280,8 +280,8 @@ class MonitorLexer(Lexer):
             _type = FULLSTOP
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:14:10: ( '.' )
-            # Monitor.g:14:12: '.'
+            # Generate/Monitor.g:14:10: ( '.' )
+            # Generate/Monitor.g:14:12: '.'
             pass 
             self.match(46)
 
@@ -305,8 +305,8 @@ class MonitorLexer(Lexer):
             _type = RESV
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:15:6: ( 'RESV' )
-            # Monitor.g:15:8: 'RESV'
+            # Generate/Monitor.g:15:6: ( 'RESV' )
+            # Generate/Monitor.g:15:8: 'RESV'
             pass 
             self.match("RESV")
 
@@ -330,8 +330,8 @@ class MonitorLexer(Lexer):
             _type = SEND
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:16:6: ( 'SEND' )
-            # Monitor.g:16:8: 'SEND'
+            # Generate/Monitor.g:16:6: ( 'SEND' )
+            # Generate/Monitor.g:16:8: 'SEND'
             pass 
             self.match("SEND")
 
@@ -355,8 +355,8 @@ class MonitorLexer(Lexer):
             _type = TYPE
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:17:6: ( 'TYPE' )
-            # Monitor.g:17:8: 'TYPE'
+            # Generate/Monitor.g:17:6: ( 'TYPE' )
+            # Generate/Monitor.g:17:8: 'TYPE'
             pass 
             self.match("TYPE")
 
@@ -380,8 +380,8 @@ class MonitorLexer(Lexer):
             _type = VALUE
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:18:7: ( 'VALUE' )
-            # Monitor.g:18:9: 'VALUE'
+            # Generate/Monitor.g:18:7: ( 'VALUE' )
+            # Generate/Monitor.g:18:9: 'VALUE'
             pass 
             self.match("VALUE")
 
@@ -405,8 +405,8 @@ class MonitorLexer(Lexer):
             _type = BRANCH
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:19:8: ( 'BRANCH' )
-            # Monitor.g:19:10: 'BRANCH'
+            # Generate/Monitor.g:19:8: ( 'BRANCH' )
+            # Generate/Monitor.g:19:10: 'BRANCH'
             pass 
             self.match("BRANCH")
 
@@ -430,8 +430,8 @@ class MonitorLexer(Lexer):
             _type = UNORDERED
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:20:11: ( 'UNORDERED' )
-            # Monitor.g:20:13: 'UNORDERED'
+            # Generate/Monitor.g:20:11: ( 'UNORDERED' )
+            # Generate/Monitor.g:20:13: 'UNORDERED'
             pass 
             self.match("UNORDERED")
 
@@ -455,8 +455,8 @@ class MonitorLexer(Lexer):
             _type = RECLABEL
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:21:10: ( 'RECLABEL' )
-            # Monitor.g:21:12: 'RECLABEL'
+            # Generate/Monitor.g:21:10: ( 'RECLABEL' )
+            # Generate/Monitor.g:21:12: 'RECLABEL'
             pass 
             self.match("RECLABEL")
 
@@ -480,8 +480,8 @@ class MonitorLexer(Lexer):
             _type = PARALLEL
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:22:10: ( 'PARALLEL' )
-            # Monitor.g:22:12: 'PARALLEL'
+            # Generate/Monitor.g:22:10: ( 'PARALLEL' )
+            # Generate/Monitor.g:22:12: 'PARALLEL'
             pass 
             self.match("PARALLEL")
 
@@ -505,8 +505,8 @@ class MonitorLexer(Lexer):
             _type = PROTOCOL
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:23:10: ( 'PROTOCOL' )
-            # Monitor.g:23:12: 'PROTOCOL'
+            # Generate/Monitor.g:23:10: ( 'PROTOCOL' )
+            # Generate/Monitor.g:23:12: 'PROTOCOL'
             pass 
             self.match("PROTOCOL")
 
@@ -530,8 +530,8 @@ class MonitorLexer(Lexer):
             _type = ASSERT
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:24:8: ( 'ASSERT' )
-            # Monitor.g:24:10: 'ASSERT'
+            # Generate/Monitor.g:24:8: ( 'ASSERT' )
+            # Generate/Monitor.g:24:10: 'ASSERT'
             pass 
             self.match("ASSERT")
 
@@ -555,8 +555,8 @@ class MonitorLexer(Lexer):
             _type = GLOBAL_ESCAPE
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:25:15: ( 'GLOBAL_ESCAPE' )
-            # Monitor.g:25:17: 'GLOBAL_ESCAPE'
+            # Generate/Monitor.g:25:15: ( 'GLOBAL_ESCAPE' )
+            # Generate/Monitor.g:25:17: 'GLOBAL_ESCAPE'
             pass 
             self.match("GLOBAL_ESCAPE")
 
@@ -580,8 +580,8 @@ class MonitorLexer(Lexer):
             _type = EMPTY
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:26:7: ( 'EMPTY' )
-            # Monitor.g:26:9: 'EMPTY'
+            # Generate/Monitor.g:26:7: ( 'EMPTY' )
+            # Generate/Monitor.g:26:9: 'EMPTY'
             pass 
             self.match("EMPTY")
 
@@ -605,8 +605,8 @@ class MonitorLexer(Lexer):
             _type = ROLES
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:27:7: ( 'ROLES' )
-            # Monitor.g:27:9: 'ROLES'
+            # Generate/Monitor.g:27:7: ( 'ROLES' )
+            # Generate/Monitor.g:27:9: 'ROLES'
             pass 
             self.match("ROLES")
 
@@ -630,8 +630,8 @@ class MonitorLexer(Lexer):
             _type = T__34
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:28:7: ( 'import' )
-            # Monitor.g:28:9: 'import'
+            # Generate/Monitor.g:28:7: ( 'import' )
+            # Generate/Monitor.g:28:9: 'import'
             pass 
             self.match("import")
 
@@ -655,8 +655,8 @@ class MonitorLexer(Lexer):
             _type = T__35
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:29:7: ( 'protocol' )
-            # Monitor.g:29:9: 'protocol'
+            # Generate/Monitor.g:29:7: ( 'protocol' )
+            # Generate/Monitor.g:29:9: 'protocol'
             pass 
             self.match("protocol")
 
@@ -680,8 +680,8 @@ class MonitorLexer(Lexer):
             _type = T__36
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:30:7: ( ',' )
-            # Monitor.g:30:9: ','
+            # Generate/Monitor.g:30:7: ( ',' )
+            # Generate/Monitor.g:30:9: ','
             pass 
             self.match(44)
 
@@ -705,8 +705,8 @@ class MonitorLexer(Lexer):
             _type = T__37
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:31:7: ( ';' )
-            # Monitor.g:31:9: ';'
+            # Generate/Monitor.g:31:7: ( ';' )
+            # Generate/Monitor.g:31:9: ';'
             pass 
             self.match(59)
 
@@ -730,8 +730,8 @@ class MonitorLexer(Lexer):
             _type = T__38
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:32:7: ( 'from' )
-            # Monitor.g:32:9: 'from'
+            # Generate/Monitor.g:32:7: ( 'from' )
+            # Generate/Monitor.g:32:9: 'from'
             pass 
             self.match("from")
 
@@ -755,8 +755,8 @@ class MonitorLexer(Lexer):
             _type = T__39
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:33:7: ( 'as' )
-            # Monitor.g:33:9: 'as'
+            # Generate/Monitor.g:33:7: ( 'as' )
+            # Generate/Monitor.g:33:9: 'as'
             pass 
             self.match("as")
 
@@ -780,8 +780,8 @@ class MonitorLexer(Lexer):
             _type = T__40
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:34:7: ( 'at' )
-            # Monitor.g:34:9: 'at'
+            # Generate/Monitor.g:34:7: ( 'at' )
+            # Generate/Monitor.g:34:9: 'at'
             pass 
             self.match("at")
 
@@ -805,8 +805,8 @@ class MonitorLexer(Lexer):
             _type = T__41
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:35:7: ( '{' )
-            # Monitor.g:35:9: '{'
+            # Generate/Monitor.g:35:7: ( '{' )
+            # Generate/Monitor.g:35:9: '{'
             pass 
             self.match(123)
 
@@ -830,8 +830,8 @@ class MonitorLexer(Lexer):
             _type = T__42
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:36:7: ( '}' )
-            # Monitor.g:36:9: '}'
+            # Generate/Monitor.g:36:7: ( '}' )
+            # Generate/Monitor.g:36:9: '}'
             pass 
             self.match(125)
 
@@ -855,8 +855,8 @@ class MonitorLexer(Lexer):
             _type = T__43
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:37:7: ( '(' )
-            # Monitor.g:37:9: '('
+            # Generate/Monitor.g:37:7: ( '(' )
+            # Generate/Monitor.g:37:9: '('
             pass 
             self.match(40)
 
@@ -880,8 +880,8 @@ class MonitorLexer(Lexer):
             _type = T__44
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:38:7: ( ')' )
-            # Monitor.g:38:9: ')'
+            # Generate/Monitor.g:38:7: ( ')' )
+            # Generate/Monitor.g:38:9: ')'
             pass 
             self.match(41)
 
@@ -905,8 +905,8 @@ class MonitorLexer(Lexer):
             _type = T__45
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:39:7: ( 'role' )
-            # Monitor.g:39:9: 'role'
+            # Generate/Monitor.g:39:7: ( 'role' )
+            # Generate/Monitor.g:39:9: 'role'
             pass 
             self.match("role")
 
@@ -930,8 +930,8 @@ class MonitorLexer(Lexer):
             _type = T__46
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:40:7: ( 'introduces' )
-            # Monitor.g:40:9: 'introduces'
+            # Generate/Monitor.g:40:7: ( 'introduces' )
+            # Generate/Monitor.g:40:9: 'introduces'
             pass 
             self.match("introduces")
 
@@ -955,8 +955,8 @@ class MonitorLexer(Lexer):
             _type = T__47
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:41:7: ( ':' )
-            # Monitor.g:41:9: ':'
+            # Generate/Monitor.g:41:7: ( ':' )
+            # Generate/Monitor.g:41:9: ':'
             pass 
             self.match(58)
 
@@ -980,8 +980,8 @@ class MonitorLexer(Lexer):
             _type = T__48
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:42:7: ( 'to' )
-            # Monitor.g:42:9: 'to'
+            # Generate/Monitor.g:42:7: ( 'to' )
+            # Generate/Monitor.g:42:9: 'to'
             pass 
             self.match("to")
 
@@ -1005,8 +1005,8 @@ class MonitorLexer(Lexer):
             _type = T__49
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:43:7: ( 'choice' )
-            # Monitor.g:43:9: 'choice'
+            # Generate/Monitor.g:43:7: ( 'choice' )
+            # Generate/Monitor.g:43:9: 'choice'
             pass 
             self.match("choice")
 
@@ -1030,8 +1030,8 @@ class MonitorLexer(Lexer):
             _type = T__50
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:44:7: ( 'or' )
-            # Monitor.g:44:9: 'or'
+            # Generate/Monitor.g:44:7: ( 'or' )
+            # Generate/Monitor.g:44:9: 'or'
             pass 
             self.match("or")
 
@@ -1055,8 +1055,8 @@ class MonitorLexer(Lexer):
             _type = T__51
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:45:7: ( 'repeat' )
-            # Monitor.g:45:9: 'repeat'
+            # Generate/Monitor.g:45:7: ( 'repeat' )
+            # Generate/Monitor.g:45:9: 'repeat'
             pass 
             self.match("repeat")
 
@@ -1080,8 +1080,8 @@ class MonitorLexer(Lexer):
             _type = T__52
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:46:7: ( 'rec' )
-            # Monitor.g:46:9: 'rec'
+            # Generate/Monitor.g:46:7: ( 'rec' )
+            # Generate/Monitor.g:46:9: 'rec'
             pass 
             self.match("rec")
 
@@ -1105,8 +1105,8 @@ class MonitorLexer(Lexer):
             _type = T__53
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:47:7: ( 'end' )
-            # Monitor.g:47:9: 'end'
+            # Generate/Monitor.g:47:7: ( 'end' )
+            # Generate/Monitor.g:47:9: 'end'
             pass 
             self.match("end")
 
@@ -1130,8 +1130,8 @@ class MonitorLexer(Lexer):
             _type = T__54
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:48:7: ( 'run' )
-            # Monitor.g:48:9: 'run'
+            # Generate/Monitor.g:48:7: ( 'run' )
+            # Generate/Monitor.g:48:9: 'run'
             pass 
             self.match("run")
 
@@ -1155,8 +1155,8 @@ class MonitorLexer(Lexer):
             _type = T__55
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:49:7: ( 'inline' )
-            # Monitor.g:49:9: 'inline'
+            # Generate/Monitor.g:49:7: ( 'inline' )
+            # Generate/Monitor.g:49:9: 'inline'
             pass 
             self.match("inline")
 
@@ -1180,8 +1180,8 @@ class MonitorLexer(Lexer):
             _type = T__56
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:50:7: ( 'parallel' )
-            # Monitor.g:50:9: 'parallel'
+            # Generate/Monitor.g:50:7: ( 'parallel' )
+            # Generate/Monitor.g:50:9: 'parallel'
             pass 
             self.match("parallel")
 
@@ -1205,8 +1205,8 @@ class MonitorLexer(Lexer):
             _type = T__57
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:51:7: ( 'and' )
-            # Monitor.g:51:9: 'and'
+            # Generate/Monitor.g:51:7: ( 'and' )
+            # Generate/Monitor.g:51:9: 'and'
             pass 
             self.match("and")
 
@@ -1230,8 +1230,8 @@ class MonitorLexer(Lexer):
             _type = T__58
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:52:7: ( 'do' )
-            # Monitor.g:52:9: 'do'
+            # Generate/Monitor.g:52:7: ( 'do' )
+            # Generate/Monitor.g:52:9: 'do'
             pass 
             self.match("do")
 
@@ -1255,8 +1255,8 @@ class MonitorLexer(Lexer):
             _type = T__59
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:53:7: ( 'interrupt' )
-            # Monitor.g:53:9: 'interrupt'
+            # Generate/Monitor.g:53:7: ( 'interrupt' )
+            # Generate/Monitor.g:53:9: 'interrupt'
             pass 
             self.match("interrupt")
 
@@ -1280,8 +1280,8 @@ class MonitorLexer(Lexer):
             _type = T__60
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:54:7: ( 'by' )
-            # Monitor.g:54:9: 'by'
+            # Generate/Monitor.g:54:7: ( 'by' )
+            # Generate/Monitor.g:54:9: 'by'
             pass 
             self.match("by")
 
@@ -1305,8 +1305,8 @@ class MonitorLexer(Lexer):
             _type = T__61
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:55:7: ( 'unordered' )
-            # Monitor.g:55:9: 'unordered'
+            # Generate/Monitor.g:55:7: ( 'unordered' )
+            # Generate/Monitor.g:55:9: 'unordered'
             pass 
             self.match("unordered")
 
@@ -1330,8 +1330,8 @@ class MonitorLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:157:4: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            # Monitor.g:157:6: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            # Generate/Monitor.g:157:4: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            # Generate/Monitor.g:157:6: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             pass 
             if (65 <= self.input.LA(1) <= 90) or self.input.LA(1) == 95 or (97 <= self.input.LA(1) <= 122):
                 self.input.consume()
@@ -1340,7 +1340,7 @@ class MonitorLexer(Lexer):
                 self.recover(mse)
                 raise mse
 
-            # Monitor.g:157:29: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            # Generate/Monitor.g:157:29: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
@@ -1350,7 +1350,7 @@ class MonitorLexer(Lexer):
 
 
                 if alt1 == 1:
-                    # Monitor.g:
+                    # Generate/Monitor.g:
                     pass 
                     if (48 <= self.input.LA(1) <= 57) or (65 <= self.input.LA(1) <= 90) or self.input.LA(1) == 95 or (97 <= self.input.LA(1) <= 122):
                         self.input.consume()
@@ -1384,10 +1384,10 @@ class MonitorLexer(Lexer):
             _type = NUMBER
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:159:8: ( ( DIGIT )+ )
-            # Monitor.g:159:10: ( DIGIT )+
+            # Generate/Monitor.g:159:8: ( ( DIGIT )+ )
+            # Generate/Monitor.g:159:10: ( DIGIT )+
             pass 
-            # Monitor.g:159:10: ( DIGIT )+
+            # Generate/Monitor.g:159:10: ( DIGIT )+
             cnt2 = 0
             while True: #loop2
                 alt2 = 2
@@ -1398,7 +1398,7 @@ class MonitorLexer(Lexer):
 
 
                 if alt2 == 1:
-                    # Monitor.g:159:11: DIGIT
+                    # Generate/Monitor.g:159:11: DIGIT
                     pass 
                     self.mDIGIT()
 
@@ -1432,10 +1432,10 @@ class MonitorLexer(Lexer):
             _type = WHITESPACE
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:161:12: ( ( '\\t' | ' ' | '\\r' | '\\n' | '\\u000C' )+ )
-            # Monitor.g:161:14: ( '\\t' | ' ' | '\\r' | '\\n' | '\\u000C' )+
+            # Generate/Monitor.g:161:12: ( ( '\\t' | ' ' | '\\r' | '\\n' | '\\u000C' )+ )
+            # Generate/Monitor.g:161:14: ( '\\t' | ' ' | '\\r' | '\\n' | '\\u000C' )+
             pass 
-            # Monitor.g:161:14: ( '\\t' | ' ' | '\\r' | '\\n' | '\\u000C' )+
+            # Generate/Monitor.g:161:14: ( '\\t' | ' ' | '\\r' | '\\n' | '\\u000C' )+
             cnt3 = 0
             while True: #loop3
                 alt3 = 2
@@ -1446,7 +1446,7 @@ class MonitorLexer(Lexer):
 
 
                 if alt3 == 1:
-                    # Monitor.g:
+                    # Generate/Monitor.g:
                     pass 
                     if (9 <= self.input.LA(1) <= 10) or (12 <= self.input.LA(1) <= 13) or self.input.LA(1) == 32:
                         self.input.consume()
@@ -1486,8 +1486,8 @@ class MonitorLexer(Lexer):
     def mDIGIT(self, ):
 
         try:
-            # Monitor.g:163:16: ( '0' .. '9' )
-            # Monitor.g:163:18: '0' .. '9'
+            # Generate/Monitor.g:163:16: ( '0' .. '9' )
+            # Generate/Monitor.g:163:18: '0' .. '9'
             pass 
             self.matchRange(48, 57)
 
@@ -1509,11 +1509,11 @@ class MonitorLexer(Lexer):
             _type = ASSERTION
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:165:11: ( '@{' ( options {greedy=false; } : . )* '}' )
-            # Monitor.g:165:13: '@{' ( options {greedy=false; } : . )* '}'
+            # Generate/Monitor.g:165:11: ( '@{' ( options {greedy=false; } : . )* '}' )
+            # Generate/Monitor.g:165:13: '@{' ( options {greedy=false; } : . )* '}'
             pass 
             self.match("@{")
-            # Monitor.g:165:18: ( options {greedy=false; } : . )*
+            # Generate/Monitor.g:165:18: ( options {greedy=false; } : . )*
             while True: #loop4
                 alt4 = 2
                 LA4_0 = self.input.LA(1)
@@ -1525,7 +1525,7 @@ class MonitorLexer(Lexer):
 
 
                 if alt4 == 1:
-                    # Monitor.g:165:45: .
+                    # Generate/Monitor.g:165:45: .
                     pass 
                     self.matchAny()
 
@@ -1554,11 +1554,11 @@ class MonitorLexer(Lexer):
             _type = ANNOTATION
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:167:12: ( '[[' ( options {greedy=false; } : . )* ']]' )
-            # Monitor.g:167:14: '[[' ( options {greedy=false; } : . )* ']]'
+            # Generate/Monitor.g:167:12: ( '[[' ( options {greedy=false; } : . )* ']]' )
+            # Generate/Monitor.g:167:14: '[[' ( options {greedy=false; } : . )* ']]'
             pass 
             self.match("[[")
-            # Monitor.g:167:19: ( options {greedy=false; } : . )*
+            # Generate/Monitor.g:167:19: ( options {greedy=false; } : . )*
             while True: #loop5
                 alt5 = 2
                 LA5_0 = self.input.LA(1)
@@ -1577,7 +1577,7 @@ class MonitorLexer(Lexer):
 
 
                 if alt5 == 1:
-                    # Monitor.g:167:46: .
+                    # Generate/Monitor.g:167:46: .
                     pass 
                     self.matchAny()
 
@@ -1606,11 +1606,11 @@ class MonitorLexer(Lexer):
             _type = ML_COMMENT
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:170:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            # Monitor.g:170:9: '/*' ( options {greedy=false; } : . )* '*/'
+            # Generate/Monitor.g:170:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            # Generate/Monitor.g:170:9: '/*' ( options {greedy=false; } : . )* '*/'
             pass 
             self.match("/*")
-            # Monitor.g:170:14: ( options {greedy=false; } : . )*
+            # Generate/Monitor.g:170:14: ( options {greedy=false; } : . )*
             while True: #loop6
                 alt6 = 2
                 LA6_0 = self.input.LA(1)
@@ -1629,7 +1629,7 @@ class MonitorLexer(Lexer):
 
 
                 if alt6 == 1:
-                    # Monitor.g:170:41: .
+                    # Generate/Monitor.g:170:41: .
                     pass 
                     self.matchAny()
 
@@ -1661,11 +1661,11 @@ class MonitorLexer(Lexer):
             _type = LINE_COMMENT
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:173:14: ( '//' ( options {greedy=false; } : . )* '\\n' )
-            # Monitor.g:173:16: '//' ( options {greedy=false; } : . )* '\\n'
+            # Generate/Monitor.g:173:14: ( '//' ( options {greedy=false; } : . )* '\\n' )
+            # Generate/Monitor.g:173:16: '//' ( options {greedy=false; } : . )* '\\n'
             pass 
             self.match("//")
-            # Monitor.g:173:21: ( options {greedy=false; } : . )*
+            # Generate/Monitor.g:173:21: ( options {greedy=false; } : . )*
             while True: #loop7
                 alt7 = 2
                 LA7_0 = self.input.LA(1)
@@ -1677,7 +1677,7 @@ class MonitorLexer(Lexer):
 
 
                 if alt7 == 1:
-                    # Monitor.g:173:48: .
+                    # Generate/Monitor.g:173:48: .
                     pass 
                     self.matchAny()
 
@@ -1709,11 +1709,11 @@ class MonitorLexer(Lexer):
             _type = StringLiteral
             _channel = DEFAULT_CHANNEL
 
-            # Monitor.g:175:14: ( '\"' (~ ( '\\\\' | '\"' ) )* '\"' )
-            # Monitor.g:175:16: '\"' (~ ( '\\\\' | '\"' ) )* '\"'
+            # Generate/Monitor.g:175:14: ( '\"' (~ ( '\\\\' | '\"' ) )* '\"' )
+            # Generate/Monitor.g:175:16: '\"' (~ ( '\\\\' | '\"' ) )* '\"'
             pass 
             self.match(34)
-            # Monitor.g:175:20: (~ ( '\\\\' | '\"' ) )*
+            # Generate/Monitor.g:175:20: (~ ( '\\\\' | '\"' ) )*
             while True: #loop8
                 alt8 = 2
                 LA8_0 = self.input.LA(1)
@@ -1723,7 +1723,7 @@ class MonitorLexer(Lexer):
 
 
                 if alt8 == 1:
-                    # Monitor.g:175:22: ~ ( '\\\\' | '\"' )
+                    # Generate/Monitor.g:175:22: ~ ( '\\\\' | '\"' )
                     pass 
                     if (0 <= self.input.LA(1) <= 33) or (35 <= self.input.LA(1) <= 91) or (93 <= self.input.LA(1) <= 65535):
                         self.input.consume()
@@ -1752,347 +1752,347 @@ class MonitorLexer(Lexer):
 
 
     def mTokens(self):
-        # Monitor.g:1:8: ( INTERACTION | INT | STRING | PLUS | MINUS | MULT | DIV | FULLSTOP | RESV | SEND | TYPE | VALUE | BRANCH | UNORDERED | RECLABEL | PARALLEL | PROTOCOL | ASSERT | GLOBAL_ESCAPE | EMPTY | ROLES | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | ID | NUMBER | WHITESPACE | ASSERTION | ANNOTATION | ML_COMMENT | LINE_COMMENT | StringLiteral )
+        # Generate/Monitor.g:1:8: ( INTERACTION | INT | STRING | PLUS | MINUS | MULT | DIV | FULLSTOP | RESV | SEND | TYPE | VALUE | BRANCH | UNORDERED | RECLABEL | PARALLEL | PROTOCOL | ASSERT | GLOBAL_ESCAPE | EMPTY | ROLES | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | ID | NUMBER | WHITESPACE | ASSERTION | ANNOTATION | ML_COMMENT | LINE_COMMENT | StringLiteral )
         alt9 = 57
         alt9 = self.dfa9.predict(self.input)
         if alt9 == 1:
-            # Monitor.g:1:10: INTERACTION
+            # Generate/Monitor.g:1:10: INTERACTION
             pass 
             self.mINTERACTION()
 
 
         elif alt9 == 2:
-            # Monitor.g:1:22: INT
+            # Generate/Monitor.g:1:22: INT
             pass 
             self.mINT()
 
 
         elif alt9 == 3:
-            # Monitor.g:1:26: STRING
+            # Generate/Monitor.g:1:26: STRING
             pass 
             self.mSTRING()
 
 
         elif alt9 == 4:
-            # Monitor.g:1:33: PLUS
+            # Generate/Monitor.g:1:33: PLUS
             pass 
             self.mPLUS()
 
 
         elif alt9 == 5:
-            # Monitor.g:1:38: MINUS
+            # Generate/Monitor.g:1:38: MINUS
             pass 
             self.mMINUS()
 
 
         elif alt9 == 6:
-            # Monitor.g:1:44: MULT
+            # Generate/Monitor.g:1:44: MULT
             pass 
             self.mMULT()
 
 
         elif alt9 == 7:
-            # Monitor.g:1:49: DIV
+            # Generate/Monitor.g:1:49: DIV
             pass 
             self.mDIV()
 
 
         elif alt9 == 8:
-            # Monitor.g:1:53: FULLSTOP
+            # Generate/Monitor.g:1:53: FULLSTOP
             pass 
             self.mFULLSTOP()
 
 
         elif alt9 == 9:
-            # Monitor.g:1:62: RESV
+            # Generate/Monitor.g:1:62: RESV
             pass 
             self.mRESV()
 
 
         elif alt9 == 10:
-            # Monitor.g:1:67: SEND
+            # Generate/Monitor.g:1:67: SEND
             pass 
             self.mSEND()
 
 
         elif alt9 == 11:
-            # Monitor.g:1:72: TYPE
+            # Generate/Monitor.g:1:72: TYPE
             pass 
             self.mTYPE()
 
 
         elif alt9 == 12:
-            # Monitor.g:1:77: VALUE
+            # Generate/Monitor.g:1:77: VALUE
             pass 
             self.mVALUE()
 
 
         elif alt9 == 13:
-            # Monitor.g:1:83: BRANCH
+            # Generate/Monitor.g:1:83: BRANCH
             pass 
             self.mBRANCH()
 
 
         elif alt9 == 14:
-            # Monitor.g:1:90: UNORDERED
+            # Generate/Monitor.g:1:90: UNORDERED
             pass 
             self.mUNORDERED()
 
 
         elif alt9 == 15:
-            # Monitor.g:1:100: RECLABEL
+            # Generate/Monitor.g:1:100: RECLABEL
             pass 
             self.mRECLABEL()
 
 
         elif alt9 == 16:
-            # Monitor.g:1:109: PARALLEL
+            # Generate/Monitor.g:1:109: PARALLEL
             pass 
             self.mPARALLEL()
 
 
         elif alt9 == 17:
-            # Monitor.g:1:118: PROTOCOL
+            # Generate/Monitor.g:1:118: PROTOCOL
             pass 
             self.mPROTOCOL()
 
 
         elif alt9 == 18:
-            # Monitor.g:1:127: ASSERT
+            # Generate/Monitor.g:1:127: ASSERT
             pass 
             self.mASSERT()
 
 
         elif alt9 == 19:
-            # Monitor.g:1:134: GLOBAL_ESCAPE
+            # Generate/Monitor.g:1:134: GLOBAL_ESCAPE
             pass 
             self.mGLOBAL_ESCAPE()
 
 
         elif alt9 == 20:
-            # Monitor.g:1:148: EMPTY
+            # Generate/Monitor.g:1:148: EMPTY
             pass 
             self.mEMPTY()
 
 
         elif alt9 == 21:
-            # Monitor.g:1:154: ROLES
+            # Generate/Monitor.g:1:154: ROLES
             pass 
             self.mROLES()
 
 
         elif alt9 == 22:
-            # Monitor.g:1:160: T__34
+            # Generate/Monitor.g:1:160: T__34
             pass 
             self.mT__34()
 
 
         elif alt9 == 23:
-            # Monitor.g:1:166: T__35
+            # Generate/Monitor.g:1:166: T__35
             pass 
             self.mT__35()
 
 
         elif alt9 == 24:
-            # Monitor.g:1:172: T__36
+            # Generate/Monitor.g:1:172: T__36
             pass 
             self.mT__36()
 
 
         elif alt9 == 25:
-            # Monitor.g:1:178: T__37
+            # Generate/Monitor.g:1:178: T__37
             pass 
             self.mT__37()
 
 
         elif alt9 == 26:
-            # Monitor.g:1:184: T__38
+            # Generate/Monitor.g:1:184: T__38
             pass 
             self.mT__38()
 
 
         elif alt9 == 27:
-            # Monitor.g:1:190: T__39
+            # Generate/Monitor.g:1:190: T__39
             pass 
             self.mT__39()
 
 
         elif alt9 == 28:
-            # Monitor.g:1:196: T__40
+            # Generate/Monitor.g:1:196: T__40
             pass 
             self.mT__40()
 
 
         elif alt9 == 29:
-            # Monitor.g:1:202: T__41
+            # Generate/Monitor.g:1:202: T__41
             pass 
             self.mT__41()
 
 
         elif alt9 == 30:
-            # Monitor.g:1:208: T__42
+            # Generate/Monitor.g:1:208: T__42
             pass 
             self.mT__42()
 
 
         elif alt9 == 31:
-            # Monitor.g:1:214: T__43
+            # Generate/Monitor.g:1:214: T__43
             pass 
             self.mT__43()
 
 
         elif alt9 == 32:
-            # Monitor.g:1:220: T__44
+            # Generate/Monitor.g:1:220: T__44
             pass 
             self.mT__44()
 
 
         elif alt9 == 33:
-            # Monitor.g:1:226: T__45
+            # Generate/Monitor.g:1:226: T__45
             pass 
             self.mT__45()
 
 
         elif alt9 == 34:
-            # Monitor.g:1:232: T__46
+            # Generate/Monitor.g:1:232: T__46
             pass 
             self.mT__46()
 
 
         elif alt9 == 35:
-            # Monitor.g:1:238: T__47
+            # Generate/Monitor.g:1:238: T__47
             pass 
             self.mT__47()
 
 
         elif alt9 == 36:
-            # Monitor.g:1:244: T__48
+            # Generate/Monitor.g:1:244: T__48
             pass 
             self.mT__48()
 
 
         elif alt9 == 37:
-            # Monitor.g:1:250: T__49
+            # Generate/Monitor.g:1:250: T__49
             pass 
             self.mT__49()
 
 
         elif alt9 == 38:
-            # Monitor.g:1:256: T__50
+            # Generate/Monitor.g:1:256: T__50
             pass 
             self.mT__50()
 
 
         elif alt9 == 39:
-            # Monitor.g:1:262: T__51
+            # Generate/Monitor.g:1:262: T__51
             pass 
             self.mT__51()
 
 
         elif alt9 == 40:
-            # Monitor.g:1:268: T__52
+            # Generate/Monitor.g:1:268: T__52
             pass 
             self.mT__52()
 
 
         elif alt9 == 41:
-            # Monitor.g:1:274: T__53
+            # Generate/Monitor.g:1:274: T__53
             pass 
             self.mT__53()
 
 
         elif alt9 == 42:
-            # Monitor.g:1:280: T__54
+            # Generate/Monitor.g:1:280: T__54
             pass 
             self.mT__54()
 
 
         elif alt9 == 43:
-            # Monitor.g:1:286: T__55
+            # Generate/Monitor.g:1:286: T__55
             pass 
             self.mT__55()
 
 
         elif alt9 == 44:
-            # Monitor.g:1:292: T__56
+            # Generate/Monitor.g:1:292: T__56
             pass 
             self.mT__56()
 
 
         elif alt9 == 45:
-            # Monitor.g:1:298: T__57
+            # Generate/Monitor.g:1:298: T__57
             pass 
             self.mT__57()
 
 
         elif alt9 == 46:
-            # Monitor.g:1:304: T__58
+            # Generate/Monitor.g:1:304: T__58
             pass 
             self.mT__58()
 
 
         elif alt9 == 47:
-            # Monitor.g:1:310: T__59
+            # Generate/Monitor.g:1:310: T__59
             pass 
             self.mT__59()
 
 
         elif alt9 == 48:
-            # Monitor.g:1:316: T__60
+            # Generate/Monitor.g:1:316: T__60
             pass 
             self.mT__60()
 
 
         elif alt9 == 49:
-            # Monitor.g:1:322: T__61
+            # Generate/Monitor.g:1:322: T__61
             pass 
             self.mT__61()
 
 
         elif alt9 == 50:
-            # Monitor.g:1:328: ID
+            # Generate/Monitor.g:1:328: ID
             pass 
             self.mID()
 
 
         elif alt9 == 51:
-            # Monitor.g:1:331: NUMBER
+            # Generate/Monitor.g:1:331: NUMBER
             pass 
             self.mNUMBER()
 
 
         elif alt9 == 52:
-            # Monitor.g:1:338: WHITESPACE
+            # Generate/Monitor.g:1:338: WHITESPACE
             pass 
             self.mWHITESPACE()
 
 
         elif alt9 == 53:
-            # Monitor.g:1:349: ASSERTION
+            # Generate/Monitor.g:1:349: ASSERTION
             pass 
             self.mASSERTION()
 
 
         elif alt9 == 54:
-            # Monitor.g:1:359: ANNOTATION
+            # Generate/Monitor.g:1:359: ANNOTATION
             pass 
             self.mANNOTATION()
 
 
         elif alt9 == 55:
-            # Monitor.g:1:370: ML_COMMENT
+            # Generate/Monitor.g:1:370: ML_COMMENT
             pass 
             self.mML_COMMENT()
 
 
         elif alt9 == 56:
-            # Monitor.g:1:381: LINE_COMMENT
+            # Generate/Monitor.g:1:381: LINE_COMMENT
             pass 
             self.mLINE_COMMENT()
 
 
         elif alt9 == 57:
-            # Monitor.g:1:394: StringLiteral
+            # Generate/Monitor.g:1:394: StringLiteral
             pass 
             self.mStringLiteral()
 

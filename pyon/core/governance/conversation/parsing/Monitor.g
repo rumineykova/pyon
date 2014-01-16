@@ -81,8 +81,8 @@ roleDef: ID -> ID;
 roleName: ID -> ID;
 
 typeReferenceDef: ID ->ID;
-interactionSignatureDef: ((typeReferenceDef ('(' valueDecl (',' valueDecl)* ')')? -> typeReferenceDef ^(VALUE valueDecl*))
-			 | (('(' valueDecl (',' valueDecl)* ')') -> ^(VALUE valueDecl*)));
+interactionSignatureDef: ((typeReferenceDef ('(' ( valueDecl )? (',' valueDecl)* ')')? -> typeReferenceDef ^(VALUE valueDecl*))
+			 | (('(' ( valueDecl )? (',' valueDecl)* ')') -> ^(VALUE valueDecl*)));
 
 valueDecl : ID (':'! primitivetype)?;	 
 firstValueDecl	: valueDecl;
@@ -103,7 +103,7 @@ activityList: ( ( ANNOTATION )* activityDef )*;
 
 repeatDef: 'repeat' ( 'at' roleName ( ',' roleName )* )? blockDef  -> ^('repeat' blockDef);
 
-recBlockDef: 'rec' labelName blockDef -> ^('rec' labelName blockDef);
+recBlockDef: assertDef 'rec' labelName blockDef -> ^('rec' labelName blockDef);
 
 labelName: ID -> ID ;
 
