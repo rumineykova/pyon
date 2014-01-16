@@ -11,7 +11,7 @@ protocol Negotiation at adviser(role requester, role provider, role adviser)
                 () to requester;
 
             } or {
-                consult(cond:string) from requester;
+                consult(offer:string) from requester;
                 (result:string) to requester;
                 Start;}
                 }

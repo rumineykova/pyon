@@ -11,7 +11,7 @@ protocol Negotiation at provider(role requester, role provider, role adviser)
             () to requester;
         } or {
             propose(text:string) from requester;
-            (cond:string) to requester;
+            (offer:string) to requester;
             Start;}
             }
 }

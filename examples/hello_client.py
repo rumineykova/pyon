@@ -59,7 +59,7 @@ def negotiate_ok(container):
         # (offer:string) from provider;
         offer = provider.ask.get_offer('send me your offer')
 
-        # consult(text:string) to adviser;
+        # consult(offer:string) to adviser;
         # (result:string) from adviser;
         result = adviser.ask.consult(offer)
 
@@ -67,15 +67,16 @@ def negotiate_ok(container):
         # (x:string) from provider;
         conditions = provider.ask.propose(result)
 
-        # consult(text:string) to adviser;
-        # (x:string) from  adviser;
-        adviser.ask.consult(conditions)
+        # consult(offer:string) to adviser;
+        # (result:string) from  adviser;
+        result = adviser.ask.consult(conditions)
+        print "Returned: " + str(result)
 
         # accept(text:string) to  provider;
-        # (x:string) from provider;
+        # () from provider;
         provider.ask.accept(conditions)
 
-        # accept() to  adviser;
+        # accept(text:string) to  adviser;
         # () from adviser;
         adviser.ask.accept(conditions)
 
@@ -92,15 +93,14 @@ def negotiate_nok(container):
         # (offer:string) from provider
         offer = provider.ask.get_offer('send me your offer')
 
-        # consult(text:string) to adviser;
+        # consult(offer:string) to adviser;
         # (result:string) from adviser;
         result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
 
         # reject(text:string) to provider;
-        # (x:string) from provider;
-        ret = provider.ask.reject('not interested')
-        print "Returned: " + str(ret)
+        # () from provider;
+        provider.ask.reject('not interested')
 
         ret = provider.ask.propose('here is my offer')
         print "Returned: " + str(ret)
@@ -117,7 +117,7 @@ def negotiate_assert(container):
         # (offer:string) from provider
         offer = provider.ask.get_offer('send me your offer')
 
-        # consult(text:string) to adviser;
+        # consult(offer:string) to adviser;
         # (result:string) from adviser;
         result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
@@ -139,21 +139,20 @@ def negotiate_guard(container):
         # (offer:string) from provider
         offer = provider.ask.get_offer('send me your offer')
 
-        # consult(text:string) to adviser;
+        # consult(offer:string) to adviser;
         # (result:string) from adviser;
         result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
 
         for i in range(1, 3):
             # propose(text:string) to provider;
-            # (x:string) from provider;
+            # (offer:string) from provider;
             reply = provider.ask.propose(result)
 
-            # consult() to adviser;
-            # () from adviser;
+            # consult(offer:string) to adviser;
+            # (result:string) from adviser;
             result = adviser.ask.consult(offer)
             print "Returned: " + str(result)
-
 
         print "Returned: " + str(reply)
 
