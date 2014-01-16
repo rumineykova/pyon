@@ -58,27 +58,27 @@ def negotiate_ok(container):
 
         # get_offer(text:string) to provider;
         # (offer:string) from provider;
-        offer = provider.send.get_offer('send me your offer')
+        offer = provider.ask.get_offer('send me your offer')
 
         # consult(text:string) to adviser;
         # (result:string) from adviser;
-        result = adviser.send.consult(offer)
+        result = adviser.ask.consult(offer)
 
         # propose(text:string) to provider;
         # (x:string) from provider;
-        conditions = provider.send.propose(result)
+        conditions = provider.ask.propose(result)
 
         # consult(text:string) to adviser;
         # (x:string) from  adviser;
-        adviser.send.consult(conditions)
+        adviser.ask.consult(conditions)
 
         # accept(text:string) to  provider;
         # (x:string) from provider;
-        provider.send.accept(conditions)
+        provider.ask.accept(conditions)
 
         # accept() to  adviser;
         # () from adviser;
-        adviser.send.accept(conditions)
+        adviser.ask.accept(conditions)
 
         c.close()
 
@@ -91,19 +91,19 @@ def negotiate_nok(container):
 
         # get_offer(text:string) to provider;
         # (offer:string) from provider
-        offer = provider.send.get_offer('send me your offer')
+        offer = provider.ask.get_offer('send me your offer')
 
         # consult(text:string) to adviser;
         # (result:string) from adviser;
-        result = adviser.send.consult(offer)
+        result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
 
         # reject(text:string) to provider;
         # (x:string) from provider;
-        ret = provider.send.reject('not interested')
+        ret = provider.ask.reject('not interested')
         print "Returned: " + str(ret)
 
-        ret = provider.send.propose('here is my offer')
+        ret = provider.ask.propose('here is my offer')
         print "Returned: " + str(ret)
 
         c.close()
@@ -116,16 +116,16 @@ def negotiate_assert(container):
 
         # get_offer(text:string) to provider;
         # (offer:string) from provider
-        offer = provider.send.get_offer('send me your offer')
+        offer = provider.ask.get_offer('send me your offer')
 
         # consult(text:string) to adviser;
         # (result:string) from adviser;
-        result = adviser.send.consult(offer)
+        result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
 
         # propose(text:string) to provider;
         # (x:string) from provider;
-        provider.send.propose(offer)
+        provider.ask.propose(offer)
 
         c.close()
     except Exception, e:
@@ -138,21 +138,21 @@ def negotiate_guard(container):
 
         # get_offer(text:string) to provider;
         # (offer:string) from provider
-        offer = provider.send.get_offer('send me your offer')
+        offer = provider.ask.get_offer('send me your offer')
 
         # consult(text:string) to adviser;
         # (result:string) from adviser;
-        result = adviser.send.consult(offer)
+        result = adviser.ask.consult(offer)
         print "Returned: " + str(result)
 
         for i in range(1, 3):
             # propose(text:string) to provider;
             # (x:string) from provider;
-            reply = provider.send.propose(result)
+            reply = provider.ask.propose(result)
 
             # consult() to adviser;
             # () from adviser;
-            result = adviser.send.consult(offer)
+            result = adviser.ask.consult(offer)
             print "Returned: " + str(result)
 
         print "Returned: " + str(reply)

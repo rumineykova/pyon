@@ -103,7 +103,7 @@ activityList: ( ( ANNOTATION )* activityDef )*;
 
 repeatDef: 'repeat' ( 'at' roleName ( ',' roleName )* )? blockDef  -> ^('repeat' blockDef);
 
-recBlockDef: 'rec' labelName blockDef -> ^('rec' labelName blockDef);
+recBlockDef: (ANNOTATION)* 'rec' labelName blockDef -> ^('rec' labelName blockDef);
 
 labelName: ID -> ID ;
 
